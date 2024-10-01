@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: yekan;
+    src: url(/src/assets/fonts/Yekan.ttf);
+  }
+  body {
+    /* background-color: #e7f0fc; */
+    font-family: yekan;
+    /* min-height: 100vh; */
+  }
+  h1 {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+}
