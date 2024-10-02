@@ -6,7 +6,7 @@ import SocialsIcon from "./SocialsIcon";
 
 function Footer() {
   return (
-    <div className="bg-[#252641] text-white">
+    <div className="bg-[#252641] text-white mt-28">
       <div className="container flex flex-col gap-10 p-10">
         <div className="flex justify-center gap-4">
           <img src="/src/assets/images/footer/Group 33.png" />

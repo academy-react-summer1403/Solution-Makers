@@ -3,7 +3,7 @@ import FilterSection from "./filterSection/FilterSection";
 
 function MiddleSection() {
   return (
-    <div className="px-0 sm:px-[2rem] md:px-[3rem] lg:px-[3rem] container flex justify-center bg-purple-300 gap-4">
+    <div className="mt-20 px-0 sm:px-[2rem] md:px-[3rem] lg:px-[3rem] container flex justify-center gap-4">
       <FilterSection />
       <CoursesSection />
     </div>
