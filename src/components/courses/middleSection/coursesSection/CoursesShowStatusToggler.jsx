@@ -5,11 +5,14 @@ import { useContext } from "react";
 import { AppContext } from "../../../../context/Provider";
 
 function CoursesShowStatusToggler() {
-  const { setCoursesShowStatus } = useContext(AppContext);
-  
+  const { coursesShowStatus, setCoursesShowStatus } = useContext(AppContext);
+
   return (
-    <div className="flex gap-3 items-center py-2 px-3 rounded-xl bg-white">
+    <div className="lg:w-full px-2 flex gap-3 items-center justify-center py-2 rounded-xl bg-white">
       <Button
+        className={`${
+          coursesShowStatus == "column" ? "bg-[#dbdbdb]" : "bg-white"
+        }`}
         isIconOnly
         variant="faded"
         onClick={() => setCoursesShowStatus("column")}
@@ -17,6 +20,9 @@ function CoursesShowStatusToggler() {
         <BsGrid3X3 size={25} className="text-black" />
       </Button>
       <Button
+        className={`${
+          coursesShowStatus == "row" ? "bg-[#dbdbdb]" : "bg-white"
+        }`}
         isIconOnly
         variant="faded"
         onClick={() => setCoursesShowStatus("row")}

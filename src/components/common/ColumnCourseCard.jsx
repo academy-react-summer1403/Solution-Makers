@@ -36,28 +36,28 @@ function ColumnCourseCard({
           src={tumbImageAddress}
         />
       </CardHeader>
-      <CardBody className="text-right px-0">
+      <CardBody className="text-right">
         <h3 className="text-lg">{title}</h3>
-        <div className="hidden sm:flex justify-center mt-4 p-4 gap-12 lg:gap-5 rounded-[1.5rem] bg-[#ECEFF1]">
-          <p className="text-sm flex justify-center items-center gap-1">
+        <div className="flex flex-col sm:flex-row sm:justify-center lg:text-sm sm:mt-4 py-4 gap-5 sm:gap-14 md:gap-10 lg:gap-5 rounded-[1.5rem] sm:bg-[#ECEFF1]">
+          <p className="flex items-center gap-1">
             <FiBookOpen />
             202درس
           </p>
-          <p className="text-sm flex justify-center items-center gap-1">
+          <p className="flex items-center gap-1">
             <GoClock /> 14ساعت
           </p>
-          <p className="text-sm flex justify-center items-center gap-1">
+          <p className="flex items-center gap-1">
             <IoCalendarOutline /> 1آذر1402
           </p>
         </div>
-        <div className="flex justify-between mt-4">
+        <div className="flex flex-col justify-between sm:flex-row gap-2 sm:mt-4">
           <p>
             <b>مدرس:</b> {teacherName}
           </p>
           <p>{currentRegistrants} دانش‌آموز</p>
         </div>
       </CardBody>
-      <CardFooter className="justify-between p-0 mt-1">
+      <CardFooter className="flex-col items-start gap-2 justify-start sm:flex-row sm:items-center sm:justify-between lg:py-0 lg:mt-1">
         <p className="flex items-center gap-1 text-lg text-[#f44336] bg-[#ffebee] py-2 px-5 rounded-full">
           <FaRegHeart />
           {likeCount}

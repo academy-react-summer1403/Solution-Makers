@@ -1,12 +1,5 @@
-import RowCourseCard from "../../components/common/RowCourseCard";
-
 function Articles() {
-  return (
-    <>
-      <h1>Articles Page</h1>
-      <RowCourseCard />
-    </>
-  );
+  return <h1>Articles Page</h1>;
 }
 
 export default Articles;
