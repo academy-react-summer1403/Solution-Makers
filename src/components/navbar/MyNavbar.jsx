@@ -1,4 +1,11 @@
-import { Navbar, NavbarMenuToggle, NavbarMenu, Button, Avatar, Badge, } from "@nextui-org/react";
+import {
+  Navbar,
+  NavbarMenuToggle,
+  NavbarMenu,
+  Button,
+  Avatar,
+  Badge,
+} from "@nextui-org/react";
 import NavMenuItem from "./NavMenuItem";
 import { useContext, useState } from "react";
 import { AppContext } from "../../context/Provider";
@@ -12,15 +19,15 @@ function MyNavbar() {
   return (
     <Navbar
       onMenuOpenChange={setIsMenuOpen}
-      classNames={{ wrapper: "max-w-[full]" }}
+      classNames={{ base: "md:px-6", wrapper: "max-w-[full]" }}
     >
-      <div className="container h-[50px] flex justify-start px-0 md:px-4 md:justify-between items-center gap-2">
+      <div className="w-full h-[50px] flex justify-start sm:justify-between sm:px-4 items-center gap-2">
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           className="md:hidden"
         />
         <Link to="/">
-          <div className="hidden md:flex items-center gap-2">
+          <div className="hidden sm:flex items-center gap-2">
             <img src="/src/assets/images/navbar/Group 33.png" />
             <p>هگزا اسکواد</p>
           </div>
@@ -39,8 +46,8 @@ function MyNavbar() {
             <NavLink to="/articles">اخبار مقالات</NavLink>
           </li>
         </ul>
-        <div className="hidden md:flex justify-between items-center gap-4">
-          <Link className="bg-white h-[50px] w-[50px] rounded-full hidden md:flex items-center justify-center">
+        <div className="flex justify-between items-center gap-4">
+          <Link className="bg-white h-[50px] w-[50px] rounded-full hidden sm:flex items-center justify-center">
             <Badge
               content={bagIconNum > 0 ? bagIconNum : null}
               color="primary"
@@ -59,7 +66,12 @@ function MyNavbar() {
               />
             </Badge>
           </Link>
-          <Button radius="full" size="lg" color="primary">
+          <Button
+            radius="full"
+            size="lg"
+            color="primary"
+            className="hidden md:inline-block"
+          >
             ورود به حساب
           </Button>
         </div>
