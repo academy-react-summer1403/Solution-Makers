@@ -14,7 +14,7 @@ function RowCourseCard({
   likeCount,
 }) {
   return (
-    <div className="flex flex-col md:flex-row gap-8 bg-white p-4 rounded-xl">
+    <div className="flex flex-col md:flex-row gap-8 bg-white p-4 rounded-xl shadow-lg border">
       <div className="relative w-full md:w-[30%] lg:w-[40%] xl:w-[30%] flex items-center">
         <Image
           radius="lg"

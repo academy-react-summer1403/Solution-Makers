@@ -1,12 +1,14 @@
 import { NavbarMenuItem } from "@nextui-org/react";
 import { Link } from "react-router-dom";
 
-function NavMenuItem(props) {
+function NavMenuLink(props) {
   return (
     <NavbarMenuItem>
-      <Link to={props.target} className="hover:text-primary">{props.title}</Link>
+      <Link to={props.target} className="hover:text-primary">
+        {props.title}
+      </Link>
     </NavbarMenuItem>
   );
 }
 
-export default NavMenuItem;
+export default NavMenuLink;

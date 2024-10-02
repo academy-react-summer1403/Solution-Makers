@@ -1,9 +1,9 @@
-import Articles from "./pages/articles/Articles";
-import Courses from "./pages/courses/Courses";
-import Landing from "./pages/landing/Landing";
-import Login from "./pages/login/Login";
-import Teachers from "./pages/teachers/Teachers";
-import Contact from "./pages/contact/Contact";
+import Articles from "./pages/Articles";
+import Courses from "./pages/Courses";
+import Landing from "./pages/Landing";
+import Login from "./pages/Login";
+import Teachers from "./pages/Teachers";
+import Contact from "./pages/Contact";
 
 const routes = [
   { path: "/", element: <Landing /> },

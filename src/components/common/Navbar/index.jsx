@@ -6,11 +6,12 @@ import {
   Avatar,
   Badge,
 } from "@nextui-org/react";
-import NavMenuItem from "./NavMenuItem";
+
 import { useContext, useState } from "react";
-import { AppContext } from "../../context/Provider";
+import { AppContext } from "../../../context/Provider";
 import { NavLink, Link } from "react-router-dom";
-import "./MyNavbar.css";
+import NavMenuLink from "./NavMenuLink";
+import "./index.css";
 
 function MyNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -19,7 +20,10 @@ function MyNavbar() {
   return (
     <Navbar
       onMenuOpenChange={setIsMenuOpen}
-      classNames={{ base: "md:px-6", wrapper: "max-w-[full]" }}
+      classNames={{
+        base: "bg-[#e7f0fc] md:px-6 py-2 static",
+        wrapper: "max-w-[full]",
+      }}
     >
       <div className="w-full h-[50px] flex justify-start sm:justify-between sm:px-4 items-center gap-2">
         <NavbarMenuToggle
@@ -77,15 +81,15 @@ function MyNavbar() {
         </div>
       </div>
 
-      <NavbarMenu className="space-y-2">
-        <NavMenuItem target="" title="ورود به حساب کاربری" />
-        <NavMenuItem target="" title="پنل کاربری" />
-        <NavMenuItem target="" title="سبد خرید" />
-        <NavMenuItem target="" title="دوره‌ها" />
-        <NavMenuItem target="" title="اساتید" />
-        <NavMenuItem target="" title="ارتباط با ما" />
-        <NavMenuItem target="" title="اخبار مقالات" />
-        <NavMenuItem target="" title="خروج" />
+      <NavbarMenu className="bg-[#e7f0fc] space-y-2">
+        <NavMenuLink target="" title="ورود به حساب کاربری" />
+        <NavMenuLink target="" title="پنل کاربری" />
+        <NavMenuLink target="" title="سبد خرید" />
+        <NavMenuLink target="" title="دوره‌ها" />
+        <NavMenuLink target="" title="اساتید" />
+        <NavMenuLink target="" title="ارتباط با ما" />
+        <NavMenuLink target="" title="اخبار مقالات" />
+        <NavMenuLink target="" title="خروج" />
       </NavbarMenu>
     </Navbar>
   );

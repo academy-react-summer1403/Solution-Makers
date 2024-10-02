@@ -8,7 +8,7 @@ function CoursesShowStatusToggler() {
   const { coursesShowStatus, setCoursesShowStatus } = useContext(AppContext);
 
   return (
-    <div className="lg:w-full px-2 flex gap-3 items-center justify-center py-2 rounded-xl bg-white">
+    <div className="lg:w-full px-2 flex gap-3 items-center justify-center py-2 rounded-xl bg-white shadow-lg">
       <Button
         className={`${
           coursesShowStatus == "column" ? "bg-[#dbdbdb]" : "bg-white"

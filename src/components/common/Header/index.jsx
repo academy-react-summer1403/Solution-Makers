@@ -1,4 +1,4 @@
-function CoursesHeader() {
+function Header({ img, heading, reminding }) {
   return (
     <div className="container mt-20">
       <div className="flex flex-col gap-20 justify-center items-center md:items-stretch md:flex-row">
@@ -9,8 +9,8 @@ function CoursesHeader() {
           <div className="w-[196px] h-[154px] hidden md:block absolute md:top-[60px] md:right-[110px] lg:top-[100px] lg:right-[450px] xl:top-[120px] bg-[url(/src/assets/images/courses/verticalDots.png)] bg-no-repeat"></div>
 
           <div className="z-20 flex flex-col gap-6 md:ms-8 items-center bg md:items-start">
-            <h2 className="text-primary text-2xl">مهمه از کی یاد می گیری!!</h2>
-            <h1 className="text-[40px]">آموزش برنامه نویسی با بهترین ها</h1>
+            <h2 className="text-primary text-2xl">{reminding}</h2>
+            <h1 className="text-[40px]">{heading}</h1>
             <p className="text-[#455A64] text-justify lg:w-[526px]">
               آموزش برنامه نویسی یکی از دوره‌های محبوب در حوزه فناوری اطلاعات
               است. برنامه نویسی مهارتی است که به افراد امکان می‌دهد تا
@@ -19,11 +19,11 @@ function CoursesHeader() {
           </div>
         </div>
         <div className="w-full md:w-1/2">
-          <img src="/src/assets/images/courses/Asset11.png" />
+          <img src={img} />
         </div>
       </div>
     </div>
   );
 }
 
-export default CoursesHeader;
+export default Header;

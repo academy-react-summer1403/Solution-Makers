@@ -1,5 +1,5 @@
-import CoursesSection from "./coursesSection/CoursesSection";
-import FilterSection from "./filterSection/FilterSection";
+import CoursesSection from "./CoursesSection";
+import FilterSection from "./FilterSection";
 
 function MiddleSection() {
   return (
