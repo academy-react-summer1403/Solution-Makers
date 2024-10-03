@@ -5,6 +5,7 @@ import axios from "axios";
 import ColumnCourseCard from "../../../../common/ColumnCourseCard";
 import RowCourseCard from "../../../../common/RowCourseCard";
 import { AppContext } from "../../../../../context/Provider";
+import ColumnCourseCardSkeleton from "../../../../common/ColumnCourseCard/Skeleton";
 
 const fetchCourses = (pageNumber, RowsOfPage) =>
   axios.get(
@@ -23,13 +24,15 @@ function CoursesList() {
 
   useEffect(() => {
     setRowsOfPage(coursesShowStatus == "column" ? 9 : 5);
-    setPageNumber(1);
+    if (
+      data &&
+      coursesShowStatus == "column" &&
+      pageNumber > Math.ceil(data.data.totalCount / rowsOfPage)
+    ) {
+      setPageNumber(Math.ceil(data.data.totalCount / rowsOfPage));
+    }
     refetch();
   }, [coursesShowStatus, rowsOfPage]);
-
-  if (isLoading) {
-    return <div className="text-xl p-4">در حال دریافت اطلاعات</div>;
-  }
 
   return (
     <>
@@ -40,27 +43,40 @@ function CoursesList() {
             : "flex flex-col gap-6"
         }`}
       >
-        {coursesShowStatus == "column"
-          ? data.data.courseFilterDtos.map((course) => (
-              <ColumnCourseCard {...course} key={course.courseId} />
-            ))
-          : data.data.courseFilterDtos.map((course) => (
-              <RowCourseCard {...course} key={course.courseId} />
-            ))}
+        {isLoading ? (
+          new Array(9)
+            .fill(0)
+            .map((item, index) => <ColumnCourseCardSkeleton key={index} />)
+        ) : (
+          <>
+            {coursesShowStatus == "column"
+              ? data.data.courseFilterDtos.map((course) => (
+                  <ColumnCourseCard {...course} key={course.courseId} />
+                ))
+              : data.data.courseFilterDtos.map((course) => (
+                  <RowCourseCard {...course} key={course.courseId} />
+                ))}
+          </>
+        )}
       </div>
-      <Pagination
-        style={{ direction: "ltr" }}
-        className="mt-4"
-        classNames={{
-          base: "flex justify-center",
-          item: "rounded-full mx-1",
-          cursor: "bg-primary rounded-full",
-        }}
-        total={Math.ceil(data.data.totalCount / rowsOfPage)}
-        page={pageNumber}
-        showControls
-        onChange={(number) => setPageNumber(number)}
-      />
+      {data && (
+        <Pagination
+          style={{ direction: "ltr" }}
+          className="mt-4"
+          classNames={{
+            base: "flex justify-center",
+            item: "rounded-full mx-1",
+            cursor: "bg-primary rounded-full",
+          }}
+          total={Math.ceil(data.data.totalCount / rowsOfPage)}
+          page={pageNumber}
+          showControls
+          onChange={(number) => {
+            setPageNumber(number);
+            scrollTo({ top: 560, behavior: "smooth" });
+          }}
+        />
+      )}
     </>
   );
 }
