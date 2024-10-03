@@ -1,10 +1,10 @@
 import CoursesList from "./CoursesList";
-import InputSection from "./InputSection";
+import TopSection from "./TopSection";
 
 function CoursesSection() {
   return (
     <div className="w-full lg:w-[70%] xl:w-[75%] px-5 sm:px-2">
-      <InputSection />
+      <TopSection />
       <CoursesList />
     </div>
   );

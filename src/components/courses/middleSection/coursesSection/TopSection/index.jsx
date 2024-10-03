@@ -1,5 +1,5 @@
 import { Select, SelectItem } from "@nextui-org/react";
-import SearchInput from "../../../common/SearchInput";
+import SearchInput from "../../../../common/SearchInput";
 import { useState } from "react";
 import { CgSortAz } from "react-icons/cg";
 import CoursesShowStatusToggler from "./CoursesShowStatusToggler";

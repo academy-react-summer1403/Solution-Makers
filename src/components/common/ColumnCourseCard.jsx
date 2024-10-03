@@ -36,7 +36,7 @@ function ColumnCourseCard({
           src={tumbImageAddress}
         />
       </CardHeader>
-      <CardBody className="text-right">
+      <CardBody className="text-right px-0">
         <h3 className="text-lg">{title}</h3>
         <div className="flex flex-col sm:flex-row sm:justify-center lg:text-sm sm:mt-4 py-4 gap-5 sm:gap-14 md:gap-10 lg:gap-5 rounded-[1.5rem] sm:bg-[#ECEFF1]">
           <p className="flex items-center gap-1">
@@ -57,7 +57,7 @@ function ColumnCourseCard({
           <p>{currentRegistrants} دانش‌آموز</p>
         </div>
       </CardBody>
-      <CardFooter className="flex-col items-start gap-2 justify-start sm:flex-row sm:items-center sm:justify-between lg:py-0 lg:mt-1">
+      <CardFooter className="flex-col px-0 items-start gap-2 justify-start sm:flex-row sm:items-center sm:justify-between lg:py-0 lg:mt-1">
         <p className="flex items-center gap-1 text-lg text-[#f44336] bg-[#ffebee] py-2 px-5 rounded-full">
           <FaRegHeart />
           {likeCount}

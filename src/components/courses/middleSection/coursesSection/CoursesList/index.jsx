@@ -2,9 +2,9 @@ import { useContext, useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Pagination } from "@nextui-org/react";
 import axios from "axios";
-import ColumnCourseCard from "../../../common/ColumnCourseCard";
-import RowCourseCard from "../../../common/RowCourseCard";
-import { AppContext } from "../../../../context/Provider";
+import ColumnCourseCard from "../../../../common/ColumnCourseCard";
+import RowCourseCard from "../../../../common/RowCourseCard";
+import { AppContext } from "../../../../../context/Provider";
 
 const fetchCourses = (pageNumber, RowsOfPage) =>
   axios.get(
@@ -13,19 +13,19 @@ const fetchCourses = (pageNumber, RowsOfPage) =>
 
 function CoursesList() {
   const { coursesShowStatus } = useContext(AppContext);
-  const [page, setPage] = useState(1);
-  const [coursesCountInEachPage, setCoursesCountInEachPage] = useState(9);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [rowsOfPage, setRowsOfPage] = useState(9);
 
   const { data, isLoading, error, isError, isFetching, refetch } = useQuery({
-    queryKey: ["courses", page],
-    queryFn: () => fetchCourses(page, coursesCountInEachPage),
+    queryKey: ["courses", pageNumber],
+    queryFn: () => fetchCourses(pageNumber, rowsOfPage),
   });
 
   useEffect(() => {
-    setCoursesCountInEachPage(coursesShowStatus == "column" ? 9 : 5);
-    setPage(1);
+    setRowsOfPage(coursesShowStatus == "column" ? 9 : 5);
+    setPageNumber(1);
     refetch();
-  }, [coursesShowStatus, coursesCountInEachPage]);
+  }, [coursesShowStatus, rowsOfPage]);
 
   if (isLoading) {
     return <div className="text-xl p-4">در حال دریافت اطلاعات</div>;
@@ -56,10 +56,10 @@ function CoursesList() {
           item: "rounded-full mx-1",
           cursor: "bg-primary rounded-full",
         }}
-        total={Math.ceil(data.data.totalCount / coursesCountInEachPage)}
-        page={page}
+        total={Math.ceil(data.data.totalCount / rowsOfPage)}
+        page={pageNumber}
         showControls
-        onChange={(number) => setPage(number)}
+        onChange={(number) => setPageNumber(number)}
       />
     </>
   );

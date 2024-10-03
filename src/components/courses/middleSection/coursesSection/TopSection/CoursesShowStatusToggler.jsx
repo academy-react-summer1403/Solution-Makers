@@ -2,7 +2,7 @@ import { Button } from "@nextui-org/react";
 import { MdOutlineTableRows } from "react-icons/md";
 import { BsGrid3X3 } from "react-icons/bs";
 import { useContext } from "react";
-import { AppContext } from "../../../../context/Provider";
+import { AppContext } from "../../../../../context/Provider";
 
 function CoursesShowStatusToggler() {
   const { coursesShowStatus, setCoursesShowStatus } = useContext(AppContext);
