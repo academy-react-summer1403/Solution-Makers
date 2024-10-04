@@ -8,7 +8,7 @@
     src: url(/src/assets/fonts/Yekan.ttf);
   }
   body {
-    /* background-color: #e7f0fc; */
+    background-color: #e7f0fc;
     font-family: yekan;
     /* min-height: 100vh; */
   }

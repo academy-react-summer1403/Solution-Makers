@@ -34,6 +34,10 @@ function CoursesList() {
     refetch();
   }, [coursesShowStatus, rowsOfPage]);
 
+  if (error) {
+    return <p className="text-lg mt-8 ps-4">دریافت اطلاعات با خطا مواجه گردید !</p>;
+  }
+
   return (
     <>
       <div
@@ -62,10 +66,12 @@ function CoursesList() {
       {data && (
         <Pagination
           style={{ direction: "ltr" }}
-          className="mt-4"
+          className="mt-8"
           classNames={{
             base: "flex justify-center",
-            item: "rounded-full mx-1",
+            item: "rounded-full mx-1 bg-white",
+            prev:"bg-white",
+            next:"bg-white",
             cursor: "bg-primary rounded-full",
           }}
           total={Math.ceil(data.data.totalCount / rowsOfPage)}

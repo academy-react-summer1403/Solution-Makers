@@ -12,6 +12,7 @@ export default {
       colors: {
         primary: "#2196F3",
         dark: "#252641",
+        gray: "#ECEFF1",
       },
       screens: {
         sm: "576px",

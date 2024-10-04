@@ -4,13 +4,13 @@ import { useState } from "react";
 import { CgSortAz } from "react-icons/cg";
 import CoursesShowStatusToggler from "./CoursesShowStatusToggler";
 
-function TopSection({setRowsOfPage}) {
+function TopSection({ setRowsOfPage }) {
   const [sort, setSort] = useState("");
 
   return (
     <div className="flex flex-col md:flex-row gap-0 md:gap-5">
       <div className="w-full md:w-[12%] lg:w-[15%] xl:w-[12%] flex items-center justify-center sm:justify-start md:justify-center h-20">
-        <CoursesShowStatusToggler setRowsOfPage={setRowsOfPage}/>
+        <CoursesShowStatusToggler setRowsOfPage={setRowsOfPage} />
       </div>
       <div className="w-full md:w-[68%] lg:w-[60%] xl:w-[68%] h-20 flex items-center">
         <SearchInput />
@@ -25,9 +25,8 @@ function TopSection({setRowsOfPage}) {
             onChange={(e) => setSort(e.target.value)}
             startContent={<CgSortAz size={40} />}
           >
-            <SelectItem key="favs">محبوب ترین‌ها</SelectItem>
-            <SelectItem key="mostSelled">پر فروش ترین ها</SelectItem>
             <SelectItem key="newest">جدیدترین</SelectItem>
+            <SelectItem key="cheap">ارزان ترین</SelectItem>
             <SelectItem key="expensive">گران ترین</SelectItem>
           </Select>
         </div>
