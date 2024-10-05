@@ -8,15 +8,32 @@ import {
 import { HiOutlineTrash } from "react-icons/hi";
 import { BiFilterAlt } from "react-icons/bi";
 import { PiCaretLeft } from "react-icons/pi";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
+import { AppContext } from "../../../../context/Provider";
 
 function FilterSection() {
+  const {
+    courseLevelId,
+    setCourseLevelId,
+    courseTypeId,
+    setCourseTypeId,
+    teacherId,
+    setTeacherId,
+    listTech,
+    setListTech,
+    techCount,
+    setTechCount,
+    setCostDown,
+    setCostUp,
+    setReFetch,
+  } = useContext(AppContext);
+
   const [technologies, setTechnologies] = useState([]);
   const [courseTypes, setCourseTypes] = useState([]);
   const [courseLevels, setCourseLevels] = useState([]);
   const [teachers, setTeachers] = useState([]);
-  const [price, setPrice] = useState([0, 5000000]);
+  const [price, setPrice] = useState([0, 100000000]);
 
   useEffect(() => {
     axios
@@ -34,6 +51,11 @@ function FilterSection() {
       .get("https://classapi.sepehracademy.ir/api/Home/GetTeachers")
       .then((res) => setTeachers(res.data));
   }, []);
+
+  useEffect(() => {
+    setCostDown(price[0].toString());
+    setCostUp(price[1].toString());
+  }, [price]);
 
   return (
     <div className="hidden lg:block lg:w-[30%] xl:w-[25%] mt-3">
@@ -56,7 +78,25 @@ function FilterSection() {
           >
             <div className="flex flex-col gap-2">
               {technologies.map((tech) => (
-                <Checkbox key={tech.id} value="buenos-aires">
+                <Checkbox
+                  key={tech.id}
+                  value={tech.id}
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      if (listTech.some((item) => item == e.target.value)) {
+                        return;
+                      } else {
+                        setListTech([...listTech, e.target.value]);
+                        setTechCount((prev) => prev + 1);
+                      }
+                    } else {
+                      setListTech(
+                        listTech.filter((item) => item != e.target.value)
+                      );
+                      setTechCount((prev) => prev - 1);
+                    }
+                  }}
+                >
                   {tech.techName.substring(1)}
                 </Checkbox>
               ))}
@@ -71,7 +111,16 @@ function FilterSection() {
           >
             <div className="flex flex-col gap-2">
               {courseTypes.map((type) => (
-                <Checkbox key={type.id} value="buenos-aires">
+                <Checkbox
+                  key={type.id}
+                  value={type.id}
+                  isSelected={courseTypeId == type.id}
+                  onChange={(e) => {
+                    e.target.checked
+                      ? setCourseTypeId(e.target.value)
+                      : setCourseTypeId(undefined);
+                  }}
+                >
                   {type.typeName}
                 </Checkbox>
               ))}
@@ -86,7 +135,16 @@ function FilterSection() {
           >
             <div className="flex flex-col gap-2">
               {courseLevels.map((level) => (
-                <Checkbox key={level.id} value="buenos-aires">
+                <Checkbox
+                  key={level.id}
+                  value={level.id}
+                  isSelected={courseLevelId == level.id}
+                  onChange={(e) => {
+                    e.target.checked
+                      ? setCourseLevelId(e.target.value)
+                      : setCourseLevelId(undefined);
+                  }}
+                >
                   {level.levelName}
                 </Checkbox>
               ))}
@@ -103,7 +161,16 @@ function FilterSection() {
               {teachers.map((teacher) => {
                 if (teacher.fullName) {
                   return (
-                    <Checkbox key={teacher.teacherId} value="buenos-aires">
+                    <Checkbox
+                      key={teacher.teacherId}
+                      value={teacher.teacherId}
+                      isSelected={teacherId == teacher.teacherId}
+                      onChange={(e) => {
+                        e.target.checked
+                          ? setTeacherId(teacher.teacherId.toString())
+                          : setTeacherId(undefined);
+                      }}
+                    >
                       {teacher.fullName}
                     </Checkbox>
                   );
@@ -146,7 +213,15 @@ function FilterSection() {
           </AccordionItem>
         </Accordion>
         <div className="my-3">
-          <Button className="text-md" color="primary">اعمال فیلتر</Button>
+          <Button
+            className="text-md"
+            color="primary"
+            onClick={() => {
+              setReFetch(true);
+            }}
+          >
+            اعمال فیلتر
+          </Button>
         </div>
       </div>
     </div>

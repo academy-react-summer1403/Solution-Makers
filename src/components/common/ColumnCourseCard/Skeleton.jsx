@@ -3,15 +3,13 @@ import { useContext } from "react";
 import { AppContext } from "../../../context/Provider";
 
 function ColumnCourseCardSkeleton() {
-  const { coursesShowStatus } = useContext(AppContext);
+  const { rowsOfPage } = useContext(AppContext);
 
   return (
     <Card className="space-y-5 p-4" radius="lg">
       <div
         className={`hidden md:${
-          coursesShowStatus == "row"
-            ? "flex max-w-[300px] w-full items-center gap-3"
-            : ""
+          rowsOfPage == 5 ? "flex max-w-[300px] w-full items-center gap-3" : ""
         }`}
       >
         <div>
@@ -25,16 +23,10 @@ function ColumnCourseCardSkeleton() {
         </div>
       </div>
 
-      <Skeleton
-        className={`rounded-lg md:${
-          coursesShowStatus == "row" ? "hidden" : ""
-        }`}
-      >
+      <Skeleton className={`rounded-lg md:${rowsOfPage == 5 ? "hidden" : ""}`}>
         <div className="h-[330px] md:h-[275px] lg:h-[220px] rounded-lg bg-default-300"></div>
       </Skeleton>
-      <div
-        className={`space-y-6 md:${coursesShowStatus == "row" ? "hidden" : ""}`}
-      >
+      <div className={`space-y-6 md:${rowsOfPage == 5 ? "hidden" : ""}`}>
         <Skeleton className="w-3/5 rounded-lg">
           <div className="h-7 w-3/5 rounded-lg bg-default-200"></div>
         </Skeleton>

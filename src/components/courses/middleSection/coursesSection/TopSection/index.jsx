@@ -4,13 +4,13 @@ import { useState } from "react";
 import { CgSortAz } from "react-icons/cg";
 import CoursesShowStatusToggler from "./CoursesShowStatusToggler";
 
-function TopSection({ setRowsOfPage }) {
+function TopSection() {
   const [sort, setSort] = useState("");
 
   return (
     <div className="flex flex-col md:flex-row gap-0 md:gap-5">
       <div className="w-full md:w-[12%] lg:w-[15%] xl:w-[12%] flex items-center justify-center sm:justify-start md:justify-center h-20">
-        <CoursesShowStatusToggler setRowsOfPage={setRowsOfPage} />
+        <CoursesShowStatusToggler />
       </div>
       <div className="w-full md:w-[68%] lg:w-[60%] xl:w-[68%] h-20 flex items-center">
         <SearchInput />
