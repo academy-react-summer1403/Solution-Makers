@@ -1,6 +1,6 @@
 import MyNavbar from "../../components/common/Navbar";
 import Header from "../../components/common/Header";
-import MiddleSection from "../../components/courses/MiddleSection";
+import CoursesMiddleSection from "../../components/courses/MiddleSection";
 import Footer from "../../components/common/Footer";
 
 function Courses() {
@@ -12,7 +12,7 @@ function Courses() {
         heading="آموزش برنامه نویسی با بهترین ها"
         reminding="مهمه از کی یاد می گیری!!"
       />
-      <MiddleSection />
+      <CoursesMiddleSection />
       <Footer />
     </>
   );

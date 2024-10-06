@@ -56,7 +56,10 @@ function RowCourseCard({
           <p className="flex items-center">
             {cost > 0 ? (
               <>
-                <b className="text-primary me-1 text-lg">{cost}</b> تومان
+                <b className="text-primary me-1 text-lg">
+                  {cost.toLocaleString()}
+                </b>{" "}
+                تومان
               </>
             ) : (
               "رایگان"

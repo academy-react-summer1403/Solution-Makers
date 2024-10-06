@@ -13,7 +13,7 @@ function TopSection() {
         <CoursesShowStatusToggler />
       </div>
       <div className="w-full md:w-[68%] lg:w-[60%] xl:w-[68%] h-20 flex items-center">
-        <SearchInput />
+        <SearchInput placeholder="چی میخوای یاد بگیری ؟"/>
       </div>
       <div className="w-full md:w-[20%] lg:w-[25%] xl:w-[20%] h-20 flex items-center">
         <div className="flex w-full max-w-xs flex-col gap-2">
