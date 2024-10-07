@@ -3,6 +3,9 @@ import { RiGraduationCapLine } from "react-icons/ri";
 import { GoPeople, GoClock } from "react-icons/go";
 import { FiBookOpen } from "react-icons/fi";
 import { FaRegHeart } from "react-icons/fa";
+import { useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 function RowCourseCard({
   courseId,
@@ -13,22 +16,31 @@ function RowCourseCard({
   currentRegistrants,
   likeCount,
 }) {
+  useEffect(() => {
+    AOS.init();
+    AOS.refresh();
+  }, []);
+
   return (
-    <div className="flex flex-col md:flex-row gap-8 bg-white p-4 rounded-xl shadow-lg">
+    <div
+      className="flex flex-col md:flex-row gap-8 bg-white p-4 rounded-xl shadow-lg"
+      data-aos="fade-up"
+    >
       <div className="relative w-full md:w-[30%] lg:w-[40%] xl:w-[30%] flex items-center">
         <Image
           radius="lg"
           width="100%"
           className="w-full h-[450px] md:h-[250px] lg:h-[270px] xl:h-[220px]"
           classNames={{ wrapper: "w-full" }}
-          src={tumbImageAddress || "/src/assets/images/notFound/1047293-صفحه-یافت-نشد-خطای-404.jpg"}
+          src={
+            tumbImageAddress ||
+            "/src/assets/images/notFound/1047293-صفحه-یافت-نشد-خطای-404.jpg"
+          }
         />
-        {tumbImageAddress && (
-          <p className="absolute top-5 lg:top-14 xl:top-6 right-3 z-10 flex items-center gap-1 text-sm text-[#f44336] bg-[#ffebee] py-2 px-5 rounded-full">
-            <FaRegHeart />
-            {likeCount}
-          </p>
-        )}
+        <p className="absolute top-5 lg:top-14 xl:top-6 right-3 z-10 flex items-center gap-1 text-sm text-[#f44336] bg-[#ffebee] py-2 px-5 rounded-full">
+          <FaRegHeart />
+          {likeCount}
+        </p>
       </div>
 
       <div className="flex flex-col gap-5 md:justify-between w-[70%] lg:w-[60%] xl:w-[70%]">

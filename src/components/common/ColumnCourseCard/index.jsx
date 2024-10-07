@@ -5,10 +5,13 @@ import {
   CardFooter,
   Image,
 } from "@nextui-org/react";
+import { useEffect } from "react";
 import { GoClock } from "react-icons/go";
 import { IoCalendarOutline } from "react-icons/io5";
 import { FiBookOpen } from "react-icons/fi";
 import { FaRegHeart } from "react-icons/fa";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 function ColumnCourseCard({
   courseId,
@@ -19,9 +22,15 @@ function ColumnCourseCard({
   currentRegistrants,
   likeCount,
 }) {
+  useEffect(() => {
+    AOS.init();
+    AOS.refresh();
+  }, []);
+
   return (
     <Card
-      className="p-4"
+      className="p-4 hover:scale-[1.03]"
+      data-aos="flip-left"
       shadow="sm"
       isPressable
       onPress={() => console.log(courseId)}
@@ -33,7 +42,10 @@ function ColumnCourseCard({
           width="100%"
           className="w-full h-[330px] md:h-[275px] lg:h-[220px]"
           classNames={{ wrapper: "w-full" }}
-          src={tumbImageAddress || "/src/assets/images/notFound/1047293-صفحه-یافت-نشد-خطای-404.jpg"}
+          src={
+            tumbImageAddress ||
+            "/src/assets/images/notFound/1047293-صفحه-یافت-نشد-خطای-404.jpg"
+          }
         />
       </CardHeader>
       <CardBody className="text-right px-0">
@@ -65,7 +77,10 @@ function ColumnCourseCard({
         <p className="text-md">
           {cost > 0 ? (
             <>
-              <b className="text-primary me-1 text-lg">{cost.toLocaleString()}</b> تومان
+              <b className="text-primary me-1 text-lg">
+                {cost.toLocaleString()}
+              </b>{" "}
+              تومان
             </>
           ) : (
             "رایگان"

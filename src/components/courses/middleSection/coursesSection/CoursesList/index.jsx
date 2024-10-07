@@ -29,7 +29,7 @@ function CoursesList() {
 
   const fetchCourses = () =>
     axios.get(
-      `${baseApi}Home/GetCoursesWithPagination?PageNumber=${coursesPageNumber}&RowsOfPage=${rowsOfPage}${
+      `${baseApi}/Home/GetCoursesWithPagination?PageNumber=${coursesPageNumber}&RowsOfPage=${rowsOfPage}${
         courseLevelId ? `&courseLevelId=${courseLevelId}` : ""
       }${courseTypeId ? `&CourseTypeId=${courseTypeId}` : ""}${
         teacherId ? `&TeacherId=${teacherId}` : ""

@@ -20,7 +20,7 @@ function ArticlesList() {
 
   const fetchArticles = () =>
     axios.get(
-      `${baseApi}News?PageNumber=${articlesPageNumber}&RowsOfPage=9${
+      `${baseApi}/News?PageNumber=${articlesPageNumber}&RowsOfPage=9${
         articlesSortingCol ? `&SortingCol=${articlesSortingCol}` : ""
       }&SortType=DESC${articlesQuery ? `&Query=${articlesQuery}` : ""}`
     );

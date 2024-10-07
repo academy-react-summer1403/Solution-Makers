@@ -1,13 +1,11 @@
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { IoCalendarOutline } from "react-icons/io5";
 import { GoDotFill } from "react-icons/go";
-import {
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
-  Image,
-} from "@nextui-org/react";
+import { Card, CardBody, CardFooter } from "@nextui-org/react";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 function ArticleCard({
   id,
@@ -18,8 +16,19 @@ function ArticleCard({
   currentImageAddressTumb,
   addUserProfileImage,
 }) {
+  const navigate = useNavigate();
+  useEffect(() => {
+    AOS.init();
+    AOS.refresh();
+  }, []);
+
   return (
-    <Card className="p-4" isPressable onPress={() => console.log(id)}>
+    <Card
+      className="p-4 hover:scale-[1.03]"
+      data-aos="flip-left"
+      isPressable
+      onPress={() => navigate(id)}
+    >
       <div className="flex justify-center w-full rounded-3xl overflow-hidden">
         <img
           src={
