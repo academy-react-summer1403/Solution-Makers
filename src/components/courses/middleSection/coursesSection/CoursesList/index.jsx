@@ -12,35 +12,38 @@ function CoursesList() {
   const {
     reFetch,
     setReFetch,
-    pageNumber,
-    setPageNumber,
+    coursesPageNumber,
+    setCoursesPageNumber,
     rowsOfPage,
-    setRowsOfPage,
     courseLevelId,
     courseTypeId,
     teacherId,
     listTech,
     techCount,
-    query,
+    coursesQuery,
+    coursesSortingCol,
+    coursesSortType,
     costDown,
     costUp,
   } = useContext(AppContext);
 
   const fetchCourses = () =>
     axios.get(
-      `${baseApi}Home/GetCoursesWithPagination?PageNumber=${pageNumber}&RowsOfPage=${rowsOfPage}${
+      `${baseApi}Home/GetCoursesWithPagination?PageNumber=${coursesPageNumber}&RowsOfPage=${rowsOfPage}${
         courseLevelId ? `&courseLevelId=${courseLevelId}` : ""
       }${courseTypeId ? `&CourseTypeId=${courseTypeId}` : ""}${
         teacherId ? `&TeacherId=${teacherId}` : ""
       }${listTech.length > 0 ? `&ListTech=${listTech.join(",")}` : ""}${
         techCount ? `&TechCount=${String(techCount)}` : ""
-      }${query ? `&Query=${query}` : ""}${
+      }${coursesSortingCol ? `&SortingCol=${coursesSortingCol}` : ""}${
+        coursesQuery ? `&Query=${coursesQuery}` : ""
+      }${coursesSortType == "DESC" ? "&SortType=DESC" : "&SortType=ASC"}${
         costDown ? `&CostDown=${costDown}` : ""
       }${costUp ? `&CostUp=${costUp}` : ""}`
     );
 
   const { data, isLoading, error, refetch } = useQuery({
-    queryKey: ["courses", pageNumber],
+    queryKey: ["courses", coursesPageNumber],
     queryFn: () => fetchCourses(),
   });
 
@@ -48,9 +51,9 @@ function CoursesList() {
     if (
       data &&
       rowsOfPage == 9 &&
-      pageNumber > Math.ceil(data.data.totalCount / rowsOfPage)
+      coursesPageNumber > Math.ceil(data.data.totalCount / rowsOfPage)
     ) {
-      setPageNumber(Math.ceil(data.data.totalCount / rowsOfPage));
+      setCoursesPageNumber(Math.ceil(data.data.totalCount / rowsOfPage));
     }
     reFetch && refetch();
     setReFetch(false);
@@ -61,7 +64,7 @@ function CoursesList() {
     teacherId,
     listTech,
     techCount,
-    query,
+    coursesQuery,
     costDown,
     costUp,
     reFetch,
@@ -88,13 +91,19 @@ function CoursesList() {
             .map((item, index) => <ColumnCourseCardSkeleton key={index} />)
         ) : (
           <>
-            {rowsOfPage == 9
-              ? data.data.courseFilterDtos.map((course) => (
-                  <ColumnCourseCard {...course} key={course.courseId} />
-                ))
-              : data.data.courseFilterDtos.map((course) => (
-                  <RowCourseCard {...course} key={course.courseId} />
-                ))}
+            {data.data.courseFilterDtos.length != 0 ? (
+              <>
+                {rowsOfPage == 9
+                  ? data.data.courseFilterDtos.map((course) => (
+                      <ColumnCourseCard {...course} key={course.courseId} />
+                    ))
+                  : data.data.courseFilterDtos.map((course) => (
+                      <RowCourseCard {...course} key={course.courseId} />
+                    ))}
+              </>
+            ) : (
+              <p className="text-xl p-4">دوره ای یافت نشد</p>
+            )}
           </>
         )}
       </div>
@@ -110,10 +119,11 @@ function CoursesList() {
             cursor: "bg-primary rounded-full",
           }}
           total={Math.ceil(data.data.totalCount / rowsOfPage)}
-          page={pageNumber}
+          page={coursesPageNumber}
           showControls
           onChange={(number) => {
-            setPageNumber(number);
+            setReFetch(true);
+            setCoursesPageNumber(number);
             scrollTo({ top: 560, behavior: "smooth" });
           }}
         />

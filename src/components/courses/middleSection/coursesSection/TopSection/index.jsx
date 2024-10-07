@@ -1,11 +1,18 @@
 import { Select, SelectItem } from "@nextui-org/react";
 import SearchInput from "../../../../common/SearchInput";
-import { useState } from "react";
+import { useContext } from "react";
 import { CgSortAz } from "react-icons/cg";
 import CoursesShowStatusToggler from "./CoursesShowStatusToggler";
+import { AppContext } from "../../../../../context/Provider";
 
 function TopSection() {
-  const [sort, setSort] = useState("");
+  const {
+    coursesQuery,
+    setCoursesQuery,
+    setCoursesSortType,
+    setCoursesSortingCol,
+    setReFetch,
+  } = useContext(AppContext);
 
   return (
     <div className="flex flex-col md:flex-row gap-0 md:gap-5">
@@ -13,21 +20,29 @@ function TopSection() {
         <CoursesShowStatusToggler />
       </div>
       <div className="w-full md:w-[68%] lg:w-[60%] xl:w-[68%] h-20 flex items-center">
-        <SearchInput placeholder="چی میخوای یاد بگیری ؟"/>
+        <SearchInput
+          placeholder="چی میخوای یاد بگیری ؟"
+          query={coursesQuery}
+          setQuery={setCoursesQuery}
+        />
       </div>
       <div className="w-full md:w-[20%] lg:w-[25%] xl:w-[20%] h-20 flex items-center">
         <div className="flex w-full max-w-xs flex-col gap-2">
           <Select
             placeholder="انتخاب کنید"
-            selectedKeys={[sort]}
+            aria-label="coursesSortingCol"
             className="max-w-xs"
             classNames={{ trigger: "bg-white h-14", value: "text-md" }}
-            onChange={(e) => setSort(e.target.value)}
+            onChange={(e) => {
+              setCoursesSortingCol(e.target.value.split(",")[0]);
+              setCoursesSortType(e.target.value.split(",")[1]);
+              setReFetch(true);
+            }}
             startContent={<CgSortAz size={40} />}
           >
-            <SelectItem key="newest">جدیدترین</SelectItem>
-            <SelectItem key="cheap">ارزان ترین</SelectItem>
-            <SelectItem key="expensive">گران ترین</SelectItem>
+            <SelectItem key="lastUpdate,DESC">جدیدترین</SelectItem>
+            <SelectItem key="cost,ASC">ارزان ترین</SelectItem>
+            <SelectItem key="cost,DESC">گران ترین</SelectItem>
           </Select>
         </div>
       </div>

@@ -1,15 +1,17 @@
-import { useState } from "react";
 import { Tabs, Tab } from "@nextui-org/react";
-
+import { useContext } from "react";
+import { AppContext } from "../../../../context/Provider";
 function TopSectionTabs() {
-  const [selected, setSelected] = useState("photos");
+  const { setArticlesSortingCol, setReFetch } = useContext(AppContext);
 
   return (
-    <div className="flex w-full flex-col">
+    <div className="hidden xs:flex w-full rounded-xl flex-col sm:shadow-lg">
       <Tabs
         aria-label="Options"
-        selectedKey={selected}
-        onSelectionChange={setSelected}
+        onSelectionChange={(e) => {
+          setArticlesSortingCol(e);
+          setReFetch(true);
+        }}
         classNames={{
           base: "mx-20 sm:mx-0",
           tabList: "w-full gap-2 lg:gap-5 p-2 bg-white flex-col sm:flex-row",
@@ -17,10 +19,9 @@ function TopSectionTabs() {
           cursor: "bg-primary rounded-xl",
         }}
       >
-        <Tab key="all" title="همه" />
-        <Tab key="favs" title="محبوب ترین ها" />
-        <Tab key="mostViwed" title="پربازدیدترین ها" />
-        <Tab key="newest" title="جدیدترین ها" />
+        <Tab key="" title="همه" />
+        <Tab key="currentView" title="پربازدیدترین ها" />
+        <Tab key="updateDate" title="جدیدترین ها" />
       </Tabs>
     </div>
   );

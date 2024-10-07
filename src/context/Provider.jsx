@@ -6,16 +6,21 @@ function Provider({ children }) {
   const [reFetch, setReFetch] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
   const [bagIconNum, setBagIconNum] = useState(5);
-  const [pageNumber, setPageNumber] = useState(1);
+  const [coursesPageNumber, setCoursesPageNumber] = useState(1);
+  const [coursesSortType, setCoursesSortType] = useState("DESC");
+  const [coursesSortingCol, setCoursesSortingCol] = useState(undefined);
   const [rowsOfPage, setRowsOfPage] = useState(9);
   const [courseTypeId, setCourseTypeId] = useState(undefined);
   const [courseLevelId, setCourseLevelId] = useState(undefined);
   const [teacherId, setTeacherId] = useState(undefined);
   const [techCount, setTechCount] = useState(0);
   const [listTech, setListTech] = useState([]);
-  const [query, setQuery] = useState("");
+  const [coursesQuery, setCoursesQuery] = useState("");
   const [costDown, setCostDown] = useState(undefined);
   const [costUp, setCostUp] = useState(undefined);
+  const [articlesPageNumber, setArticlesPageNumber] = useState(1);
+  const [articlesQuery, setArticlesQuery] = useState("");
+  const [articlesSortingCol, setArticlesSortingCol] = useState(undefined);
 
   return (
     <AppContext.Provider
@@ -26,8 +31,10 @@ function Provider({ children }) {
         setIsLogin,
         bagIconNum,
         setBagIconNum,
-        pageNumber,
-        setPageNumber,
+        coursesPageNumber,
+        setCoursesPageNumber,
+        coursesSortType,
+        setCoursesSortType,
         rowsOfPage,
         setRowsOfPage,
         courseLevelId,
@@ -40,12 +47,20 @@ function Provider({ children }) {
         setListTech,
         techCount,
         setTechCount,
-        query,
-        setQuery,
+        coursesQuery,
+        setCoursesQuery,
+        coursesSortingCol,
+        setCoursesSortingCol,
         costDown,
         setCostDown,
         costUp,
         setCostUp,
+        articlesPageNumber,
+        setArticlesPageNumber,
+        articlesQuery,
+        setArticlesQuery,
+        articlesSortingCol,
+        setArticlesSortingCol,
       }}
     >
       {children}

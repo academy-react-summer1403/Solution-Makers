@@ -15,6 +15,7 @@ export default {
         gray: "#ECEFF1",
       },
       screens: {
+        xs : "350px",
         sm: "576px",
         md: "992px",
         lg: "1200px",

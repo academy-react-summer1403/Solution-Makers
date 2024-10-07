@@ -57,6 +57,18 @@ function FilterSection() {
     setCostUp(price[1].toString());
   }, [price]);
 
+  const removeFilters = () => {
+    setCourseLevelId("");
+    setCourseTypeId("");
+    setTeacherId("");
+    setListTech([]);
+    setTechCount(0);
+    setCostDown("");
+    setCostUp("");
+    setPrice([0, 100000000]);
+    setReFetch(true);
+  };
+
   return (
     <div className="hidden lg:block lg:w-[30%] xl:w-[25%] mt-3">
       <div className="bg-white rounded-xl p-3">
@@ -65,7 +77,10 @@ function FilterSection() {
             <BiFilterAlt size={25} />
             فیلترها
           </p>
-          <span className="bg-[#F44336] p-1 rounded-xl cursor-pointer">
+          <span
+            className="bg-[#F44336] p-1 rounded-xl cursor-pointer"
+            onClick={removeFilters}
+          >
             <HiOutlineTrash size={25} color="white" />
           </span>
         </div>
@@ -81,6 +96,7 @@ function FilterSection() {
                 <Checkbox
                   key={tech.id}
                   value={tech.id}
+                  isSelected={listTech.includes(String(tech.id))}
                   onChange={(e) => {
                     if (e.target.checked) {
                       if (listTech.some((item) => item == e.target.value)) {

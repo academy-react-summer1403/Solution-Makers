@@ -21,7 +21,7 @@ function RowCourseCard({
           width="100%"
           className="w-full h-[450px] md:h-[250px] lg:h-[270px] xl:h-[220px]"
           classNames={{ wrapper: "w-full" }}
-          src={tumbImageAddress}
+          src={tumbImageAddress || "/src/assets/images/notFound/1047293-صفحه-یافت-نشد-خطای-404.jpg"}
         />
         {tumbImageAddress && (
           <p className="absolute top-5 lg:top-14 xl:top-6 right-3 z-10 flex items-center gap-1 text-sm text-[#f44336] bg-[#ffebee] py-2 px-5 rounded-full">

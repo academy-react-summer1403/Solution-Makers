@@ -24,7 +24,7 @@ function ColumnCourseCard({
       className="p-4"
       shadow="sm"
       isPressable
-      onPress={() => console.log("item pressed")}
+      onPress={() => console.log(courseId)}
     >
       <CardHeader className="overflow-visible p-0 max-w-full">
         <Image
@@ -33,7 +33,7 @@ function ColumnCourseCard({
           width="100%"
           className="w-full h-[330px] md:h-[275px] lg:h-[220px]"
           classNames={{ wrapper: "w-full" }}
-          src={tumbImageAddress}
+          src={tumbImageAddress || "/src/assets/images/notFound/1047293-صفحه-یافت-نشد-خطای-404.jpg"}
         />
       </CardHeader>
       <CardBody className="text-right px-0">

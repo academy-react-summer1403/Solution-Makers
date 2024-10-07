@@ -1,33 +1,54 @@
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { IoCalendarOutline } from "react-icons/io5";
 import { GoDotFill } from "react-icons/go";
+import {
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Image,
+} from "@nextui-org/react";
 
-function ArticleCard({ id, title, miniDescribe, currentView, insertDate , currentImageAddressTumb }) {
+function ArticleCard({
+  id,
+  title,
+  miniDescribe,
+  currentView,
+  updateDate,
+  currentImageAddressTumb,
+  addUserProfileImage,
+}) {
   return (
-    <div className="flex flex-col gap-4 lg:h-[447px] rounded-3xl shadow-lg p-4 cursor-pointer">
-      <div className="rounded-3xl overflow-hidden">
-        <img src={currentImageAddressTumb} />
+    <Card className="p-4" isPressable onPress={() => console.log(id)}>
+      <div className="flex justify-center w-full rounded-3xl overflow-hidden">
+        <img
+          src={
+            currentImageAddressTumb ||
+            "/src/assets/images/notFound/1047293-صفحه-یافت-نشد-خطای-404.jpg"
+          }
+          className="w-full h-[330px] md:h-[275px] lg:h-[280px]"
+        />
       </div>
-      <div className="flex flex-col gap-2">
-        <h3 className="text-lg font-bold text-ellipsis whitespace-nowrap overflow-hidden">
+      <CardBody className="text-right px-0 mt-5">
+        <h3 className="text-xl font-bold text-ellipsis whitespace-nowrap overflow-hidden">
           {title}
         </h3>
-        <p className="text-justify text-ellipsis overflow-hidden">
+        <div className="flex flex-col text-justify justify-between sm:flex-row gap-2 sm:mt-4 text-ellipsis overflow-hidden">
           {miniDescribe}
-        </p>
-      </div>
-      <div className="flex gap-4 text-primary">
+        </div>
+      </CardBody>
+      <CardFooter className="flex-col items-center gap-4 justify-start sm:flex-row text-primary">
         <span className="flex items-center gap-1">
-          <MdOutlineRemoveRedEye /> {currentView} بازدید
+          <MdOutlineRemoveRedEye size={20} />
+          {currentView}
         </span>
-        <span className="flex items-center">
-          <GoDotFill />
-        </span>
+        <GoDotFill size={20} className="hidden sm:inline-block" />
         <span className="flex items-center gap-1">
-          <IoCalendarOutline /> {insertDate}
+          <IoCalendarOutline size={20} />
+          {updateDate.slice(0, 10)}
         </span>
-      </div>
-    </div>
+      </CardFooter>
+    </Card>
   );
 }
 
