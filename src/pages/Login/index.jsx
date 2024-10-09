@@ -34,11 +34,10 @@ function Login() {
 
     const Exist = res.data.success;
     const Error = res.data.message;
-
+    const Number = res.data.phoneNumber;
     if (Exist === true) {
-      alert(
-        "نام کاربری و رمز صحیح است"
-      );
+      console.log(Number);
+
       navigate("/");
     } else {
       alert(Error);
@@ -100,7 +99,7 @@ function Login() {
               <div className=" mt-[6pX] flex items-center flex-row-reverse justify-between">
                 <div className="text-sm">
                   <a
-                    href="/Register"
+                    href="/ForgetPassword"
                     className="font-semibold text-indigo-600 hover:text-indigo-500"
                   >
                     رمز عبور را فراموش
