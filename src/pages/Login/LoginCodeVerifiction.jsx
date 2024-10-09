@@ -98,14 +98,14 @@ function RegisterCodeVerifiction() {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    const VariCode =
+    const VeriCode =
       otp[0] +
       otp[1] +
       otp[2] +
       otp[3] +
       otp[4];
 
-    const res = console.log(VariCode);
+    console.log(VeriCode);
   };
 
   return (
