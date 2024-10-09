@@ -3,9 +3,14 @@ import Courses from "./pages/Courses";
 import Landing from "./pages/Landing";
 import LoginCodeVerifiction from "./pages/Login/LoginCodeVerifiction";
 import Login from "./pages/Login";
+import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
+import ForgetPasswordVerification from "./pages/ForgetPassword/ForgetPasswordVerification";
 import Teachers from "./pages/Teachers";
 import Contact from "./pages/Contact";
 import ArticleDetails from "./pages/ArticleDetails";
+import SignUp from "./pages/SignUp/SignUp";
+import SignUpVerification from "./pages/SignUp/SignUpVerification";
+import SetPassword from "./pages/SignUp/SetPassword";
 
 const routes = [
   { path: "/", element: <Landing /> },
@@ -38,12 +43,26 @@ const routes = [
     element: <LoginCodeVerifiction />,
   },
   {
-    path: "/login",
-    element: <Login />,
+    path: "/ForgetPassword",
+    element: <ForgetPassword />,
   },
   {
-    path: "/login",
-    element: <Login />,
+    path: "/ForgetPasswordVerification",
+    element: (
+      <ForgetPasswordVerification />
+    ),
+  },
+  {
+    path: "/SignUp",
+    element: <SignUp />,
+  },
+  {
+    path: "/SignUpVerification",
+    element: <SignUpVerification />,
+  },
+  {
+    path: "/SetPassword",
+    element: <SetPassword />,
   },
 ];
 
