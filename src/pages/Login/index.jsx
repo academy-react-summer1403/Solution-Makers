@@ -39,6 +39,7 @@ function Login() {
       alert(
         "نام کاربری و رمز صحیح است"
       );
+      navigate("/");
     } else {
       alert(Error);
     }
@@ -49,15 +50,15 @@ function Login() {
   };
 
   return (
-    <div className=" rel top-0 w-full h-full  bg-[#ccc]  ">
-      <div className="  mt-[205px] m-auto w-[420px] h-[490px] flex min-h-full  flex-col   lg:px-8 bg-[#fff] rounded-[25px] ">
-        <div className="flex justify-between items-center flex-row-reverse">
+    <div>
+      <div className=" shadow-slate-500 shadow-lg  mt-[205px] m-auto w-[420px] h-[490px] flex min-h-full  flex-col   lg:px-8 bg-[#fff] rounded-[25px] ">
+        <div className="flex justify-between items-center flex-row">
           <h2 className=" text-[32px] mt-[32px] mr-[5px] text-right text-2xl font-bold leading-9 tracking-tight text-gray-900">
             ورود به حساب
           </h2>
           <button
             onClick={Close}
-            className=" mt-[30px] bg-[url('/src/image/icon/close.png')] bg-cover  left-[30px] w-[48px] h-[48px] "
+            className=" mt-[30px] bg-[url('/src/assets/images/close.png')] bg-cover  left-[30px] w-[48px] h-[48px] "
           ></button>
         </div>
 
@@ -96,7 +97,7 @@ function Login() {
                 />
               </div>
 
-              <div className=" mt-[6pX] flex items-center justify-between">
+              <div className=" mt-[6pX] flex items-center flex-row-reverse justify-between">
                 <div className="text-sm">
                   <a
                     href="/Register"
@@ -106,7 +107,7 @@ function Login() {
                     کردم
                   </a>
                 </div>
-                <div className=" flex gap-[7px] items-center checkbox-wrapper-13">
+                <div className=" flex gap-[7px] items-center flex-row-reverse checkbox-wrapper-13">
                   <label
                     className="block cursor-pointer text-sm font-medium leading-6 text-gray-900"
                     htmlFor="c1-13"
