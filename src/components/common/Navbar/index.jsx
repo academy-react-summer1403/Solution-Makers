@@ -18,8 +18,10 @@ import {
 } from "react-router-dom";
 import NavMenuLink from "./NavMenuLink";
 import "./index.css";
+import { useNavigate } from "react-router-dom";
 
 function MyNavbar() {
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] =
     useState(false);
   const { bagIconNum } =
@@ -95,6 +97,9 @@ function MyNavbar() {
             </Badge>
           </Link>
           <Button
+            onClick={() => {
+              navigate("/login");
+            }}
             radius="full"
             size="lg"
             color="primary"
