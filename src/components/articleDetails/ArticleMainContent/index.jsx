@@ -12,11 +12,20 @@ import RateSection from "../../common/RateSection";
 
 function ArticleMainContent() {
   const { id } = useParams();
+
   const fetchArticleById = () => axios.get(`${baseApi}/News/${id}`);
+
+  const fetchArticleComments = () =>
+    axios.get(`${baseApi}/News/GetNewsComments?NewsId=${id}`);
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["article", id],
     queryFn: () => fetchArticleById(),
+  });
+
+  const comments = useQuery({
+    queryKey: ["articleComments"],
+    queryFn: () => fetchArticleComments(),
   });
 
   if (isLoading) {
@@ -80,7 +89,13 @@ function ArticleMainContent() {
           </div>
           <RateSection title="آیا از این مقاله راضی بودید؟" />
           <div className="bg-white p-7 mt-12 rounded-3xl">
-            <CommentsBox id={id} title="نظرات کاربران درباره این مقاله" />
+            <CommentsBox
+              articleId={id}
+              title="نظرات کاربران درباره این مقاله"
+              comments={comments.data?.data}
+              isLoading={comments.isLoading}
+              error={comments.error}
+            />
           </div>
         </div>
       </div>

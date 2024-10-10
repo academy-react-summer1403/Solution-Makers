@@ -6,6 +6,7 @@ import { FaRegHeart } from "react-icons/fa";
 import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { useNavigate } from "react-router-dom";
 
 function RowCourseCard({
   courseId,
@@ -21,10 +22,13 @@ function RowCourseCard({
     AOS.refresh();
   }, []);
 
+  const navigate = useNavigate();
+
   return (
     <div
-      className="flex flex-col md:flex-row gap-8 bg-white p-4 rounded-xl shadow-lg"
+      className="flex flex-col md:flex-row gap-8 bg-white p-4 rounded-xl shadow-lg cursor-pointer"
       data-aos="fade-up"
+      onClick={() => navigate(courseId)}
     >
       <div className="relative w-full md:w-[30%] lg:w-[40%] xl:w-[30%] flex items-center">
         <Image

@@ -16,7 +16,7 @@ function RateSection({ title }) {
             <FaStar
               key={index}
               className="cursor-pointer"
-              size={27}
+              size={28}
               color="#FFC107"
               onClick={() => setScore(index)}
             />

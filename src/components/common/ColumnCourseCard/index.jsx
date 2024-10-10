@@ -12,6 +12,7 @@ import { FiBookOpen } from "react-icons/fi";
 import { FaRegHeart } from "react-icons/fa";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { useNavigate } from "react-router-dom";
 
 function ColumnCourseCard({
   courseId,
@@ -27,13 +28,15 @@ function ColumnCourseCard({
     AOS.refresh();
   }, []);
 
+  const navigate = useNavigate();
+
   return (
     <Card
       className="p-4 hover:scale-[1.03]"
       data-aos="flip-left"
       shadow="sm"
       isPressable
-      onPress={() => console.log(courseId)}
+      onPress={() => navigate(courseId)}
     >
       <CardHeader className="overflow-visible p-0 max-w-full">
         <Image

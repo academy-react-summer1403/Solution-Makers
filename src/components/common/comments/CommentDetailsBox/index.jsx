@@ -8,17 +8,27 @@ import ReplyDetailsBox from "../ReplyDetailsBox";
 
 function CommentDetailsBox({
   id,
+  courseId,
+  articleId,
   pictureAddress,
   autor,
   describe,
   likeCount,
-  inserDate,
+  insertDate,
 }) {
   const [replies, setReplies] = useState([]);
+
   useEffect(() => {
-    axios
-      .get(`${baseApi}/News/GetRepliesComments?Id=${id}`)
-      .then((res) => setReplies(res.data));
+    if (courseId) {
+      axios
+        .get(`${baseApi}/Course/GetCourseReplyCommnets/${courseId}/${id}`)
+        .then((res) => setReplies(res.data));
+    }
+    if (articleId) {
+      axios
+        .get(`${baseApi}/News/GetRepliesComments?Id=${id}`)
+        .then((res) => setReplies(res.data));
+    }
   }, []);
 
   return (
@@ -34,9 +44,13 @@ function CommentDetailsBox({
           </span>
           <span>{autor}</span>
         </div>
-        <p className="hidden text-sm xs:block text-[#607D8B]">{inserDate.slice(0, 10)}</p>
+        <p className="hidden text-sm xs:block text-[#607D8B]">
+          {insertDate.slice(0,10)}
+        </p>
       </div>
-      <p className="text-ellipsis whitespace-nowrap overflow-hidden">{describe}</p>
+      <p className="text-ellipsis whitespace-nowrap overflow-hidden">
+        {describe}
+      </p>
       <div className="flex flex-col xs:flex-row gap-5">
         <span className="flex items-center gap-1 text-red-500">
           {likeCount} <FaRegHeart />
