@@ -14,6 +14,7 @@ function CommentDetailsBox({
   autor,
   describe,
   likeCount,
+  inserDate,
   insertDate,
 }) {
   const [replies, setReplies] = useState([]);
@@ -45,7 +46,8 @@ function CommentDetailsBox({
           <span>{autor}</span>
         </div>
         <p className="hidden text-sm xs:block text-[#607D8B]">
-          {insertDate.slice(0,10)}
+          {insertDate && insertDate.slice(0, 10)}
+          {inserDate && inserDate.slice(0, 10)}
         </p>
       </div>
       <p className="text-ellipsis whitespace-nowrap overflow-hidden">

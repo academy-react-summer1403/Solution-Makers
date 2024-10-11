@@ -53,7 +53,7 @@ function CommentsBox({
       <div className="flex justify-center">
         {comments.length < 5 ? null : (
           <>
-            {comments.length < count ? (
+            {comments.length <= count ? (
               <span
                 className="text-primary p-1 cursor-pointer"
                 onClick={() => setCount(5)}

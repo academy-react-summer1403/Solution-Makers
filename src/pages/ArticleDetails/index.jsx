@@ -1,14 +1,11 @@
-import MyNavbar from "../../components/common/Navbar";
-import Footer from "../../components/common/Footer";
 import ArticleMainContent from "../../components/articleDetails/ArticleMainContent";
+import AppLayout from "../../layouts/AppLayout";
 
 function ArticleDetails() {
   return (
-    <>
-      <MyNavbar />
+    <AppLayout>
       <ArticleMainContent />
-      <Footer />
-    </>
+    </AppLayout>
   );
 }
 

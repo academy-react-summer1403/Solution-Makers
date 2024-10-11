@@ -1,14 +1,11 @@
-import Footer from "../../components/common/Footer";
-import MyNavbar from "../../components/common/Navbar";
 import CourseMainContent from "../../components/courseDetails/CourseMainContent";
+import AppLayout from "../../layouts/AppLayout";
 
 function CourseDetails() {
   return (
-    <>
-      <MyNavbar />
+    <AppLayout>
       <CourseMainContent />
-      <Footer />
-    </>
+    </AppLayout>
   );
 }
 

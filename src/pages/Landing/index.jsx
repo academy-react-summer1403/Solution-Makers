@@ -1,12 +1,8 @@
-import MyNavbar from "../../components/common/Navbar";
-import Footer from "../../components/common/Footer";
+import AppLayout from "../../layouts/AppLayout";
 
 function Landing() {
   return (
-    <>
-      <MyNavbar />
-      <Footer />
-    </>
+    <AppLayout></AppLayout>
   );
 }
 

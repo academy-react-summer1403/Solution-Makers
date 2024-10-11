@@ -3,6 +3,7 @@ import { BiMessageRounded } from "react-icons/bi";
 import { FaRegHeart } from "react-icons/fa";
 
 function ReplyDetailsBox({
+  inserDate,
   insertDate,
   describe,
   likeCount,
@@ -23,7 +24,8 @@ function ReplyDetailsBox({
           <span>{autor}</span>
         </div>
         <p className="hidden xs:block text-[#607D8B]">
-          {insertDate.slice(0, 10)}
+          {insertDate && insertDate.slice(0, 10)}
+          {inserDate && inserDate.slice(0, 10)}
         </p>
       </div>
       <p className="text-ellipsis whitespace-nowrap overflow-hidden">
