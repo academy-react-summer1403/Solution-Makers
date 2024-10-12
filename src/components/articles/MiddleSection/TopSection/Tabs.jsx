@@ -14,9 +14,9 @@ function TopSectionTabs() {
         }}
         classNames={{
           base: "mx-20 sm:mx-0",
-          tabList: "w-full gap-2 lg:gap-5 p-2 bg-white flex-col sm:flex-row",
+          tabList: "w-full gap-2 lg:gap-5 p-2 bg-white flex-col sm:flex-row dark:bg-dark-100",
           tab: "py-5",
-          cursor: "bg-primary rounded-xl",
+          cursor: "bg-primary rounded-xl dark:bg-dark-200 dark:border",
         }}
       >
         <Tab key="" title="همه" />

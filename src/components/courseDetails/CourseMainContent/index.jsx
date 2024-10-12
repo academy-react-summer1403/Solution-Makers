@@ -3,18 +3,16 @@ import { useParams } from "react-router-dom";
 import { baseApi } from "../../../config";
 import { useQuery } from "@tanstack/react-query";
 import { BeatLoader } from "react-spinners";
-import CourseSpecificationsDiv from "./CourseSpecificationsDiv";
-import { HiOutlineUsers } from "react-icons/hi2";
-import { BsCameraVideo } from "react-icons/bs";
-import { IoCalendarOutline } from "react-icons/io5";
-import { RiGraduationCapLine } from "react-icons/ri";
-import { LuCalendarCheck2 } from "react-icons/lu";
-import { Avatar, Button } from "@nextui-org/react";
 import RateSection from "../../common/RateSection";
 import CommentsBox from "../../common/comments/CommentsBox";
+import CourseDetailsTabs from "../CourseDetailsTabs";
+import { useState } from "react";
+import CourseDescription from "../CourseDescription";
+import CourseSpecificationsBox from "../CourseSpecificationsBox";
 
 function CourseMainContent() {
   const { id } = useParams();
+  const [showBox, setShowBox] = useState("descriptions");
 
   const fetchCourseById = () =>
     axios.get(`${baseApi}/Home/GetCourseDetails?CourseId=${id}`);
@@ -40,8 +38,8 @@ function CourseMainContent() {
 
   return (
     <div className="container px-12 mt-10">
-      <div className="flex gap-8">
-        <div className="flex flex-col gap-5 lg:w-[70%]">
+      <div className="flex flex-col lg:flex-row gap-8">
+        <div className="flex flex-col gap-5 w-full lg:w-[70%]">
           <div className="relative rounded-3xl overflow-hidden">
             <img
               src={
@@ -51,69 +49,58 @@ function CourseMainContent() {
               className="w-full lg:h-[548px]"
             />
           </div>
-          <h1>{data.data.title}</h1>
-          <p className="text-justify">{data.data.describe}</p>
+          <h1 className="text-ellipsis whitespace-nowrap overflow-hidden sm:whitespace-normal">
+            {data.data.title}
+          </h1>
+          <p className="text-justify text-ellipsis whitespace-nowrap overflow-hidden sm:whitespace-normal">
+            {data.data.describe}
+          </p>
           <RateSection />
-          <div className="bg-white p-7 mt-12 rounded-3xl">
-            <CommentsBox
-              courseId={id}
-              comments={comments?.data?.data}
-              isLoading={comments?.isLoading}
-              error={comments?.error}
-            />
+          <div className="bg-white dark:bg-dark-200 p-7 mt-12 rounded-3xl overflow-hidden">
+            <CourseDetailsTabs setShowBox={setShowBox} />
+            {showBox == "descriptions" && (
+              <CourseDescription
+                googleSchema={data.data.googleSchema}
+                describe={data.data.describe}
+              />
+            )}
+            {showBox == "comments" && (
+              <CommentsBox
+                courseId={id}
+                comments={comments?.data?.data}
+                isLoading={comments?.isLoading}
+                error={comments?.error}
+              />
+            )}
+            {showBox == "details" && (
+              <div className="lg:hidden">
+                <CourseSpecificationsBox
+                  currentRegistrants={data.data.currentRegistrants}
+                  courseStatusName={data.data.courseStatusName}
+                  courseLevelName={data.data.courseLevelName}
+                  capacity={data.data.capacity}
+                  startTime={data.data.startTime}
+                  endTime={data.data.endTime}
+                  cost={data.data.cost}
+                  teacherName={data.data.teacherName}
+                  uniqeUrlString={data.data.uniqeUrlString}
+                />
+              </div>
+            )}
           </div>
         </div>
-        <div className="lg:w-[30%] flex flex-col gap-10">
-          <div className="bg-white px-8 py-5 flex flex-col divide-y-1 divide-gray rounded-3xl">
-            <h3 className="text-center text-2xl pb-5">مشخصات دوره</h3>
-            <CourseSpecificationsDiv
-              icon={<HiOutlineUsers />}
-              textKey="تعداد دانشجو"
-              textValue={data.data.currentRegistrants}
-            />
-            <CourseSpecificationsDiv
-              icon={<BsCameraVideo />}
-              textKey="وضعیت دوره"
-              textValue={data.data.courseStatusName}
-            />
-            <CourseSpecificationsDiv
-              icon={<IoCalendarOutline />}
-              textKey="تاریخ شروع"
-              textValue={data.data.startTime.slice(0, 10)}
-            />
-            <CourseSpecificationsDiv
-              icon={<LuCalendarCheck2 />}
-              textKey="تاریخ پایان"
-              textValue={data.data.endTime.slice(0, 10)}
-            />
-            <div className="py-5 flex justify-between items-center">
-              <Button color="primary" size="lg" className="rounded-full ">
-                شرکت در دوره
-              </Button>
-              <span className="flex items-center gap-2">
-                <b className="text-primary text-xl">
-                  {data.data.cost.toLocaleString()}
-                </b>
-                تومان
-              </span>
-            </div>
-          </div>
-          <div className="bg-white flex items-center p-6 gap-5 rounded-3xl">
-            <div>
-              <Avatar
-                size="lg"
-                radius="md"
-                src="https://i.pravatar.cc/150?u=a04258a2462d826712d"
-              />
-            </div>
-            <div className="flex flex-col">
-              <span className="flex items-center gap-2">
-                <RiGraduationCapLine size={20} />
-                {data.data.teacherName}
-              </span>
-              <div>{data.data.uniqeUrlString}</div>
-            </div>
-          </div>
+        <div className="hidden w-full lg:w-[30%] lg:flex flex-col gap-10">
+          <CourseSpecificationsBox
+            currentRegistrants={data.data.currentRegistrants}
+            courseStatusName={data.data.courseStatusName}
+            courseLevelName={data.data.courseLevelName}
+            capacity={data.data.capacity}
+            startTime={data.data.startTime}
+            endTime={data.data.endTime}
+            cost={data.data.cost}
+            teacherName={data.data.teacherName}
+            uniqeUrlString={data.data.uniqeUrlString}
+          />
         </div>
       </div>
     </div>

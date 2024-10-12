@@ -28,7 +28,7 @@ function CommentsBox({
           variant="bordered"
           placeholder="نظر خودتو بنویس"
           classNames={{
-            inputWrapper: "bg-white text-2xl",
+            inputWrapper: "bg-white text-2xl dark:bg-dark-100",
             input: "text-[18px]",
           }}
         />

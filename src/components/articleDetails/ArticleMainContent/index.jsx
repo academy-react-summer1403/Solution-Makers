@@ -52,7 +52,7 @@ function ArticleMainContent() {
             <h1 className="text-ellipsis whitespace-nowrap overflow-hidden">
               {data.data.detailsNewsDto.title}
             </h1>
-            <p className="text-justify mt-5 md:mt-0 overflow-hidden text-[#455A64] ">
+            <p className="text-justify mt-5 md:mt-0 overflow-hidden text-[#455A64] dark:text-white">
               {data.data.detailsNewsDto.describe}
             </p>
 
@@ -69,7 +69,7 @@ function ArticleMainContent() {
                 </span>
               </div>
 
-              <div className="xs:flex mt-5 md:mt-0 justify-start items-center gap-3 sm:bg-white sm:pe-12 sm:ps-4 sm:py-3 rounded-2xl">
+              <div className="xs:flex mt-5 md:mt-0 justify-start items-center gap-3 sm:bg-white dark:bg-dark-100 sm:pe-12 sm:ps-4 sm:py-3 rounded-2xl">
                 <Avatar
                   radius="lg"
                   size="md"
@@ -88,7 +88,7 @@ function ArticleMainContent() {
             <p>{data.data.detailsNewsDto.googleDescribe}</p>
           </div>
           <RateSection title="آیا از این مقاله راضی بودید؟" />
-          <div className="bg-white p-7 mt-12 rounded-3xl">
+          <div className="bg-white dark:bg-dark-200 p-7 mt-12 rounded-3xl">
             <CommentsBox
               articleId={id}
               title="نظرات کاربران درباره این مقاله"

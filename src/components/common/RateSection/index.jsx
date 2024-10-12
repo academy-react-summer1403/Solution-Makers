@@ -3,7 +3,7 @@ import { useState } from "react";
 import { BiLike, BiDislike } from "react-icons/bi";
 import { CiStar } from "react-icons/ci";
 import { FaStar } from "react-icons/fa";
-import { FaBookmark } from "react-icons/fa";
+import { FaRegBookmark } from "react-icons/fa";
 
 function RateSection({ title }) {
   const [score, setScore] = useState(0);
@@ -48,7 +48,7 @@ function RateSection({ title }) {
           <BiDislike size={22} />
         </Button>
         <Button className="rounded-full bg-primary text-white">
-          <FaBookmark size={22} />
+          <FaRegBookmark size={22} />
         </Button>
       </div>
     </div>

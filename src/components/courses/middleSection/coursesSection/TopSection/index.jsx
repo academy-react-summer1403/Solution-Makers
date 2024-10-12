@@ -4,8 +4,9 @@ import { useContext } from "react";
 import { CgSortAz } from "react-icons/cg";
 import CoursesShowStatusToggler from "./CoursesShowStatusToggler";
 import { AppContext } from "../../../../../context/Provider";
+import { BiFilterAlt } from "react-icons/bi";
 
-function TopSection() {
+function TopSection({ onOpen }) {
   const {
     coursesQuery,
     setCoursesQuery,
@@ -16,10 +17,18 @@ function TopSection() {
 
   return (
     <div className="flex flex-col md:flex-row gap-0 md:gap-5">
-      <div className="w-full md:w-[12%] lg:w-[15%] xl:w-[12%] flex items-center justify-center sm:justify-start md:justify-center h-20">
+      <div className="w-full md:w-[20%] lg:w-[15%] xl:w-[12%] flex items-center justify-center gap-3 lg:gap-0 sm:justify-start md:justify-center h-20">
         <CoursesShowStatusToggler />
+        <div className="flex lg:hidden items-center">
+          <span
+            className="bg-white dark:bg-dark-100 p-[14px] rounded-xl cursor-pointer"
+            onClick={onOpen}
+          >
+            <BiFilterAlt size={28} />
+          </span>
+        </div>
       </div>
-      <div className="w-full md:w-[68%] lg:w-[60%] xl:w-[68%] h-20 flex items-center">
+      <div className="w-full md:w-[60%] lg:w-[60%] xl:w-[68%] h-20 flex items-center">
         <SearchInput
           placeholder="چی میخوای یاد بگیری ؟"
           query={coursesQuery}
@@ -29,10 +38,13 @@ function TopSection() {
       <div className="w-full md:w-[20%] lg:w-[25%] xl:w-[20%] h-20 flex items-center">
         <div className="flex w-full max-w-xs flex-col gap-2">
           <Select
-            placeholder="انتخاب کنید"
+            placeholder="مرتب سازی"
             aria-label="coursesSortingCol"
             className="max-w-xs"
-            classNames={{ trigger: "bg-white h-14", value: "text-md" }}
+            classNames={{
+              trigger: "bg-white dark:bg-dark-100 h-14",
+              value: "text-md",
+            }}
             onChange={(e) => {
               setCoursesSortingCol(e.target.value.split(",")[0]);
               setCoursesSortType(e.target.value.split(",")[1]);

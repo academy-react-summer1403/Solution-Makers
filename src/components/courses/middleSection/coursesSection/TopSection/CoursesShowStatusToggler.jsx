@@ -7,7 +7,7 @@ import { AppContext } from "../../../../../context/Provider";
 function CoursesShowStatusToggler() {
   const { rowsOfPage, setRowsOfPage, setReFetch } = useContext(AppContext);
   return (
-    <div className="lg:w-full px-2 flex gap-3 items-center justify-center py-2 rounded-xl bg-white shadow-lg">
+    <div className="lg:w-full px-2 flex gap-3 items-center justify-center py-2 rounded-xl bg-white shadow-lg dark:bg-dark-100">
       <Button
         className={`${rowsOfPage == 9 ? "bg-[#dbdbdb]" : "bg-white"}`}
         isIconOnly

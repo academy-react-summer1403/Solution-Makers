@@ -10,12 +10,16 @@ export default {
   theme: {
     extend: {
       colors: {
+        background: "#e7f0fc",
         primary: "#2196F3",
-        dark: "#252641",
         gray: "#ECEFF1",
+        dark: {
+          100: "#3F3F46",
+          200: "#27272A",
+        },
       },
       screens: {
-        xs : "350px",
+        xs: "350px",
         sm: "576px",
         md: "992px",
         lg: "1200px",

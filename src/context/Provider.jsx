@@ -3,6 +3,7 @@ import { createContext, useState } from "react";
 export const AppContext = createContext();
 
 function Provider({ children }) {
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   const [reFetch, setReFetch] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
   const [bagIconNum, setBagIconNum] = useState(5);
@@ -25,6 +26,8 @@ function Provider({ children }) {
   return (
     <AppContext.Provider
       value={{
+        theme,
+        setTheme,
         reFetch,
         setReFetch,
         isLogin,

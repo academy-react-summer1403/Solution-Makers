@@ -6,8 +6,8 @@ import {
   Avatar,
   Badge,
 } from "@nextui-org/react";
-
-import { useContext, useState } from "react";
+import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md";
+import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../../context/Provider";
 import { NavLink, Link } from "react-router-dom";
 import NavMenuLink from "./NavMenuLink";
@@ -15,13 +15,27 @@ import "./index.css";
 
 function MyNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { bagIconNum } = useContext(AppContext);
+  const { bagIconNum, theme, setTheme } = useContext(AppContext);
+
+  useEffect(() => {
+    document.documentElement.className = theme;
+  }, [theme]);
+
+  const themeHandler = () => {
+    if (theme == "light") {
+      localStorage.setItem("theme", "dark");
+      setTheme("dark");
+    } else {
+      localStorage.setItem("theme", "light");
+      setTheme("light");
+    }
+  };
 
   return (
     <Navbar
       onMenuOpenChange={setIsMenuOpen}
       classNames={{
-        base: "bg-[#e7f0fc] md:px-6 py-2 static",
+        base: "bg-[#e7f0fc] dark:bg-dark-200 md:px-6 py-2 static",
         wrapper: "max-w-[full]",
       }}
     >
@@ -51,6 +65,16 @@ function MyNavbar() {
           </li>
         </ul>
         <div className="flex justify-between items-center gap-4">
+          <span
+            className="hidden sm:inline-block bg-white dark:bg-dark-100 p-2 rounded-full cursor-pointer"
+            onClick={themeHandler}
+          >
+            {theme == "light" ? (
+              <MdOutlineDarkMode size={28} />
+            ) : (
+              <MdOutlineLightMode size={28} />
+            )}
+          </span>
           <Link className="bg-white h-[50px] w-[50px] rounded-full hidden sm:flex items-center justify-center">
             <Badge
               content={bagIconNum > 0 ? bagIconNum : null}
@@ -81,7 +105,7 @@ function MyNavbar() {
         </div>
       </div>
 
-      <NavbarMenu className="bg-[#e7f0fc] space-y-2">
+      <NavbarMenu className="bg-[#e7f0fc] dark:bg-dark-200 space-y-2">
         <NavMenuLink target="" title="ورود به حساب کاربری" />
         <NavMenuLink target="" title="پنل کاربری" />
         <NavMenuLink target="" title="سبد خرید" />

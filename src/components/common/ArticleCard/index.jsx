@@ -24,7 +24,7 @@ function ArticleCard({
 
   return (
     <Card
-      className="p-4 hover:scale-[1.03]"
+      className="p-4 hover:scale-[1.03] dark:border-2 dark:border-[#707070]"
       data-aos="flip-left"
       isPressable
       onPress={() => navigate(id)}

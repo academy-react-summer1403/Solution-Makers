@@ -23,7 +23,7 @@ function ReplyDetailsBox({
           </span>
           <span>{autor}</span>
         </div>
-        <p className="hidden xs:block text-[#607D8B]">
+        <p className="hidden xs:block text-[#607D8B] dark:text-white">
           {insertDate && insertDate.slice(0, 10)}
           {inserDate && inserDate.slice(0, 10)}
         </p>

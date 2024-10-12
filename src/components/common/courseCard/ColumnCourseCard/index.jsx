@@ -32,7 +32,7 @@ function ColumnCourseCard({
 
   return (
     <Card
-      className="p-4 hover:scale-[1.03]"
+      className="p-4 hover:scale-[1.03] dark:border-2 dark:border-[#707070]"
       data-aos="flip-left"
       shadow="sm"
       isPressable
@@ -51,9 +51,9 @@ function ColumnCourseCard({
           }
         />
       </CardHeader>
-      <CardBody className="text-right px-0">
+      <CardBody className="text-right px-0 gap-4 md:gap-0">
         <h3 className="text-lg">{title}</h3>
-        <div className="flex flex-col sm:flex-row sm:justify-center lg:text-sm sm:mt-4 py-4 gap-5 sm:gap-14 md:gap-10 lg:gap-5 rounded-[1.5rem] sm:bg-[#ECEFF1]">
+        <div className="flex flex-col sm:flex-row sm:justify-center lg:text-sm sm:mt-4 p-4 gap-5 sm:gap-14 md:gap-10 lg:gap-5 rounded-[1.5rem] sm:bg-gray dark:bg-dark-100">
           <p className="flex items-center gap-1">
             <FiBookOpen />
             202درس
@@ -72,7 +72,7 @@ function ColumnCourseCard({
           <p>{currentRegistrants} دانش‌آموز</p>
         </div>
       </CardBody>
-      <CardFooter className="flex-col px-0 items-start gap-2 justify-start sm:flex-row sm:items-center sm:justify-between lg:py-0 lg:mt-1">
+      <CardFooter className="flex items-center px-0 gap-2 justify-between lg:py-0 lg:mt-1">
         <p className="flex items-center gap-1 text-lg text-[#f44336] bg-[#ffebee] py-2 px-5 rounded-full">
           <FaRegHeart />
           {likeCount}
