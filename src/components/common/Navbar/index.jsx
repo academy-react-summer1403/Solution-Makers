@@ -6,30 +6,16 @@ import {
   Avatar,
   Badge,
 } from "@nextui-org/react";
-import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { AppContext } from "../../../context/Provider";
 import { NavLink, Link } from "react-router-dom";
 import NavMenuLink from "./NavMenuLink";
 import "./index.css";
+import ToggleTheme from "../ToggleTheme";
 
 function MyNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { bagIconNum, theme, setTheme } = useContext(AppContext);
-
-  useEffect(() => {
-    document.documentElement.className = theme;
-  }, [theme]);
-
-  const themeHandler = () => {
-    if (theme == "light") {
-      localStorage.setItem("theme", "dark");
-      setTheme("dark");
-    } else {
-      localStorage.setItem("theme", "light");
-      setTheme("light");
-    }
-  };
+  const { bagIconNum } = useContext(AppContext);
 
   return (
     <Navbar
@@ -65,16 +51,7 @@ function MyNavbar() {
           </li>
         </ul>
         <div className="flex justify-between items-center gap-4">
-          <span
-            className="hidden sm:inline-block bg-white dark:bg-dark-100 p-2 rounded-full cursor-pointer"
-            onClick={themeHandler}
-          >
-            {theme == "light" ? (
-              <MdOutlineDarkMode size={28} />
-            ) : (
-              <MdOutlineLightMode size={28} />
-            )}
-          </span>
+          <ToggleTheme />
           <Link className="bg-white h-[50px] w-[50px] rounded-full hidden sm:flex items-center justify-center">
             <Badge
               content={bagIconNum > 0 ? bagIconNum : null}
