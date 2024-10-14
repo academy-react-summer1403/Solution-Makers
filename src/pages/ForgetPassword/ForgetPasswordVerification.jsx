@@ -2,7 +2,7 @@ import {
   useRef,
   useState,
 } from "react";
-// import "../../App";
+import "../../app/App.css";
 import { useNavigate } from "react-router-dom";
 
 function ForgetPasswordVerification() {
