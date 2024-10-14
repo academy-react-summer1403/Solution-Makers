@@ -17,6 +17,8 @@ import {
 } from "react-router-dom";
 import NavMenuLink from "./NavMenuLink";
 import "./index.css";
+import { useNavigate } from "react-router-dom";
+import ToggleTheme from "../ToggleTheme";
 
 function MyNavbar() {
   const navigate = useNavigate();
