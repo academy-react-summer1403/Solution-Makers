@@ -2,7 +2,7 @@ import {
   useRef,
   useState,
 } from "react";
-import "../../App";
+// import "../../App";
 import { useNavigate } from "react-router-dom";
 
 function RegisterCodeVerifiction() {
