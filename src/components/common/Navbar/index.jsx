@@ -6,7 +6,6 @@ import {
   Avatar,
   Badge,
 } from "@nextui-org/react";
-
 import {
   useContext,
   useState,
@@ -18,7 +17,6 @@ import {
 } from "react-router-dom";
 import NavMenuLink from "./NavMenuLink";
 import "./index.css";
-import { useNavigate } from "react-router-dom";
 
 function MyNavbar() {
   const navigate = useNavigate();
@@ -31,7 +29,7 @@ function MyNavbar() {
     <Navbar
       onMenuOpenChange={setIsMenuOpen}
       classNames={{
-        base: "bg-[#e7f0fc] md:px-6 py-2 static",
+        base: "bg-[#e7f0fc] dark:bg-dark-200 md:px-6 py-2 static",
         wrapper: "max-w-[full]",
       }}
     >
@@ -73,6 +71,7 @@ function MyNavbar() {
           </li>
         </ul>
         <div className="flex justify-between items-center gap-4">
+          <ToggleTheme />
           <Link className="bg-white h-[50px] w-[50px] rounded-full hidden sm:flex items-center justify-center">
             <Badge
               content={

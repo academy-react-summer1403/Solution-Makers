@@ -3,7 +3,7 @@ import Provider from "./context/Provider.jsx";
 import { BrowserRouter } from "react-router-dom";
 import { NextUIProvider } from "@nextui-org/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import App from "./App.jsx";
+import App from "./app/App.jsx";
 import "./index.css";
 
 const client = new QueryClient();

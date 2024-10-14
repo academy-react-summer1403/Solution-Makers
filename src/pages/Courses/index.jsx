@@ -1,20 +1,17 @@
-import MyNavbar from "../../components/common/Navbar";
 import Header from "../../components/common/Header";
 import CoursesMiddleSection from "../../components/courses/MiddleSection";
-import Footer from "../../components/common/Footer";
+import AppLayout from "../../layouts/AppLayout";
 
 function Courses() {
   return (
-    <>
-      <MyNavbar />
+    <AppLayout>
       <Header
         img="/src/assets/images/courses/Asset11.png"
         heading="آموزش برنامه نویسی با بهترین ها"
         reminding="مهمه از کی یاد می گیری!!"
       />
       <CoursesMiddleSection />
-      <Footer />
-    </>
+    </AppLayout>
   );
 }
 

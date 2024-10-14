@@ -16,7 +16,7 @@ import SocialsIcon from "./SocialsIcon";
 
 function Footer() {
   return (
-    <div className="bg-[#252641] text-white mt-28">
+    <div className="bg-[#252641] dark:bg-dark-200 text-white mt-28">
       <div className="container flex flex-col gap-10 p-10">
         <div className="flex justify-center gap-4">
           <img src="/src/assets/images/footer/Group 33.png" />
@@ -46,7 +46,8 @@ function Footer() {
             // defaultValue=""
             className="max-w-[480px]"
             classNames={{
-              inputWrapper: "py-7",
+              inputWrapper:
+                "py-7 dark:border",
               input:
                 "text-sm sm:text-xl",
               clearButton:

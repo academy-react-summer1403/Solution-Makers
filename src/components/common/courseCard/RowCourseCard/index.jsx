@@ -6,6 +6,7 @@ import { FaRegHeart } from "react-icons/fa";
 import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { useNavigate } from "react-router-dom";
 
 function RowCourseCard({
   courseId,
@@ -21,10 +22,13 @@ function RowCourseCard({
     AOS.refresh();
   }, []);
 
+  const navigate = useNavigate();
+
   return (
     <div
-      className="flex flex-col md:flex-row gap-8 bg-white p-4 rounded-xl shadow-lg"
+      className="flex flex-col md:flex-row gap-8 bg-white dark:bg-dark-200 dark:border-2 dark:border-[#707070] p-4 rounded-xl shadow-lg cursor-pointer mt-10"
       data-aos="fade-up"
+      onClick={() => navigate(courseId)}
     >
       <div className="relative w-full md:w-[30%] lg:w-[40%] xl:w-[30%] flex items-center">
         <Image
@@ -55,7 +59,7 @@ function RowCourseCard({
           ab sequi! Tenetur, praesentium!
         </p>
         <div className="flex flex-col gap-2 md:flex-row md:flex-wrap xl:flex-nowrap justify-between">
-          <div className="flex text-sm flex-col md:flex-row md:flex-wrap xl:flex-nowrap xl:bg-[#ECEFF1] gap-3 md:gap-5 xl:gap-5 xl:p-4 sm:rounded-3xl xl:rounded-full">
+          <div className="flex text-xl lg:text-sm flex-col md:flex-row md:flex-wrap xl:flex-nowrap xl:bg-[#ECEFF1] dark:bg-dark-100 gap-3 md:gap-5 xl:gap-5 xl:p-4 rounded-3xl xl:rounded-full p-4">
             <Details text={teacherName} icon={<RiGraduationCapLine />} />
             <Details
               text={`${currentRegistrants} دانش‌آموز`}
@@ -65,7 +69,7 @@ function RowCourseCard({
             <Details text="14 ساعت" icon={<GoClock />} />
             <Details text="ا آذر 1402" />
           </div>
-          <p className="flex items-center">
+          <p className="flex items-center pt-4 ps-2 xl:pt-0 xl:ps-0">
             {cost > 0 ? (
               <>
                 <b className="text-primary me-1 text-lg">

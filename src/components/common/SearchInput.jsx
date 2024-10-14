@@ -26,7 +26,7 @@ function SearchInput({ placeholder, query, setQuery }) {
         }
         size="lg"
         classNames={{
-          inputWrapper: "bg-white px-2 h-14",
+          inputWrapper: "bg-white px-2 h-14 dark:bg-dark-100",
         }}
       />
     </div>

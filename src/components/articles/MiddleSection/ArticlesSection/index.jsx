@@ -60,9 +60,9 @@ function ArticlesList() {
               className="mt-8"
               classNames={{
                 base: "flex justify-center",
-                item: "rounded-full mx-1 bg-white",
-                prev: "bg-white",
-                next: "bg-white",
+                item: "rounded-full mx-1 bg-white dark:bg-dark-100",
+                prev: "bg-white dark:bg-dark-100",
+                next: "bg-white dark:bg-dark-100",
                 cursor: "bg-primary rounded-full",
               }}
               total={Math.ceil(data.data.totalCount / rowsOfPage)}

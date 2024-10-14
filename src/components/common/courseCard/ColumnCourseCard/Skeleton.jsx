@@ -1,6 +1,6 @@
 import { Card, Skeleton } from "@nextui-org/react";
 import { useContext } from "react";
-import { AppContext } from "../../../context/Provider";
+import { AppContext } from "../../../../context/Provider";
 
 function ColumnCourseCardSkeleton() {
   const { rowsOfPage } = useContext(AppContext);
