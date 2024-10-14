@@ -6,6 +6,9 @@ import Teachers from "./pages/Teachers";
 import Contact from "./pages/Contact";
 import ArticleDetails from "./pages/ArticleDetails";
 import CourseDetails from "./pages/CourseDetails";
+import UserPanelLayout from "./layouts/UserPanelLayout";
+import UserPanelIndex from "./pages/userPanel/Index";
+import UserPanelCourses from "./pages/userPanel/Courses";
 
 const routes = [
   { path: "/", element: <Landing /> },
@@ -16,6 +19,20 @@ const routes = [
   { path: "/teachers", element: <Teachers /> },
   { path: "/contact", element: <Contact /> },
   { path: "/login", element: <Login /> },
+  {
+    path: "/my-panel/*",
+    element: <UserPanelLayout />,
+    children: [
+      {
+        path: "",
+        element: <UserPanelIndex />,
+      },
+      {
+        path: "courses",
+        element: <UserPanelCourses />,
+      },
+    ],
+  },
 ];
 
 export default routes;

@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react";
 import { AppContext } from "../../../context/Provider";
 import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md";
 
-function ToggleTheme() {
+function ToggleTheme({ hideInMobile }) {
   const { theme, setTheme } = useContext(AppContext);
 
   useEffect(() => {
@@ -21,7 +21,7 @@ function ToggleTheme() {
 
   return (
     <span
-      className="hidden sm:inline-block bg-white dark:bg-dark-100 p-2 rounded-full cursor-pointer"
+      className={`${hideInMobile ? "hidden" : ""} sm:inline-block bg-white dark:bg-dark-100 p-2 rounded-full cursor-pointer`}
       onClick={themeHandler}
     >
       {theme == "light" ? (
