@@ -2,7 +2,8 @@ import { useContext } from "react";
 import { AppContext } from "../../../context/Provider";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { PiBookOpenTextBold } from "react-icons/pi";
-import { GoHeart } from "react-icons/go";
+import { BiSolidBookHeart } from "react-icons/bi";
+import { GrArticle } from "react-icons/gr";
 import { FaRegComment } from "react-icons/fa";
 import { LiaUserEditSolid } from "react-icons/lia";
 import { BiLogOut } from "react-icons/bi";
@@ -24,7 +25,7 @@ function UserPanelSidebar() {
         className="absolute left-1 top-1 lg:hidden cursor-pointer"
         onClick={() => setShowUserPanelSidebar(false)}
       >
-        <IoIosArrowRoundForward size={35} color="white"/>
+        <IoIosArrowRoundForward size={35} color="white" />
       </span>
       <div className="flex items-center px-9 py-8 border-b-1 border-[#cacaca] ">
         <Avatar
@@ -44,14 +45,14 @@ function UserPanelSidebar() {
           link={"courses"}
         />
         <UserPanelSidebarLink
-          icon={<GoHeart size={30} color="white" />}
-          text="ذخیره شده‌ها"
-          link={""}
+          icon={<BiSolidBookHeart size={30} color="white" />}
+          text="دوره های مورد علاقه"
+          link={"favorite-courses"}
         />
         <UserPanelSidebarLink
-          icon={<FaRegComment size={30} color="white" />}
-          text="نظرات ثبت شده"
-          link={""}
+          icon={<GrArticle size={30} color="white" />}
+          text="مقاله های مورد علاقه"
+          link={"favorite-articles"}
         />
         <UserPanelSidebarLink
           icon={<LiaUserEditSolid size={30} color="white" />}

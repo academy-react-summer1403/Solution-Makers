@@ -15,6 +15,8 @@ import Contact from "./pages/Contact";
 import UserPanelLayout from "./layouts/UserPanelLayout";
 import UserPanelIndex from "./pages/userPanel/Index";
 import UserPanelCourses from "./pages/userPanel/Courses";
+import UserPanelFavoriteCourses from "./pages/userPanel/FavoriteCourses";
+import UserPanelFavoriteArticles from "./pages/userPanel/FavoriteArticles";
 
 const routes = [
   { path: "/", element: <Landing /> },
@@ -42,6 +44,14 @@ const routes = [
       {
         path: "courses",
         element: <UserPanelCourses />,
+      },
+      {
+        path: "favorite-courses",
+        element: <UserPanelFavoriteCourses />,
+      },
+      {
+        path: "favorite-articles",
+        element: <UserPanelFavoriteArticles />,
       },
     ],
   },
