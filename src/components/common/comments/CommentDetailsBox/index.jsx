@@ -11,6 +11,7 @@ function CommentDetailsBox({
   courseId,
   articleId,
   pictureAddress,
+  author,
   autor,
   describe,
   likeCount,
@@ -43,7 +44,7 @@ function CommentDetailsBox({
               src={pictureAddress || "/src/assets/images/notFound/images.png"}
             />
           </span>
-          <span>{autor}</span>
+          <span>{autor ? autor : author}</span>
         </div>
         <p className="hidden text-sm xs:block text-[#607D8B] dark:text-white">
           {insertDate && insertDate.slice(0, 10)}

@@ -8,7 +8,13 @@ import { setItem } from "../../core/services/common/storage";
 import { AppContext } from "../../context/Provider";
 
 function UserPanelLayout() {
-  const { showUserPanelSidebar } = useContext(AppContext);
+  const { showUserPanelSidebar , setShowUserPanelSidebar } = useContext(AppContext);
+  window.onresize = () => {
+    if (window.innerWidth >= 1200) {
+      setShowUserPanelSidebar(false)
+    }
+  };
+  
   // useEffect(() => {
   //   axios.post(`/Sign/Login`, { phoneOrGmail: "masg1377@gmail.com", password: "123456", rememberMe: true,})
   //   .then( res => {setItem("token" , res.data.token)

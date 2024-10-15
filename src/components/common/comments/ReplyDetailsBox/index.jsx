@@ -8,6 +8,7 @@ function ReplyDetailsBox({
   describe,
   likeCount,
   autor,
+  author,
   pictureAddress,
 }) {
   return (
@@ -21,7 +22,7 @@ function ReplyDetailsBox({
               src={pictureAddress || "/src/assets/images/notFound/images.png"}
             />
           </span>
-          <span>{autor}</span>
+          <span>{autor ? autor : author}</span>
         </div>
         <p className="hidden xs:block text-[#607D8B] dark:text-white">
           {insertDate && insertDate.slice(0, 10)}

@@ -38,7 +38,7 @@ function UserCourses() {
 
   const fetchUserCourses = () =>
     instance.get(
-      `/SharePanel/GetMyCourses?PageNumber=${page}&RowsOfPage=5&SortingCol=DESC&SortType=LastUpdate${
+      `/SharePanel/GetMyCourses?PageNumber=${page}&RowsOfPage=3&SortingCol=DESC&SortType=LastUpdate${
         query ? `&Query=${query}` : ""
       }`
     );
@@ -57,8 +57,12 @@ function UserCourses() {
   }, []);
 
   const pages = useMemo(() => {
-    return data?.data ? Math.ceil(data?.data.listOfMyCourses.length / 5) : 0;
+    return data?.data ? Math.ceil(data?.data.listOfMyCourses.length / 3) : 0;
   }, [data?.data]);
+
+  if (error) {
+    return <p className="text-lg m-4">خطا در دریافت اطلاعات</p>;
+  }
 
   if (isLoading) {
     return (
@@ -71,7 +75,7 @@ function UserCourses() {
   }
 
   return (
-    <div className="flex flex-col gap-5 mt-8">
+    <div className="flex flex-col gap-5 mt-14">
       <Input
         placeholder="جستجوی دوره ...."
         aria-label="searchKey"
