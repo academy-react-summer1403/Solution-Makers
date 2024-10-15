@@ -4,7 +4,7 @@
 
 @layer base {
   @font-face {
-    font-family: yek;
+    font-family: yekan bakh;
     src: url("assets/fonts/Yekan Bakh/Yekan_Bakh_Fanum_Regular.TTF");
   }
   @font-face {
@@ -14,13 +14,12 @@
   body {
     /* background-color: #e7f0fc; */
     font-family: yekan;
+    /* font-family: yekan bakh; */
+    /* font-weight: 600; */
     /* min-height: 100vh; */
   }
   h1 {
     font-size: 2rem;
     font-weight: bold;
   }
-}
-body {
-  font-family: yek;
 }

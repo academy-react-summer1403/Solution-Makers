@@ -24,7 +24,7 @@ function UserPanelSidebar() {
         className="absolute left-1 top-1 lg:hidden cursor-pointer"
         onClick={() => setShowUserPanelSidebar(false)}
       >
-        <IoIosArrowRoundForward size={35} />
+        <IoIosArrowRoundForward size={35} color="white"/>
       </span>
       <div className="flex items-center px-9 py-8 border-b-1 border-[#cacaca] ">
         <Avatar

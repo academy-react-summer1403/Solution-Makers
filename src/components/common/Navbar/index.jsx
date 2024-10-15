@@ -4,29 +4,17 @@ import {
   NavbarMenu,
   Button,
 } from "@nextui-org/react";
-
 import { useState } from "react";
-=======
-import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { AppContext } from "../../../context/Provider";
-
 import { NavLink, Link } from "react-router-dom";
 import NavMenuLink from "./NavMenuLink";
 import ToggleTheme from "../ToggleTheme";
-
 import BagIcon from "../BagIcon";
-
-function MyNavbar() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-=======
 import "./index.css";
 
 function MyNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { bagIconNum } = useContext(AppContext);
   const navigate = useNavigate();
-
 
   return (
     <Navbar

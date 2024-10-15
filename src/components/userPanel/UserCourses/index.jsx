@@ -91,11 +91,10 @@ function UserCourses() {
       {data.data.listOfMyCourses.length > 0 ? (
         <Table
           aria-label="pagination"
-          className=""
           classNames={{
             wrapper: "dark:bg-dark-200 dark:border",
             th: "bg-primary dark:bg-dark-100 text-white text-small md:text-medium",
-            td: "py-3",
+            td: "py-3 text-small lg:text-medium",
           }}
           bottomContent={
             pages > 0 ? (

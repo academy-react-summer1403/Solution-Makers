@@ -3,8 +3,8 @@ import Courses from "./pages/Courses";
 import Articles from "./pages/Articles";
 import CourseDetails from "./pages/CourseDetails";
 import ArticleDetails from "./pages/ArticleDetails";
-import LoginCodeVerifiction from "./pages/Login/LoginCodeVerifiction";
 import Login from "./pages/Login";
+import LoginCodeVerifiction from "./pages/Login/LoginCodeVerifiction";
 import SignUp from "./pages/SignUp/SignUp";
 import SignUpVerification from "./pages/SignUp/SignUpVerification";
 import SetPassword from "./pages/SignUp/SetPassword";
@@ -12,14 +12,9 @@ import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
 import ForgetPasswordVerification from "./pages/ForgetPassword/ForgetPasswordVerification";
 import Teachers from "./pages/Teachers";
 import Contact from "./pages/Contact";
-
-import ArticleDetails from "./pages/ArticleDetails";
-import CourseDetails from "./pages/CourseDetails";
 import UserPanelLayout from "./layouts/UserPanelLayout";
 import UserPanelIndex from "./pages/userPanel/Index";
 import UserPanelCourses from "./pages/userPanel/Courses";
-=======
-
 
 const routes = [
   { path: "/", element: <Landing /> },
@@ -30,7 +25,12 @@ const routes = [
   { path: "/teachers", element: <Teachers /> },
   { path: "/contact", element: <Contact /> },
   { path: "/login", element: <Login /> },
-
+  { path: "/LoginCodeVerifiction", element: <LoginCodeVerifiction /> },
+  { path: "/ForgetPassword", element: <ForgetPassword /> },
+  { path: "/ForgetPasswordVerification", element: <ForgetPasswordVerification /> },
+  { path: "/SignUp", element: <SignUp /> },
+  { path: "/SignUpVerification", element: <SignUpVerification /> },
+  { path: "/SetPassword", element: <SetPassword /> },
   {
     path: "/my-panel/*",
     element: <UserPanelLayout />,
@@ -45,14 +45,6 @@ const routes = [
       },
     ],
   },
-=======
-  { path: "/LoginCodeVerifiction", element: <LoginCodeVerifiction /> },
-  { path: "/ForgetPassword", element: <ForgetPassword /> },
-  { path: "/ForgetPasswordVerification", element: <ForgetPasswordVerification /> },
-  { path: "/SignUp", element: <SignUp /> },
-  { path: "/SignUpVerification", element: <SignUpVerification /> },
-  { path: "/SetPassword", element: <SetPassword /> },
-
 ];
 
 export default routes;
