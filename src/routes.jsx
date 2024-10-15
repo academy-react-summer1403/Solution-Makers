@@ -13,6 +13,14 @@ import ForgetPasswordVerification from "./pages/ForgetPassword/ForgetPasswordVer
 import Teachers from "./pages/Teachers";
 import Contact from "./pages/Contact";
 
+import ArticleDetails from "./pages/ArticleDetails";
+import CourseDetails from "./pages/CourseDetails";
+import UserPanelLayout from "./layouts/UserPanelLayout";
+import UserPanelIndex from "./pages/userPanel/Index";
+import UserPanelCourses from "./pages/userPanel/Courses";
+=======
+
+
 const routes = [
   { path: "/", element: <Landing /> },
   { path: "/courses", element: <Courses /> },
@@ -22,12 +30,29 @@ const routes = [
   { path: "/teachers", element: <Teachers /> },
   { path: "/contact", element: <Contact /> },
   { path: "/login", element: <Login /> },
+
+  {
+    path: "/my-panel/*",
+    element: <UserPanelLayout />,
+    children: [
+      {
+        path: "",
+        element: <UserPanelIndex />,
+      },
+      {
+        path: "courses",
+        element: <UserPanelCourses />,
+      },
+    ],
+  },
+=======
   { path: "/LoginCodeVerifiction", element: <LoginCodeVerifiction /> },
   { path: "/ForgetPassword", element: <ForgetPassword /> },
   { path: "/ForgetPasswordVerification", element: <ForgetPasswordVerification /> },
   { path: "/SignUp", element: <SignUp /> },
   { path: "/SignUpVerification", element: <SignUpVerification /> },
   { path: "/SetPassword", element: <SetPassword /> },
+
 ];
 
 export default routes;

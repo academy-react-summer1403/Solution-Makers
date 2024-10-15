@@ -4,6 +4,7 @@ export const AppContext = createContext();
 
 function Provider({ children }) {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+  const [showUserPanelSidebar, setShowUserPanelSidebar] = useState(false);
   const [reFetch, setReFetch] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
   const [bagIconNum, setBagIconNum] = useState(5);
@@ -22,6 +23,7 @@ function Provider({ children }) {
   const [articlesPageNumber, setArticlesPageNumber] = useState(1);
   const [articlesQuery, setArticlesQuery] = useState("");
   const [articlesSortingCol, setArticlesSortingCol] = useState(undefined);
+  const [userNavTitle, setUserNavTitle] = useState("");
 
   return (
     <AppContext.Provider
@@ -34,6 +36,8 @@ function Provider({ children }) {
         setIsLogin,
         bagIconNum,
         setBagIconNum,
+        showUserPanelSidebar,
+        setShowUserPanelSidebar,
         coursesPageNumber,
         setCoursesPageNumber,
         coursesSortType,
@@ -64,6 +68,8 @@ function Provider({ children }) {
         setArticlesQuery,
         articlesSortingCol,
         setArticlesSortingCol,
+        userNavTitle,
+        setUserNavTitle,
       }}
     >
       {children}

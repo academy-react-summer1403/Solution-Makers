@@ -3,21 +3,30 @@ import {
   NavbarMenuToggle,
   NavbarMenu,
   Button,
-  Avatar,
-  Badge,
 } from "@nextui-org/react";
+
+import { useState } from "react";
+=======
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../../context/Provider";
+
 import { NavLink, Link } from "react-router-dom";
 import NavMenuLink from "./NavMenuLink";
 import ToggleTheme from "../ToggleTheme";
+
+import BagIcon from "../BagIcon";
+
+function MyNavbar() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+=======
 import "./index.css";
 
 function MyNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { bagIconNum } = useContext(AppContext);
   const navigate = useNavigate();
+
 
   return (
     <Navbar
@@ -55,23 +64,7 @@ function MyNavbar() {
         <div className="flex justify-between items-center gap-4">
           <ToggleTheme hideInMobile={true} />
           <Link className="bg-white h-[50px] w-[50px] rounded-full hidden sm:flex items-center justify-center">
-            <Badge
-              content={bagIconNum > 0 ? bagIconNum : null}
-              color="primary"
-              shape="circle"
-              placement="top-right"
-              className="-top-[2.5px] -right-[2.5px]"
-            >
-              <Avatar
-                radius="full"
-                size="sm"
-                src="/src/assets/images/navbar/shopping-bag.png"
-                className="w-6 h-6"
-                classNames={{
-                  base: "bg-white",
-                }}
-              />
-            </Badge>
+            <BagIcon />
           </Link>
           <Button
             onClick={() => navigate("/login")}

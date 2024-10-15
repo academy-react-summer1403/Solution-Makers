@@ -6,7 +6,6 @@ import ColumnCourseCard from "../../../../common/courseCard/ColumnCourseCard";
 import RowCourseCard from "../../../../common/courseCard/RowCourseCard";
 import { AppContext } from "../../../../../context/Provider";
 import ColumnCourseCardSkeleton from "../../../../common/courseCard/ColumnCourseCard/Skeleton";
-import { baseApi } from "../../../../../config/index";
 
 function CoursesList() {
   const {
@@ -29,7 +28,7 @@ function CoursesList() {
 
   const fetchCourses = () =>
     axios.get(
-      `${baseApi}/Home/GetCoursesWithPagination?PageNumber=${coursesPageNumber}&RowsOfPage=${rowsOfPage}${
+      `/Home/GetCoursesWithPagination?PageNumber=${coursesPageNumber}&RowsOfPage=${rowsOfPage}${
         courseLevelId ? `&courseLevelId=${courseLevelId}` : ""
       }${courseTypeId ? `&CourseTypeId=${courseTypeId}` : ""}${
         teacherId ? `&TeacherId=${teacherId}` : ""
