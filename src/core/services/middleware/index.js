@@ -1,6 +1,7 @@
 import axios from "axios";
 import { baseApi } from "../../../config";
 import { getItem } from "../common/storage";
+import toast from "react-hot-toast";
 
 axios.defaults.baseURL = baseApi;
 
@@ -15,15 +16,25 @@ instance.interceptors.request.use(
   },
   (error) => {
     console.log("error =>", error);
-    return Promise.reject(err);
+    return Promise.reject(error);
   }
 );
 
 instance.interceptors.response.use(
   (response) => response,
   (error) => {
-    console.log(error);
-    return Promise.reject(err);
+    console.log("error =>", error);
+    switch (error.status) {
+      case 422:
+        toast.error("اطلاعات نامعتبر می باشد");
+        break;
+      case 400:
+        toast.error("خطایی رخ داد");
+        break;
+      default:
+        break;
+    }
+    return Promise.reject(error);
   }
 );
 
