@@ -10,6 +10,9 @@ function CommentsBox({
   comments,
   isLoading,
   error,
+  commentBody,
+  setCommentBody,
+  addComment,
 }) {
   const [count, setCount] = useState(5);
 
@@ -26,6 +29,8 @@ function CommentsBox({
         <Textarea
           aria-label="comment"
           variant="bordered"
+          value={commentBody}
+          onValueChange={(e) => setCommentBody(e)}
           placeholder="نظر خودتو بنویس"
           classNames={{
             inputWrapper: "bg-white text-2xl dark:bg-dark-100",
@@ -36,6 +41,7 @@ function CommentsBox({
           color="primary"
           className="block mx-auto rounded-full text-lg"
           size="md"
+          onClick={() => addComment(commentBody)}
         >
           ارسال
         </Button>

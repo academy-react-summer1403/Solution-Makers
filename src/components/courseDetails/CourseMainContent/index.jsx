@@ -1,26 +1,45 @@
+import { useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { baseApi } from "../../../config";
 import { useQuery } from "@tanstack/react-query";
 import { BeatLoader } from "react-spinners";
 import RateSection from "../../common/RateSection";
 import CommentsBox from "../../common/comments/CommentsBox";
 import CourseDetailsTabs from "../CourseDetailsTabs";
-import { useState } from "react";
 import CourseDescription from "../CourseDescription";
 import CourseSpecificationsBox from "../CourseSpecificationsBox";
+import instance from "../../../core/services/middleware";
 
 function CourseMainContent() {
   const { id } = useParams();
   const [showBox, setShowBox] = useState("descriptions");
+  const [commentBody, setCommentBody] = useState("");
+
+  const addComment = (describe) => {
+    const formData = new FormData();
+    formData.append("CourseId", id);
+    formData.append("Title", "test title");
+    formData.append("Describe", describe);
+    instance
+      .post("/Course/AddCommentCourse", formData)
+      .then(() => setCommentBody(""));
+  };
+
+  const addLike = () => instance.post(`/Course/AddCourseLike?CourseId=${id}`);
+
+  const addDislike = () =>
+    instance.post(`/Course/AddCourseDissLike?CourseId=${id}`);
+
+  const addToFavorites = () =>
+    instance.post("/Course/AddCourseFavorite", { courseId: id });
 
   const fetchCourseById = () =>
-    axios.get(`${baseApi}/Home/GetCourseDetails?CourseId=${id}`);
+    instance.get(`/Home/GetCourseDetails?CourseId=${id}`);
 
   const fetchCourseComments = () =>
-    axios.get(`${baseApi}/Course/GetCourseCommnets/${id}`);
+    axios.get(`/Course/GetCourseCommnets/${id}`);
 
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["course", id],
     queryFn: () => fetchCourseById(),
   });
@@ -29,6 +48,8 @@ function CourseMainContent() {
     queryKey: ["courseComments"],
     queryFn: () => fetchCourseComments(),
   });
+
+  console.log(data?.data);
 
   if (isLoading) {
     return (
@@ -55,7 +76,14 @@ function CourseMainContent() {
           <p className="text-justify text-ellipsis whitespace-nowrap overflow-hidden sm:whitespace-normal">
             {data.data.describe}
           </p>
-          <RateSection />
+          <RateSection
+            id={id}
+            addLike={addLike}
+            addDislike={addDislike}
+            addToFavorites={addToFavorites}
+            currentUserLike={Boolean(Number(data.data.currentUserLike))}
+            currentUserDissLike={Boolean(Number(data.data.currentUserDissLike))}
+          />
           <div className="bg-white dark:bg-dark-200 p-7 mt-12 rounded-3xl overflow-hidden">
             <CourseDetailsTabs setShowBox={setShowBox} />
             {showBox == "descriptions" && (
@@ -70,6 +98,9 @@ function CourseMainContent() {
                 comments={comments?.data?.data}
                 isLoading={comments?.isLoading}
                 error={comments?.error}
+                commentBody={commentBody}
+                setCommentBody={setCommentBody}
+                addComment={addComment}
               />
             )}
             {showBox == "details" && (
