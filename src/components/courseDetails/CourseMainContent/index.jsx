@@ -9,6 +9,7 @@ import CourseDetailsTabs from "../CourseDetailsTabs";
 import CourseDescription from "../CourseDescription";
 import CourseSpecificationsBox from "../CourseSpecificationsBox";
 import instance from "../../../core/services/middleware";
+import toast from "react-hot-toast";
 
 function CourseMainContent() {
   const { id } = useParams();
@@ -20,18 +21,16 @@ function CourseMainContent() {
     formData.append("CourseId", id);
     formData.append("Title", "test title");
     formData.append("Describe", describe);
-    instance
-      .post("/Course/AddCommentCourse", formData)
-      .then(() => setCommentBody(""));
+    instance.post("/Course/AddCommentCourse", formData).then(() => {
+      toast.success("عملیات با موفقیت انجام شد");
+      setCommentBody("");
+    });
   };
 
   const addLike = () => instance.post(`/Course/AddCourseLike?CourseId=${id}`);
 
   const addDislike = () =>
     instance.post(`/Course/AddCourseDissLike?CourseId=${id}`);
-
-  const addToFavorites = () =>
-    instance.post("/Course/AddCourseFavorite", { courseId: id });
 
   const fetchCourseById = () =>
     instance.get(`/Home/GetCourseDetails?CourseId=${id}`);
@@ -49,13 +48,13 @@ function CourseMainContent() {
     queryFn: () => fetchCourseComments(),
   });
 
-  console.log(data?.data);
-
   if (isLoading) {
     return (
       <BeatLoader color="#2196F3" className="text-center mt-10" size={20} />
     );
   }
+
+  console.log(data?.data);
 
   return (
     <div className="container px-12 mt-10">
@@ -80,9 +79,11 @@ function CourseMainContent() {
             id={id}
             addLike={addLike}
             addDislike={addDislike}
-            addToFavorites={addToFavorites}
             currentUserLike={Boolean(Number(data.data.currentUserLike))}
             currentUserDissLike={Boolean(Number(data.data.currentUserDissLike))}
+            isUserFavorite={data.data.isUserFavorite}
+            userFavoriteId={data.data.userFavoriteId}
+            refetch={refetch}
           />
           <div className="bg-white dark:bg-dark-200 p-7 mt-12 rounded-3xl overflow-hidden">
             <CourseDetailsTabs setShowBox={setShowBox} />

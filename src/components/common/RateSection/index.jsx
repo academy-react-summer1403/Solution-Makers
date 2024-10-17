@@ -4,7 +4,7 @@ import { BiLike, BiDislike } from "react-icons/bi";
 import { BiSolidLike, BiSolidDislike } from "react-icons/bi";
 import { CiStar } from "react-icons/ci";
 import { FaStar } from "react-icons/fa";
-import { FaRegBookmark } from "react-icons/fa";
+import { FaRegBookmark, FaBookmark } from "react-icons/fa";
 import instance from "../../../core/services/middleware";
 import toast from "react-hot-toast";
 
@@ -13,16 +13,34 @@ function RateSection({
   title,
   addLike,
   addDislike,
-  addToFavorites,
   currentUserLike,
   currentUserDissLike,
+  isUserFavorite,
+  userFavoriteId,
+  refetch,
 }) {
   const [score, setScore] = useState(0);
   const [isLiked, setIsLiked] = useState(currentUserLike);
   const [isDisLiked, setIsDisLiked] = useState(currentUserDissLike);
+  const [isFavorite, setIsFavorite] = useState(isUserFavorite);
 
-  const submitScore = () => {
+  const submitScoreForCourse = () => {
     instance.post(`/Course/SetCourseRating?CourseId=${id}&RateNumber=${score}`);
+  };
+
+  const addCourseToFavorites = () =>
+    instance
+      .post("/Course/AddCourseFavorite", { courseId: id })
+      .then(() => refetch())
+      .then(() => toast.success("به علاقمندی ها اضافه شد"));
+
+  const removeCourseFromFavorites = () => {
+    const formData = new FormData();
+    formData.append("CourseFavoriteId", userFavoriteId);
+    instance
+      .delete("/Course/DeleteCourseFavorite", { data: formData })
+      .then(() => refetch())
+      .then(() => toast.success("از علاقمندی ها حذف شد"));
   };
 
   return (
@@ -53,7 +71,7 @@ function RateSection({
         <div>
           <Button
             className="text-[16px] text-white bg-primary rounded-full"
-            onClick={submitScore}
+            onClick={submitScoreForCourse}
           >
             ثبت امتیاز
           </Button>
@@ -103,12 +121,27 @@ function RateSection({
             <BiDislike size={25} />
           </Button>
         )}
-        <Button
-          className="rounded-full bg-primary text-white"
-          onClick={addToFavorites}
-        >
-          <FaRegBookmark size={22} />
-        </Button>
+        {isFavorite ? (
+          <Button
+            className="rounded-full bg-primary text-white"
+            onClick={() => {
+              removeCourseFromFavorites();
+              setIsFavorite((prev) => !prev);
+            }}
+          >
+            <FaBookmark size={22} />
+          </Button>
+        ) : (
+          <Button
+            className="rounded-full bg-primary text-white"
+            onClick={() => {
+              addCourseToFavorites();
+              setIsFavorite((prev) => !prev);
+            }}
+          >
+            <FaRegBookmark size={22} />
+          </Button>
+        )}
       </div>
     </div>
   );
