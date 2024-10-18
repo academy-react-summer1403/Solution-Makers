@@ -1,11 +1,11 @@
 import { useContext, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Pagination } from "@nextui-org/react";
-import axios from "axios";
 import ColumnCourseCard from "../../../../common/courseCard/ColumnCourseCard";
 import RowCourseCard from "../../../../common/courseCard/RowCourseCard";
 import { AppContext } from "../../../../../context/Provider";
 import ColumnCourseCardSkeleton from "../../../../common/courseCard/ColumnCourseCard/Skeleton";
+import instance from "../../../../../core/services/middleware";
 
 function CoursesList() {
   const {
@@ -27,7 +27,7 @@ function CoursesList() {
   } = useContext(AppContext);
 
   const fetchCourses = () =>
-    axios.get(
+    instance.get(
       `/Home/GetCoursesWithPagination?PageNumber=${coursesPageNumber}&RowsOfPage=${rowsOfPage}${
         courseLevelId ? `&courseLevelId=${courseLevelId}` : ""
       }${courseTypeId ? `&CourseTypeId=${courseTypeId}` : ""}${
@@ -94,7 +94,7 @@ function CoursesList() {
               <>
                 {rowsOfPage == 9
                   ? data.data.courseFilterDtos.map((course) => (
-                      <ColumnCourseCard {...course} key={course.courseId} />
+                      <ColumnCourseCard {...course} key={course.courseId} refetch={refetch} />
                     ))
                   : data.data.courseFilterDtos.map((course) => (
                       <RowCourseCard {...course} key={course.courseId} />
