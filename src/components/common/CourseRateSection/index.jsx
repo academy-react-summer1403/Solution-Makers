@@ -11,12 +11,13 @@ import toast from "react-hot-toast";
 function RateSection({
   id,
   title,
-  addLike,
-  addDislike,
   currentUserLike,
   currentUserDissLike,
   isUserFavorite,
   userFavoriteId,
+  userLikeId,
+  currentUserSetRate,
+  currentUserRateNumber,
   refetch,
 }) {
   const [score, setScore] = useState(0);
@@ -25,7 +26,16 @@ function RateSection({
   const [isFavorite, setIsFavorite] = useState(isUserFavorite);
 
   const submitScoreForCourse = () => {
-    instance.post(`/Course/SetCourseRating?CourseId=${id}&RateNumber=${score}`);
+    if (!currentUserSetRate) {
+      instance
+        .post(`/Course/SetCourseRating?CourseId=${id}&RateNumber=${score}`)
+        .then(() => toast.success("امتیاز ثبت شد"))
+        .then(() => refetch());
+    } else {
+      toast.error(
+        `شما قبلا به این دوره امتیاز ${currentUserRateNumber} را دادید`
+      );
+    }
   };
 
   const addCourseToFavorites = () =>
@@ -41,6 +51,26 @@ function RateSection({
       .delete("/Course/DeleteCourseFavorite", { data: formData })
       .then(() => refetch())
       .then(() => toast.success("از علاقمندی ها حذف شد"));
+  };
+
+  const addCourseLike = () =>
+    instance
+      .post(`/Course/AddCourseLike?CourseId=${id}`)
+      .then(() => refetch())
+      .then(() => toast.success("لایک شد"));
+
+  const addCourseDislike = () =>
+    instance
+      .post(`/Course/AddCourseDissLike?CourseId=${id}`)
+      .then(() => toast.success("دیسلایک شد"));
+
+  const deleteCourseLike = () => {
+    const formData = new FormData();
+    formData.append("CourseLikeId", userLikeId);
+    instance
+      .delete("/Course/DeleteCourseLike", { data: formData })
+      .then(() => refetch())
+      .then(() => toast.success("لایک برداشته شد"));
   };
 
   return (
@@ -80,21 +110,26 @@ function RateSection({
       <div className="hidden xs:flex items-center gap-4">
         <p>{title}</p>
         {isLiked ? (
-          <span className="rounded-full bg-primary text-white px-7 py-2">
+          <Button
+            className="rounded-full bg-primary text-white"
+            onClick={() => {
+              deleteCourseLike();
+              setIsLiked(false);
+            }}
+          >
             <BiSolidLike size={25} />
-          </span>
+          </Button>
         ) : (
           <Button
             className="rounded-full bg-primary text-white"
             onClick={() => {
-              addLike();
+              addCourseLike();
               if (!isLiked && !isDisLiked) {
                 setIsLiked((prev) => !prev);
               } else {
                 setIsLiked((prev) => !prev);
                 setIsDisLiked((prev) => !prev);
               }
-              toast.success("لایک شد");
             }}
           >
             <BiLike size={25} />
@@ -108,14 +143,13 @@ function RateSection({
           <Button
             className="rounded-full bg-primary text-white"
             onClick={() => {
-              addDislike();
+              addCourseDislike();
               if (!isLiked && !isDisLiked) {
                 setIsDisLiked((prev) => !prev);
               } else {
                 setIsDisLiked((prev) => !prev);
                 setIsLiked((prev) => !prev);
               }
-              toast.success("دیسلایک شد");
             }}
           >
             <BiDislike size={25} />

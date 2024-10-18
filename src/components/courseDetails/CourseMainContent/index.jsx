@@ -3,7 +3,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { BeatLoader } from "react-spinners";
-import RateSection from "../../common/RateSection";
+import CourseRateSection from "../../common/CourseRateSection";
 import CommentsBox from "../../common/comments/CommentsBox";
 import CourseDetailsTabs from "../CourseDetailsTabs";
 import CourseDescription from "../CourseDescription";
@@ -26,11 +26,6 @@ function CourseMainContent() {
       setCommentBody("");
     });
   };
-
-  const addLike = () => instance.post(`/Course/AddCourseLike?CourseId=${id}`);
-
-  const addDislike = () =>
-    instance.post(`/Course/AddCourseDissLike?CourseId=${id}`);
 
   const fetchCourseById = () =>
     instance.get(`/Home/GetCourseDetails?CourseId=${id}`);
@@ -75,14 +70,15 @@ function CourseMainContent() {
           <p className="text-justify text-ellipsis whitespace-nowrap overflow-hidden sm:whitespace-normal">
             {data.data.describe}
           </p>
-          <RateSection
+          <CourseRateSection
             id={id}
-            addLike={addLike}
-            addDislike={addDislike}
             currentUserLike={Boolean(Number(data.data.currentUserLike))}
             currentUserDissLike={Boolean(Number(data.data.currentUserDissLike))}
             isUserFavorite={data.data.isUserFavorite}
             userFavoriteId={data.data.userFavoriteId}
+            userLikeId={data.data.userLikeId}
+            currentUserSetRate={data.data.currentUserSetRate}
+            currentUserRateNumber={data.data.currentUserRateNumber}
             refetch={refetch}
           />
           <div className="bg-white dark:bg-dark-200 p-7 mt-12 rounded-3xl overflow-hidden">

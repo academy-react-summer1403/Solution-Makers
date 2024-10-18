@@ -8,7 +8,7 @@ import { GoDotFill } from "react-icons/go";
 import { IoCalendarOutline } from "react-icons/io5";
 import { Avatar } from "@nextui-org/react";
 import CommentsBox from "../../common/comments/CommentsBox";
-import RateSection from "../../common/RateSection";
+import RateSection from "../../common/CourseRateSection";
 
 function ArticleMainContent() {
   const { id } = useParams();

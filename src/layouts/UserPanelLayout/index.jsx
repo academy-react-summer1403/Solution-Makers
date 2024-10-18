@@ -15,14 +15,14 @@ function UserPanelLayout() {
     }
   };
   
-  // useEffect(() => {
-  //   axios.post(`/Sign/Login`, { phoneOrGmail: "masg1377@gmail.com", password: "123456", rememberMe: true,})
-  //   .then( res => {setItem("token" , res.data.token)
-  //     console.log(res.data);
-  //   } )
-  //   instance.get("/SharePanel/GetProfileInfo").then( res => console.log(res) )
-  //   instance.get("/SharePanel/GetMyCourses?PageNumber=1&RowsOfPage=10&SortingCol=DESC&SortType=LastUpdate").then((res) => console.log(res.data));
-  // }, []);
+  useEffect(() => {
+    axios.post(`/Sign/Login`, { phoneOrGmail: "masg1377@gmail.com", password: "123456", rememberMe: true,})
+    .then( res => {setItem("token" , res.data.token)
+      console.log(res.data);
+    } )
+    instance.get("/SharePanel/GetProfileInfo").then( res => console.log(res) )
+    instance.get("/SharePanel/GetMyCourses?PageNumber=1&RowsOfPage=10&SortingCol=DESC&SortType=LastUpdate").then((res) => console.log(res.data));
+  }, []);
 
   return (
     <div className="flex h-screen">
