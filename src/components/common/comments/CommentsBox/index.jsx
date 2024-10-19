@@ -1,17 +1,19 @@
-import { Button, Textarea } from "@nextui-org/react";
+import { Button, Input, Textarea } from "@nextui-org/react";
 import CommentDetailsBox from "../CommentDetailsBox";
 import { BeatLoader } from "react-spinners";
 import { useState } from "react";
 
 function CommentsBox({
   courseId,
-  articleId,
+  newsId,
   title,
   comments,
   isLoading,
   error,
   commentBody,
   setCommentBody,
+  commentTitle,
+  setCommentTitle,
   addComment,
 }) {
   const [count, setCount] = useState(5);
@@ -26,6 +28,17 @@ function CommentsBox({
     <>
       <div className="flex flex-col gap-8">
         {title && <h4 className="text-center text-xl">{title}</h4>}
+        <div className="max-w-[300px]">
+          <Input
+            placeholder="عنوان"
+            classNames={{
+              inputWrapper:
+                "dark:bg-dark-100 dark:focus-within:border dark:focus-within:bg-dark-100",
+            }}
+            value={commentTitle}
+            onValueChange={(e) => setCommentTitle(e)}
+          />
+        </div>
         <Textarea
           aria-label="comment"
           variant="bordered"
@@ -41,7 +54,7 @@ function CommentsBox({
           color="primary"
           className="block mx-auto rounded-full text-lg"
           size="md"
-          onClick={() => addComment(commentBody)}
+          onClick={() => addComment()}
         >
           ارسال
         </Button>
@@ -52,7 +65,7 @@ function CommentsBox({
             {...comment}
             key={comment.id}
             courseId={courseId}
-            articleId={articleId}
+            newsId={newsId}
           />
         ))}
       </div>

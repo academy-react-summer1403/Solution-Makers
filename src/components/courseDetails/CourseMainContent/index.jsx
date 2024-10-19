@@ -3,7 +3,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { BeatLoader } from "react-spinners";
-import CourseRateSection from "../../common/CourseRateSection";
+import CourseRateSection from "../CourseRateSection";
 import CommentsBox from "../../common/comments/CommentsBox";
 import CourseDetailsTabs from "../CourseDetailsTabs";
 import CourseDescription from "../CourseDescription";
@@ -15,15 +15,17 @@ function CourseMainContent() {
   const { id } = useParams();
   const [showBox, setShowBox] = useState("descriptions");
   const [commentBody, setCommentBody] = useState("");
+  const [commentTitle, setCommentTitle] = useState("");
 
-  const addComment = (describe) => {
+  const addComment = () => {
     const formData = new FormData();
     formData.append("CourseId", id);
-    formData.append("Title", "test title");
-    formData.append("Describe", describe);
+    formData.append("Title", commentTitle);
+    formData.append("Describe", commentBody);
     instance.post("/Course/AddCommentCourse", formData).then(() => {
       toast.success("عملیات با موفقیت انجام شد");
       setCommentBody("");
+      setCommentTitle("");
     });
   };
 
@@ -48,8 +50,6 @@ function CourseMainContent() {
       <BeatLoader color="#2196F3" className="text-center mt-10" size={20} />
     );
   }
-
-  console.log(data?.data);
 
   return (
     <div className="container px-12 mt-10">
@@ -95,6 +95,8 @@ function CourseMainContent() {
                 comments={comments?.data?.data}
                 isLoading={comments?.isLoading}
                 error={comments?.error}
+                commentTitle={commentTitle}
+                setCommentTitle={setCommentTitle}
                 commentBody={commentBody}
                 setCommentBody={setCommentBody}
                 addComment={addComment}

@@ -1,4 +1,3 @@
-import axios from "axios";
 import ArticleCard from "../../../common/ArticleCard";
 import { baseApi } from "../../../../config";
 import { useQuery } from "@tanstack/react-query";
@@ -6,6 +5,7 @@ import { BeatLoader } from "react-spinners";
 import { Pagination } from "@nextui-org/react";
 import { useContext, useEffect } from "react";
 import { AppContext } from "../../../../context/Provider";
+import instance from "../../../../core/services/middleware";
 
 function ArticlesList() {
   const {
@@ -19,7 +19,7 @@ function ArticlesList() {
   } = useContext(AppContext);
 
   const fetchArticles = () =>
-    axios.get(
+    instance.get(
       `${baseApi}/News?PageNumber=${articlesPageNumber}&RowsOfPage=9${
         articlesSortingCol ? `&SortingCol=${articlesSortingCol}` : ""
       }&SortType=DESC${articlesQuery ? `&Query=${articlesQuery}` : ""}`
