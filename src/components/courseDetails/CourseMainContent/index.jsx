@@ -51,6 +51,8 @@ function CourseMainContent() {
     );
   }
 
+  console.log(comments?.data?.data);
+
   return (
     <div className="container px-12 mt-10">
       <div className="flex flex-col lg:flex-row gap-8">
