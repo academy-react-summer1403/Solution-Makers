@@ -62,6 +62,7 @@ function RateSection({
   const addCourseDislike = () =>
     instance
       .post(`/Course/AddCourseDissLike?CourseId=${id}`)
+      .then(() => refetch())
       .then(() => toast.success("دیسلایک شد"));
 
   const deleteCourseLike = () => {
