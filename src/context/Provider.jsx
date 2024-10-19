@@ -24,6 +24,7 @@ function Provider({ children }) {
   const [articlesQuery, setArticlesQuery] = useState("");
   const [articlesSortingCol, setArticlesSortingCol] = useState(undefined);
   const [userNavTitle, setUserNavTitle] = useState("");
+  const [commentId, setCommentId] = useState(75);
 
   return (
     <AppContext.Provider
@@ -70,6 +71,8 @@ function Provider({ children }) {
         setArticlesSortingCol,
         userNavTitle,
         setUserNavTitle,
+        commentId,
+        setCommentId,
       }}
     >
       {children}
