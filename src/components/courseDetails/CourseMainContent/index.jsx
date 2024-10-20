@@ -1,5 +1,4 @@
-import { useState } from "react";
-import axios from "axios";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { BeatLoader } from "react-spinners";
@@ -10,9 +9,11 @@ import CourseDescription from "../CourseDescription";
 import CourseSpecificationsBox from "../CourseSpecificationsBox";
 import instance from "../../../core/services/middleware";
 import toast from "react-hot-toast";
+import { AppContext } from "../../../context/Provider";
 
 function CourseMainContent() {
   const { id } = useParams();
+  const { reFetch, setReFetch } = useContext(AppContext);
   const [showBox, setShowBox] = useState("descriptions");
   const [commentBody, setCommentBody] = useState("");
   const [commentTitle, setCommentTitle] = useState("");
@@ -33,7 +34,7 @@ function CourseMainContent() {
     instance.get(`/Home/GetCourseDetails?CourseId=${id}`);
 
   const fetchCourseComments = () =>
-    axios.get(`/Course/GetCourseCommnets/${id}`);
+    instance.get(`/Course/GetCourseCommnets/${id}`);
 
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["course", id],
@@ -45,13 +46,16 @@ function CourseMainContent() {
     queryFn: () => fetchCourseComments(),
   });
 
+  useEffect(() => {
+    reFetch && comments?.refetch();
+    setReFetch(false);
+  }, [reFetch]);
+
   if (isLoading) {
     return (
       <BeatLoader color="#2196F3" className="text-center mt-10" size={20} />
     );
   }
-
-  console.log(comments?.data?.data);
 
   return (
     <div className="container px-12 mt-10">
@@ -102,6 +106,7 @@ function CourseMainContent() {
                 commentBody={commentBody}
                 setCommentBody={setCommentBody}
                 addComment={addComment}
+                refetch={comments.refetch}
               />
             )}
             {showBox == "details" && (
