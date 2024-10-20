@@ -16,6 +16,7 @@ import {
 import { BsTrash } from "react-icons/bs";
 import { FaEye } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 
 function UserFavoriteArticles() {
   const { setUserNavTitle } = useContext(AppContext);
@@ -36,6 +37,18 @@ function UserFavoriteArticles() {
     return data?.data.myFavoriteNews.slice(start, end);
   }, [page, data?.data.myFavoriteNews]);
 
+  const removeArticleFromFavorites = (favoriteId) => {
+    toast.promise(instance
+      .delete("/News/DeleteFavoriteNews", {
+        data: {
+          deleteEntityId: favoriteId,
+        },
+      }) , {
+        loading : "در حال پردازش",
+        success : "مقاله از لیست علاقمندی ها حذف شد"
+      }).then(() => refetch())
+  };
+
   useEffect(() => {
     setUserNavTitle("مقاله های های مورد علاقه");
   }, []);
@@ -54,7 +67,7 @@ function UserFavoriteArticles() {
     return <p className="text-xl font-bold m-5">خطا در دریافت اطلاعات</p>;
   }
 
-  console.log(data?.data.myFavoriteNews);
+  // console.log(data?.data?.myFavoriteNews);
 
   return (
     <div className="mt-16">
@@ -117,7 +130,10 @@ function UserFavoriteArticles() {
                 </Link>
               ),
               delete: (
-                <span className="inline-flex items-center justify-center p-1 cursor-pointer">
+                <span
+                  className="inline-flex items-center justify-center p-1 cursor-pointer"
+                  onClick={() => removeArticleFromFavorites(item.favoriteId)}
+                >
                   <BsTrash size={22} color="#E4125B" />
                 </span>
               ),

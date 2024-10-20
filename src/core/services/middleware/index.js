@@ -25,6 +25,12 @@ instance.interceptors.response.use(
   (error) => {
     console.log("error =>", error);
     switch (error.status) {
+      case 401:
+        toast.error("لطفا اول وارد حساب کاربری خود شوید");
+        break;
+        case 404:
+        toast.error("همچین چیزی پیدا نشد");
+        break;
       case 422:
         toast.error("اطلاعات نامعتبر می باشد");
         break;

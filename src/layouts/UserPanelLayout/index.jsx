@@ -6,6 +6,7 @@ import axios from "axios";
 import instance from "../../core/services/middleware";
 import { setItem } from "../../core/services/common/storage";
 import { AppContext } from "../../context/Provider";
+import { Toaster } from "react-hot-toast";
 
 function UserPanelLayout() {
   const { showUserPanelSidebar, setShowUserPanelSidebar } =
@@ -38,6 +39,7 @@ function UserPanelLayout() {
 
   return (
     <div className="flex h-screen">
+      <Toaster position="top-center" />
       <UserPanelSidebar />
       <div
         className={`h-screen w-full lg:w-[80%] flex flex-col py-3 px-8 ${
