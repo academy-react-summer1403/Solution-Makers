@@ -1,9 +1,10 @@
 import { useContext, useEffect, useState } from "react";
-import { FaRegHeart } from "react-icons/fa";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { BiMessageRounded } from "react-icons/bi";
 import { Avatar, Button } from "@nextui-org/react";
 import { AppContext } from "../../../../context/Provider";
-import axios from "axios";
+import instance from "../../../../core/services/middleware";
+import toast from "react-hot-toast";
 
 function CommentDetailsBox({
   id,
@@ -11,6 +12,7 @@ function CommentDetailsBox({
   newsId,
   pictureAddress,
   currentUserLikeId,
+  currentUserEmotion,
   userId,
   parentId,
   author,
@@ -24,20 +26,32 @@ function CommentDetailsBox({
   myClassName,
 }) {
   const [replies, setReplies] = useState([]);
-  const { setCommentId } = useContext(AppContext);
+  const { setCommentId, reFetch, setReFetch } = useContext(AppContext);
+
+  const addLikeForCourseComment = () => {
+    toast
+      .promise(
+        instance.post(`/Course/AddCourseCommentLike?CourseCommandId=${id}`),
+        {
+          loading: "در حال پردازش",
+          success: "کامنت لایک شد",
+        }
+      )
+      .then(() => setReFetch(true));
+  };
 
   useEffect(() => {
     if (courseId) {
-      axios
+      instance
         .get(`/Course/GetCourseReplyCommnets/${courseId}/${id}`)
         .then((res) => setReplies(res.data));
     }
-    if (newsId) {
-      axios
+    else if (newsId) {
+      instance
         .get(`/News/GetRepliesComments?Id=${id}`)
         .then((res) => setReplies(res.data));
     }
-  }, []);
+  }, [reFetch]);
 
   return (
     <div className={`text-sm xs:text-medium flex flex-col gap-2 py-4`}>
@@ -66,9 +80,21 @@ function CommentDetailsBox({
           {describe}
         </p>
         <div className="flex flex-col xs:flex-row gap-1">
-          <span className="flex items-center gap-1 text-red-500">
-            {likeCount} <FaRegHeart />
-          </span>
+          {currentUserEmotion == "LIKED" ? (
+            <span
+              className="flex items-center gap-1 cursor-pointer text-red-500"
+              onClick={() => console.log(currentUserLikeId)}
+            >
+              {likeCount} <FaHeart />
+            </span>
+          ) : (
+            <span
+              className="flex items-center gap-1 cursor-pointer text-red-500"
+              onClick={addLikeForCourseComment}
+            >
+              {likeCount} <FaRegHeart />
+            </span>
+          )}
           <Button
             className="flex items-center gap-1 bg-transparent p-0"
             onPress={() => {

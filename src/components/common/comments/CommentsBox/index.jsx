@@ -167,15 +167,31 @@ function CommentsBox({
         </Modal>
       </div>
       <div className="mt-5 flex flex-col">
-        {comments.slice(0, count).map((comment) => (
-          <CommentDetailsBox
-            {...comment}
-            key={comment.id}
-            onOpen={onOpen}
-            courseId={courseId}
-            newsId={newsId}
-          />
-        ))}
+        {comments
+          .sort((a, b) => {
+            if (a.insertDate) {
+              return (
+                new Date(a.insertDate).getTime() -
+                new Date(b.insertDate).getTime()
+              );
+            } else {
+              return (
+                new Date(a.inserDate).getTime() -
+                new Date(b.inserDate).getTime()
+              );
+            }
+          })
+          .reverse()
+          .slice(0, count)
+          .map((comment) => (
+            <CommentDetailsBox
+              {...comment}
+              key={comment.id}
+              onOpen={onOpen}
+              courseId={courseId}
+              newsId={newsId}
+            />
+          ))}
       </div>
       <div className="flex justify-center">
         {comments.length < 5 ? null : (
