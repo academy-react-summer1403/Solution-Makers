@@ -1,5 +1,7 @@
+import UserIndex from "../../../components/userPanel/UserIndex";
+
 function UserPanelIndex() {
-  return <div className="bg-green-400">index page of user panel</div>;
+  return <UserIndex />;
 }
 
 export default UserPanelIndex;

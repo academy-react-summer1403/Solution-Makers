@@ -17,6 +17,7 @@ import UserPanelIndex from "./pages/userPanel/Index";
 import UserPanelCourses from "./pages/userPanel/Courses";
 import UserPanelFavoriteCourses from "./pages/userPanel/FavoriteCourses";
 import UserPanelFavoriteArticles from "./pages/userPanel/FavoriteArticles";
+import UserPanelEditProfile from "./pages/userPanel/EditProfile";
 
 const routes = [
   { path: "/", element: <Landing /> },
@@ -29,7 +30,10 @@ const routes = [
   { path: "/login", element: <Login /> },
   { path: "/LoginCodeVerifiction", element: <LoginCodeVerifiction /> },
   { path: "/ForgetPassword", element: <ForgetPassword /> },
-  { path: "/ForgetPasswordVerification", element: <ForgetPasswordVerification /> },
+  {
+    path: "/ForgetPasswordVerification",
+    element: <ForgetPasswordVerification />,
+  },
   { path: "/SignUp", element: <SignUp /> },
   { path: "/SignUpVerification", element: <SignUpVerification /> },
   { path: "/SetPassword", element: <SetPassword /> },
@@ -38,7 +42,7 @@ const routes = [
     element: <UserPanelLayout />,
     children: [
       {
-        path: "",
+        path: "dashboard",
         element: <UserPanelIndex />,
       },
       {
@@ -52,6 +56,10 @@ const routes = [
       {
         path: "favorite-articles",
         element: <UserPanelFavoriteArticles />,
+      },
+      {
+        path: "edit-profile",
+        element: <UserPanelEditProfile />,
       },
     ],
   },

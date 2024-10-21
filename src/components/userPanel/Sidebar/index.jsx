@@ -12,12 +12,12 @@ import { Avatar } from "@nextui-org/react";
 import UserPanelSidebarLink from "./SidebarLink";
 
 function UserPanelSidebar() {
-  const { showUserPanelSidebar, setShowUserPanelSidebar } =
+  const { showUserPanelSidebar, setShowUserPanelSidebar, userInfos } =
     useContext(AppContext);
 
   return (
     <div
-      className={`bg-primary dark:bg-dark-200 absolute z-50 w-[250px] ${
+      className={`bg-primary dark:bg-dark-200 dark:border-l fixed z-50 w-[250px] ${
         showUserPanelSidebar ? "right-0" : "-right-[1000px]"
       } lg:static flex flex-col h-full lg:w-[20%] gap-2 transition-all`}
     >
@@ -27,17 +27,24 @@ function UserPanelSidebar() {
       >
         <IoIosArrowRoundForward size={35} color="white" />
       </span>
-      <div className="flex items-center px-9 py-8 border-b-1 border-[#cacaca] ">
+      <div className="flex flex-col gap-3 items-center justify-center px-9 py-8 border-b-1 border-[#cacaca] ">
         <Avatar
-          src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-          size="lg"
+          src={
+            userInfos.currentPictureAddress == "Not-set"
+              ? "/src/assets/images/notFound/images.png"
+              : userInfos.currentPictureAddress
+          }
+          className="w-28 h-28 text-large"
         />
+        <p className="text-xl text-white">
+          {userInfos.fName} {userInfos.lName}
+        </p>
       </div>
       <div className="flex flex-col gap-2 py-4">
         <UserPanelSidebarLink
           icon={<LuLayoutDashboard size={30} color="white" />}
           text="پیشخوان"
-          link={""}
+          link={"dashboard"}
         />
         <UserPanelSidebarLink
           icon={<PiBookOpenTextBold size={30} color="white" />}
@@ -57,7 +64,7 @@ function UserPanelSidebar() {
         <UserPanelSidebarLink
           icon={<LiaUserEditSolid size={30} color="white" />}
           text="ویرایش پروفایل"
-          link={""}
+          link={"edit-profile"}
         />
         <UserPanelSidebarLink
           icon={<BiLogOut size={30} color="white" />}

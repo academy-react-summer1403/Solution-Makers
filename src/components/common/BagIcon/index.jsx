@@ -19,7 +19,7 @@ function BagIcon() {
         src="/src/assets/images/navbar/shopping-bag.png"
         className="w-6 h-6"
         classNames={{
-          base: "bg-white",
+          base: "bg-transparent",
         }}
       />
     </Badge>

@@ -67,10 +67,8 @@ function UserFavoriteArticles() {
     return <p className="text-xl font-bold m-5">خطا در دریافت اطلاعات</p>;
   }
 
-  // console.log(data?.data?.myFavoriteNews);
-
   return (
-    <div className="mt-16">
+    <div className="mt-16 px-10">
       {data.data.myFavoriteNews.length > 0 ? (
         <Table
           aria-label="Example table with client side pagination"
@@ -149,7 +147,7 @@ function UserFavoriteArticles() {
           </TableBody>
         </Table>
       ) : (
-        <p>هنوز مقاله ای به لیست علاقمندی ها اضافه نشد</p>
+        <p className="text-lg">هنوز مقاله ای به لیست علاقمندی ها اضافه نشد</p>
       )}
     </div>
   );

@@ -38,19 +38,29 @@ function RateSection({
     }
   };
 
-  const addCourseToFavorites = () =>
-    instance
-      .post("/Course/AddCourseFavorite", { courseId: id })
-      .then(() => refetch())
-      .then(() => toast.success("به علاقمندی ها اضافه شد"));
+  const addCourseToFavorites = () => {
+    toast
+      .promise(instance.post("/Course/AddCourseFavorite", { courseId: id }), {
+        loading: "در حال پردازش",
+        success: "به علاقمندی ها اضافه شد",
+        error: "خطایی رخ داد",
+      })
+      .then(() => refetch());
+  };
 
   const removeCourseFromFavorites = () => {
     const formData = new FormData();
     formData.append("CourseFavoriteId", userFavoriteId);
-    instance
-      .delete("/Course/DeleteCourseFavorite", { data: formData })
-      .then(() => refetch())
-      .then(() => toast.success("از علاقمندی ها حذف شد"));
+    toast
+      .promise(
+        instance.delete("/Course/DeleteCourseFavorite", { data: formData }),
+        {
+          loading: "در حال پردازش",
+          success: "از علاقمندی ها اضافه حذف شد",
+          error: "خطایی رخ داد",
+        }
+      )
+      .then(() => refetch());
   };
 
   const addCourseLike = () =>
