@@ -75,7 +75,7 @@ function UserCourses() {
   }
 
   return (
-    <div className="flex flex-col gap-5 mt-14">
+    <div className="flex flex-col gap-5 mt-14 px-10">
       <Input
         placeholder="جستجوی دوره ...."
         aria-label="searchKey"
@@ -89,7 +89,7 @@ function UserCourses() {
         size="lg"
         classNames={{
           base: "max-w-[500px]",
-          inputWrapper: "bg-white px-2 h-14 dark:bg-dark-100",
+          inputWrapper: "bg-white px-2 h-14 dark:bg-dark-100 border-2 border-primary",
         }}
       />
       {data.data.listOfMyCourses.length > 0 ? (

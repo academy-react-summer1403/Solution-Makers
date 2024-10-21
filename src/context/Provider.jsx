@@ -4,6 +4,7 @@ export const AppContext = createContext();
 
 function Provider({ children }) {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+  const [userInfos, setUserInfos] = useState({});
   const [showUserPanelSidebar, setShowUserPanelSidebar] = useState(false);
   const [reFetch, setReFetch] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
@@ -31,6 +32,8 @@ function Provider({ children }) {
       value={{
         theme,
         setTheme,
+        userInfos,
+        setUserInfos,
         reFetch,
         setReFetch,
         isLogin,

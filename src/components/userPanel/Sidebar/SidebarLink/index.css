@@ -1,0 +1,8 @@
+#sidebarNavLink.active {
+  background-color: #0d3c61;
+}
+
+html.dark #sidebarNavLink.active{
+    background-color: #2196f3;
+}
+

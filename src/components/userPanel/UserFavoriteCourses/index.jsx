@@ -55,7 +55,7 @@ function UserFavoriteCourses() {
   }
 
   return (
-    <div className="mt-16">
+    <div className="mt-16 px-10">
       {data.data.favoriteCourseDto.length > 0 ? (
         <Table
           aria-label="Example table with client side pagination"
@@ -134,7 +134,7 @@ function UserFavoriteCourses() {
           </TableBody>
         </Table>
       ) : (
-        <p>هنوز دوره ای به لیست علاقمندی ها اضافه نشد</p>
+        <p className="text-lg">هنوز دوره ای به لیست علاقمندی ها اضافه نشد</p>
       )}
     </div>
   );

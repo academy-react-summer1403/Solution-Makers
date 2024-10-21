@@ -40,21 +40,31 @@ function RateSection({
     }
   };
 
-  const addArticleToFavorites = () =>
-    instance
-      .post(`/News/AddFavoriteNews?NewsId=${id}`)
-      .then(() => refetch())
-      .then(() => toast.success("به علاقمندی ها اضافه شد"));
+  const addArticleToFavorites = () => {
+    toast
+      .promise(instance.post(`/News/AddFavoriteNews?NewsId=${id}`), {
+        loading: "در حال پردازش",
+        success: "به علاقمندی ها اضافه شد",
+        error: "خطایی رخ داد",
+      })
+      .then(() => refetch());
+  };
 
   const removeArticleFromFavorites = () => {
-    instance
-      .delete("/News/DeleteFavoriteNews", {
-        data: {
-          deleteEntityId: currentUserFavoriteId,
-        },
-      })
-      .then(() => refetch())
-      .then(() => toast.success("از علاقمندی ها حذف شد"));
+    toast
+      .promise(
+        instance.delete("/News/DeleteFavoriteNews", {
+          data: {
+            deleteEntityId: currentUserFavoriteId,
+          },
+        }),
+        {
+          loading: "در حال پردازش",
+          success: "از علاقمندی ها اضافه حذف شد",
+          error: "خطایی رخ داد",
+        }
+      )
+      .then(() => refetch());
   };
 
   const addArticleLike = () =>

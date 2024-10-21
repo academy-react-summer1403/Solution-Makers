@@ -9,7 +9,7 @@ function UserPanelNavbar() {
   const { setShowUserPanelSidebar, userNavTitle } = useContext(AppContext);
 
   return (
-    <div className="flex justify-between px-2">
+    <div className="flex justify-between dark:bg-dark-200 px-8 py-4 border-b-2 border-gray dark:border-0">
       <div className="flex items-center gap-4">
         <span className="lg:hidden">
           <HiOutlineBars3
@@ -21,8 +21,10 @@ function UserPanelNavbar() {
         <h2 className="hidden sm:block text-3xl font-bold">{userNavTitle}</h2>
       </div>
       <div className="flex items-center gap-2 sm:gap-4">
-        <ToggleTheme />
-        <Link className="bg-white h-[50px] w-[50px] rounded-full flex items-center justify-center">
+        <span className="flex items-center justify-center rounded-full">
+          <ToggleTheme />
+        </span>
+        <Link className="bg-background h-[50px] w-[50px] rounded-full flex items-center justify-center">
           <BagIcon />
         </Link>
       </div>
