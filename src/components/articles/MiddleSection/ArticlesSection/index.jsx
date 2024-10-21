@@ -6,6 +6,7 @@ import { Pagination } from "@nextui-org/react";
 import { useContext, useEffect } from "react";
 import { AppContext } from "../../../../context/Provider";
 import instance from "../../../../core/services/middleware";
+import toast from "react-hot-toast";
 
 function ArticlesList() {
   const {
@@ -44,6 +45,10 @@ function ArticlesList() {
       />
     );
   }
+
+  useEffect(() => {
+    toast.remove();
+  }, []);
 
   return (
     <>

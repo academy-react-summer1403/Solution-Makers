@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
@@ -48,6 +48,10 @@ function ArticleMainContent() {
     queryKey: ["articleComments"],
     queryFn: () => fetchArticleComments(),
   });
+
+  useEffect(() => {
+    toast.remove();
+  }, []);
 
   if (isLoading) {
     return (
