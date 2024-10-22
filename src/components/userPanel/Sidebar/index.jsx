@@ -4,7 +4,7 @@ import { LuLayoutDashboard } from "react-icons/lu";
 import { PiBookOpenTextBold } from "react-icons/pi";
 import { BiSolidBookHeart } from "react-icons/bi";
 import { GrArticle } from "react-icons/gr";
-import { FaRegComment } from "react-icons/fa";
+import { GoKey } from "react-icons/go";
 import { LiaUserEditSolid } from "react-icons/lia";
 import { BiLogOut } from "react-icons/bi";
 import { IoIosArrowRoundForward } from "react-icons/io";
@@ -20,6 +20,17 @@ function UserPanelSidebar() {
       className={`bg-primary dark:bg-dark-200 dark:border-l fixed z-50 w-[250px] ${
         showUserPanelSidebar ? "right-0" : "-right-[1000px]"
       } lg:static flex flex-col h-full lg:w-[20%] gap-2 transition-all`}
+      onClick={(e) => {
+        if (
+          e.target.nodeName == "A" ||
+          e.target.nodeName == "path" ||
+          e.target.nodeName == "svg"
+        ) {
+          return false;
+        } else {
+          setShowUserPanelSidebar(false);
+        }
+      }}
     >
       <span
         className="absolute left-1 top-1 lg:hidden cursor-pointer"
@@ -65,6 +76,11 @@ function UserPanelSidebar() {
           icon={<LiaUserEditSolid size={30} color="white" />}
           text="ویرایش پروفایل"
           link={"edit-profile"}
+        />
+        <UserPanelSidebarLink
+          icon={<GoKey size={25} color="white" />}
+          text="تغییر رمز عبور"
+          link={"change-password"}
         />
         <UserPanelSidebarLink
           icon={<BiLogOut size={30} color="white" />}

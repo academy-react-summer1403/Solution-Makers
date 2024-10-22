@@ -69,7 +69,7 @@ function UserPanelLayout() {
       <Toaster position="top-center" />
       <UserPanelSidebar />
       <div
-        className={`h-screen w-full lg:w-[80%] flex flex-col overflow-y-scroll ${
+        className={`h-screen w-full lg:w-[80%] flex flex-col overflow-y-auto ${
           showUserPanelSidebar ? "opacity-50 blur-[1px]" : ""
         }`}
       >
