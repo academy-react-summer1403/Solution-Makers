@@ -19,6 +19,7 @@ import UserPanelFavoriteCourses from "./pages/userPanel/FavoriteCourses";
 import UserPanelFavoriteArticles from "./pages/userPanel/FavoriteArticles";
 import UserPanelEditProfile from "./pages/userPanel/EditProfile";
 import UserPanelChangePassword from "./pages/userPanel/ChangePassword";
+import UserPanelComments from "./pages/userPanel/Comments";
 
 const routes = [
   { path: "/", element: <Landing /> },
@@ -57,6 +58,10 @@ const routes = [
       {
         path: "favorite-articles",
         element: <UserPanelFavoriteArticles />,
+      },
+      {
+        path: "comments",
+        element: <UserPanelComments />,
       },
       {
         path: "edit-profile",

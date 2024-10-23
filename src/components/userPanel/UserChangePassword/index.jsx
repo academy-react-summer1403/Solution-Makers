@@ -20,7 +20,7 @@ function UserChangePassword() {
   });
 
   useEffect(() => {
-    setUserNavTitle("تغییر رمز عبور")
+    setUserNavTitle("تغییر رمز عبور");
   }, []);
 
   return (
@@ -37,14 +37,14 @@ function UserChangePassword() {
             {
               loading: "در حال پردازش",
               success: "اطلاعات با موفقیت ثبت شد",
-              error: "لطفا رمز عبور فعلی اشتباه است",
+              error: "رمز عبور فعلی اشتباه است",
             }
           )
           .then(() => resetForm());
       }}
     >
       <Form className="mt-28 mx-6">
-        <div className="flex flex-col gap-3 max-w-[450px] mx-auto p-8 rounded-2xl shadow-2xl dark:shadow-none dark:border-2 dark:border-primary">
+        <div className="flex flex-col gap-5 max-w-[450px] mx-auto p-8 rounded-2xl shadow-2xl dark:shadow-none dark:border-2 dark:border-primary">
           <ChangePasswordInput label="رمز عبور فعلی" name="oldPassword" />
           <ChangePasswordInput label="رمز عبور جدید" name="newPassword" />
           <Button

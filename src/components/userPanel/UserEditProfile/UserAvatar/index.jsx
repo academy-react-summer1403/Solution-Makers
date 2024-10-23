@@ -55,11 +55,14 @@ function UserAvatar() {
     const formData = new FormData();
     formData.append("DeleteEntityId", imageId);
     toast
-      .promise(instance.delete("/SharePanel/DeleteProfileImage"), {
-        loading: "در حال پردازش",
-        success: "عکس با موفقیت حذف شد",
-        error: "خطایی رخ داد",
-      })
+      .promise(
+        instance.delete("/SharePanel/DeleteProfileImage", { data: formData }),
+        {
+          loading: "در حال پردازش",
+          success: "عکس با موفقیت حذف شد",
+          error: "خطایی رخ داد",
+        }
+      )
       .then(() => setReFetch(true));
   };
 

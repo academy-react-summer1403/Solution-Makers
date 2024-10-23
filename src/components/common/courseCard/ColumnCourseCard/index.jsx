@@ -56,14 +56,6 @@ function ColumnCourseCard({
       });
   };
 
-  const linkToDetailsHandler = (e) => {
-    if (e.target.id == "likeHandler" || e.target.id == "likeHandlerIcon") {
-      return;
-    } else {
-      navigate(courseId);
-    }
-  };
-
   useEffect(() => {
     AOS.init();
     AOS.refresh();
@@ -75,9 +67,11 @@ function ColumnCourseCard({
       data-aos="flip-left"
       shadow="sm"
       isPressable
-      onClick={linkToDetailsHandler}
     >
-      <CardHeader className="overflow-visible p-0 max-w-full">
+      <CardHeader
+        className="overflow-visible p-0 max-w-full"
+        onClick={() => navigate(courseId)}
+      >
         <Image
           shadow="sm"
           radius="lg"
@@ -90,7 +84,10 @@ function ColumnCourseCard({
           }
         />
       </CardHeader>
-      <CardBody className="text-right px-0 gap-4 md:gap-0">
+      <CardBody
+        className="text-right px-0 gap-4 md:gap-0"
+        onClick={() => navigate(courseId)}
+      >
         <h3 className="text-lg">{title}</h3>
         <div className="flex flex-col sm:flex-row sm:justify-center lg:text-sm sm:mt-4 p-4 gap-5 sm:gap-14 md:gap-10 lg:gap-5 rounded-[1.5rem] sm:bg-gray dark:bg-dark-100">
           <p className="flex items-center gap-1">

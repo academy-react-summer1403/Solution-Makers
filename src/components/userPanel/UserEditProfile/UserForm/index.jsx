@@ -56,27 +56,31 @@ function UserForm() {
             Email: userInfos.email,
           }}
           validationSchema={UserFormSchema}
-          onSubmit={(values, { resetForm }) => {
+          onSubmit={(values) => {
             console.log(values);
             const formData = new FormData();
             formData.append("FName", values.FName);
             formData.append("LName", values.LName);
-            formData.append("BirthDay", values.BirthDay);
-            formData.append("PhoneNumber" , values.PhoneNumber);
+            formData.append("BirthDay", `${dateInputValue.year}-${dateInputValue.month}-${dateInputValue.day}`);
+            formData.append("PhoneNumber", values.PhoneNumber);
             formData.append("NationalCode", values.NationalCode);
             formData.append("HomeAdderess", values.HomeAdderess);
             formData.append("UserAbout", values.UserAbout);
-            formData.append("Email" , values.Email)
-            values.TelegramLink && formData.append("TelegramLink", values.TelegramLink);
-            values.LinkdinProfile && formData.append("LinkdinProfile", values.LinkdinProfile);
-            toast.promise(
-              instance.put("/SharePanel/UpdateProfileInfo", formData),
-              {
-                loading: "در حال پردازش اطلاعات",
-                success: "اطلاعات با موفقیت ثبت شد",
-                error: "خطایی رخ داد",
-              }
-            ).then(() => setReFetch(true));
+            // formData.append("Email", values.Email);
+            values.TelegramLink &&
+              formData.append("TelegramLink", values.TelegramLink);
+            values.LinkdinProfile &&
+              formData.append("LinkdinProfile", values.LinkdinProfile);
+            toast
+              .promise(
+                instance.put("/SharePanel/UpdateProfileInfo", formData),
+                {
+                  loading: "در حال پردازش اطلاعات",
+                  success: "اطلاعات با موفقیت ثبت شد",
+                  error: "خطایی رخ داد",
+                }
+              )
+              .then(() => setReFetch(true));
           }}
         >
           <Form>
@@ -87,7 +91,7 @@ function UserForm() {
                 label="تاریخ تولد"
                 labelPlacement="outside"
                 value={dateInputValue}
-                onChange={setDateInputValue}
+                onChange={(e) => setDateInputValue(e)}
                 classNames={{
                   input: "font-bold",
                   inputWrapper:
