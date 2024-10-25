@@ -7,6 +7,7 @@ import { GrArticle } from "react-icons/gr";
 import { GoKey } from "react-icons/go";
 import { LiaUserEditSolid } from "react-icons/lia";
 import { IoIosArrowRoundForward } from "react-icons/io";
+import { AiOutlineHome } from "react-icons/ai";
 import { FaRegComment } from "react-icons/fa";
 import { Avatar } from "@nextui-org/react";
 import UserPanelSidebarLink from "./SidebarLink";
@@ -39,7 +40,7 @@ function UserPanelSidebar() {
       >
         <IoIosArrowRoundForward size={35} color="white" />
       </span>
-      <div className="flex flex-col gap-3 items-center justify-center px-9 py-8 border-b-1 border-[#cacaca] ">
+      <div className="flex flex-col gap-3 items-center justify-center px-9 py-5 border-b-1 border-[#cacaca] ">
         <Avatar
           src={
             userInfos.currentPictureAddress == "Not-set"
@@ -88,6 +89,15 @@ function UserPanelSidebar() {
           text="تغییر رمز عبور"
           link={"change-password"}
         />
+        <div className="px-4">
+          <Link
+            to="/"
+            className="flex justify-start items-center gap-3 py-3 px-5 rounded-xl text-white text-medium xl:text-lg hover:bg-[#1e87db] dark:hover:bg-primary"
+          >
+            <AiOutlineHome size={30} />
+            بازگشت به خانه
+          </Link>
+        </div>
         <div className="px-4">
           <Link className="flex justify-start items-center gap-3 py-3 px-5 rounded-xl text-white text-medium xl:text-lg hover:bg-[#1e87db] dark:hover:bg-primary">
             <BiLogOut size={30} />

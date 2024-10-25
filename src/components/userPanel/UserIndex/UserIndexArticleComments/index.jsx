@@ -7,8 +7,8 @@ import { Spinner } from "@nextui-org/react";
 import { useNavigate } from "react-router-dom";
 
 function UserIndexArticlesComments() {
-    const fetchMyArticleComments = () =>
-        instance.get("/SharePanel/GetMyNewsComments")
+  const fetchMyArticleComments = () =>
+    instance.get("/SharePanel/GetMyNewsComments");
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["userIndexArticlesComments"],
@@ -18,7 +18,7 @@ function UserIndexArticlesComments() {
   const navigate = useNavigate();
 
   if (isLoading) {
-    return <Spinner size="lg" />;
+    return <Spinner size="lg" className="m-8" />;
   }
 
   if (data.data.myNewsCommetDtos.length == 0) {
