@@ -2,14 +2,15 @@ import { useContext } from "react";
 import { AppContext } from "../../../context/Provider";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { PiBookOpenTextBold } from "react-icons/pi";
-import { BiSolidBookHeart } from "react-icons/bi";
+import { BiSolidBookHeart, BiLogOut } from "react-icons/bi";
 import { GrArticle } from "react-icons/gr";
 import { GoKey } from "react-icons/go";
 import { LiaUserEditSolid } from "react-icons/lia";
-import { BiLogOut } from "react-icons/bi";
 import { IoIosArrowRoundForward } from "react-icons/io";
+import { FaRegComment } from "react-icons/fa";
 import { Avatar } from "@nextui-org/react";
 import UserPanelSidebarLink from "./SidebarLink";
+import { Link } from "react-router-dom";
 
 function UserPanelSidebar() {
   const { showUserPanelSidebar, setShowUserPanelSidebar, userInfos } =
@@ -73,6 +74,11 @@ function UserPanelSidebar() {
           link={"favorite-articles"}
         />
         <UserPanelSidebarLink
+          icon={<FaRegComment size={25} color="white" />}
+          text="نظرات ثبت شده"
+          link={"comments"}
+        />
+        <UserPanelSidebarLink
           icon={<LiaUserEditSolid size={30} color="white" />}
           text="ویرایش پروفایل"
           link={"edit-profile"}
@@ -82,11 +88,12 @@ function UserPanelSidebar() {
           text="تغییر رمز عبور"
           link={"change-password"}
         />
-        <UserPanelSidebarLink
-          icon={<BiLogOut size={30} color="white" />}
-          text="خروج از حساب"
-          link={""}
-        />
+        <div className="px-4">
+          <Link className="flex justify-start items-center gap-3 py-3 px-5 rounded-xl text-white text-medium xl:text-lg hover:bg-[#1e87db] dark:hover:bg-primary">
+            <BiLogOut size={30} />
+            خروج از حساب
+          </Link>
+        </div>
       </div>
     </div>
   );

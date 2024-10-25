@@ -1,25 +1,32 @@
 import { useContext, useEffect } from "react";
 import { AppContext } from "../../../context/Provider";
+import UserDetails from "./UserDetails";
+import UserIndexFavCourses from "./UserIndexFavCourses";
+import 'swiper/css';
+import UserIndexFavArticles from "./UserIndexFavArticles";
+
+
 
 function UserIndex() {
-    
-    const {userInfos, setUserNavTitle} = useContext(AppContext);
+  const { setUserNavTitle } = useContext(AppContext);
 
-    useEffect(() => {
-        setUserNavTitle("پیشخوان")
-    },[])
-    
+  
 
-    return (
-        <div className="inline-flex flex-wrap text-md md:text-lg gap-16 p-10 border-2 border-primary rounded-xl mx-10 mt-8">
-            <p>نام و نام خانوادگی : {userInfos.fName} {userInfos.lName}</p>
-            <p>تاریخ تولد : {userInfos.birthDay}</p>
-            <p>شماره همراه : {userInfos.phoneNumber}</p>
-            <p>آدرس : {userInfos.homeAdderess}</p>
-            <p>شماره ملی : {userInfos.nationalCode}</p>
-            <p>ایمیل کاربر : {userInfos.email}</p>
-        </div>
-    );
+  useEffect(() => {
+    setUserNavTitle("پیشخوان");
+  }, []);
+
+  return (
+    <div className="flex flex-col gap-8">
+      <UserDetails />
+      <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 px-10 py-5">
+        
+      <UserIndexFavCourses />
+      <UserIndexFavArticles />
+
+      </div>
+    </div>
+  );
 }
 
 export default UserIndex;
