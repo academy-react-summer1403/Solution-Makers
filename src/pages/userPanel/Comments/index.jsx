@@ -1,6 +1,8 @@
+import UserComments from "../../../components/userPanel/UserComments";
+
 function UserPanelComments() {
     return (
-        <div>UserPanelComments Page</div>
+        <UserComments />
     );
 }
 
