@@ -2,14 +2,17 @@ import { useQuery } from "@tanstack/react-query";
 import instance from "../../../../core/services/middleware";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
-import UserIndexCard from "../UserIndexCard";
+import UserIndexCommentCard from "../UserIndexCommentCard";
 import { Spinner } from "@nextui-org/react";
 import { useNavigate } from "react-router-dom";
 
-function UserIndexFavCourses() {
+function UserIndexCoursesComments() {
+  const fetchMyCoursesComments = () =>
+    instance.get("/SharePanel/GetMyCoursesComments");
+
   const { data, isLoading, error } = useQuery({
-    queryKey: ["userIndexFavCourses"],
-    queryFn: () => instance.get("/SharePanel/GetMyFavoriteCourses"),
+    queryKey: ["userIndexCoursesComments"],
+    queryFn: () => fetchMyCoursesComments(),
   });
 
   const navigate = useNavigate();
@@ -18,10 +21,10 @@ function UserIndexFavCourses() {
     return <Spinner size="lg" />;
   }
 
-  if (data.data.favoriteCourseDto.length == 0) {
+  if (data.data.myCommentsDtos.length == 0) {
     return (
       <div className="flex justify-center items-center min-h-[180px] text-xl rounded-2xl border-2 border-primary dark:bg-dark-200">
-        هنوز دوره ای به لیست علاقمندی ها اضافه نشد
+        هنوز برای دوره ای کامنتی ثبت نکردید
       </div>
     );
   }
@@ -37,23 +40,25 @@ function UserIndexFavCourses() {
       modules={[Autoplay]}
       className="mySwiper shadow-xl dark:shadow-none rounded-2xl flex flex-col-reverse"
     >
-      <span
-        className="flex items-center justify-center text-lg lg:text-2xl p-4 cursor-pointer dark:bg-dark-100 bg-primary text-white"
-        onClick={() => navigate("/my-panel/favorite-courses")}
-      >
-        دوره های مورد علاقه من
-      </span>
-      {data.data.favoriteCourseDto.map((course) => (
+      <div className="flex items-center justify-center text-lg lg:text-2xl p-4 cursor-pointer dark:bg-dark-100 bg-primary text-white">
+        آخرین کامنت های من (دوره)
+      </div>
+      {data.data.myCommentsDtos.slice(0, 5).map((comment) => (
         <SwiperSlide
-          key={course.courseId}
+          key={comment.commentId}
           className="flex cursor-pointer dark:bg-dark-200"
-          onClick={() => navigate(`/courses/${course.courseId}`)}
+          onClick={() => navigate("/my-panel/comments")}
         >
-          <UserIndexCard {...course} />
+          <UserIndexCommentCard
+            title={comment.title}
+            describe={comment.describe}
+            replyCount={comment.replyCount}
+            date={comment.insertDate.slice(0, 10)}
+          />
         </SwiperSlide>
       ))}
     </Swiper>
   );
 }
 
-export default UserIndexFavCourses;
+export default UserIndexCoursesComments;

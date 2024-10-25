@@ -38,7 +38,7 @@ function UserIndexFavArticles() {
       className="mySwiper shadow-xl dark:shadow-none rounded-2xl flex flex-col-reverse"
     >
       <div
-        className="flex items-center justify-center text-2xl py-4 cursor-pointer dark:bg-dark-100 bg-primary text-white"
+        className="flex items-center justify-center text-lg lg:text-2xl p-4 cursor-pointer dark:bg-dark-100 bg-primary text-white"
         onClick={() => navigate("/my-panel/favorite-articles")}
       >
         مقاله های مورد علاقه من

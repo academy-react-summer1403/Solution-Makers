@@ -28,7 +28,10 @@ instance.interceptors.response.use(
       case 401:
         toast.error("لطفا اول وارد حساب کاربری خود شوید");
         break;
-        case 404:
+      case 403:
+        toast.error("دسترسی وجود ندارد");
+        break;
+      case 404:
         toast.error("همچین چیزی پیدا نشد");
         break;
       case 422:

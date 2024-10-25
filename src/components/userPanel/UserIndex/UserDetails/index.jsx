@@ -10,7 +10,7 @@ function UserDetails() {
   const navigate = useNavigate();
 
   return (
-    <div className="relative grid justify-center grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 text-md md:text-lg gap-16 p-10 lg:ps-24 border-2 rounded-xl mx-10 mt-8 overflow-hidden min-h-[150px] dark:bg-dark-200">
+    <div className="relative grid justify-center grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 text-md md:text-lg gap-16 p-10 lg:ps-24 border rounded-xl mx-10 mt-8 overflow-hidden min-h-[150px] dark:bg-dark-200">
       <>
         {Object.keys(userInfos).length > 0 && (
           <>
