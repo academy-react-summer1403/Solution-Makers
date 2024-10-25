@@ -59,7 +59,7 @@ function UserPanelLayout() {
     return (
       <BeatLoader
         color="#2196F3"
-        className="bg-white text-center mt-10"
+        className="bg-white dark:bg-black text-center mt-10"
         size={20}
       />
     );
