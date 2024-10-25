@@ -24,25 +24,25 @@ function UserIndexCard({
       </div>
 
       <div className="w-full lg:w-[85%] flex gap-2 flex-col justify-between">
-        <span className="text-start text-sm sm:text-lg">
+        <span className="text-start text-lg">
           {courseTitle && courseTitle}
           {title && title}
         </span>
 
         <div className="flex flex-col items-start md:items-center md:flex-row sm:justify-between">
           {teacheName && (
-            <span className="text-sm sm:text-lg">مدرس : {teacheName}</span>
+            <span className="text-lg">مدرس : {teacheName}</span>
           )}
           {typeName && (
-            <span className="text-sm sm:text-lg">نوع دوره : {typeName}</span>
+            <span className="text-lg">نوع دوره : {typeName}</span>
           )}
           {currentView && (
-            <span className="flex items-center gap-2 text-sm sm:text-lg">
+            <span className="flex items-center gap-2 text-lg">
               {currentView} بازدید <FaEye />
             </span>
           )}
           {currentRate && (
-            <span className="flex items-center py-1 gap-1 text-sm sm:text-lg">
+            <span className="flex items-center py-1 gap-1 text-lg">
               امتیاز :
               {new Array(Math.ceil(currentRate)).fill(0).map((item, index) => (
                 <FaStar key={index} color="#FFC107" className="mb-1" />

@@ -58,7 +58,6 @@ function UserComments() {
         }
       )
       .then((res) => {
-        // console.log(res.data);
         setReplies(res.data);
         toast.remove();
         res.data.length == 0
@@ -112,10 +111,6 @@ function UserComments() {
   useEffect(() => {
     setUserNavTitle("نظرات من");
   });
-
-  // useEffect(() => {
-  // console.log(comment);
-  // }, [comment]);
 
   useEffect(() => {
     console.log(replyOfComment);
@@ -197,7 +192,7 @@ function UserComments() {
                       <div className="flex flex-col gap-8">
                         {replies.map((reply, index) => (
                           <div
-                            className="me-20 bg-purple-400"
+                            className="me-20 shadow-xl rounded-2xl dark:shadow-none"
                             key={index}
                             onClick={() => console.log(reply)}
                           >

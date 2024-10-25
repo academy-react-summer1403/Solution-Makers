@@ -7,7 +7,6 @@ import { useState } from "react";
 
 function CommentBox({
   setIsReplyModalOpen,
-  replyOfComment,
   setReplyOfComment,
   author,
   autor,
@@ -15,30 +14,23 @@ function CommentBox({
   id,
   courseId,
   newsId,
-  commentId,
-  parentId,
+  // commentId,
+  // parentId,
   title,
   describe,
   insertDate,
   inserDate,
   currentUserEmotion,
   currentUserIsLike,
-  currentUserLikeId,
+  currentUserIsDissLike,
+  // currentUserLikeId,
 }) {
   const [isCourseReplyCommentLiked, setIsCourseReplyCommentLiked] = useState(
     currentUserEmotion == "LIKED" ? true : false
   );
-
-  const [isCourseReplyCommentDisliked, setIsCourseReplyCommentDisliked] = useState(
-    currentUserEmotion == "DISSLIKED" ? true : false
-  );
-
-
+  const [isCourseReplyCommentDisliked, setIsCourseReplyCommentDisliked] =
+    useState(currentUserEmotion == "DISSLIKED" ? true : false);
   const [isArticleReplyCommentLiked, setIsArticleReplyCommentLiked] = useState(
-    currentUserIsLike ? true : false
-  );
-
-  const [isArticleReplyCommentDisliked, setIsArticleReplyCommentDisliked] = useState(
     currentUserIsLike ? true : false
   );
 
@@ -54,32 +46,36 @@ function CommentBox({
   };
 
   const dislikeCourseCommentReply = () => {
-    return toast.promise(instance.post(`/Course/AddCourseCommentDissLike?CourseCommandId=${id}`) , {
-      loading: "در حال پردازش",
+    return toast.promise(
+      instance.post(`/Course/AddCourseCommentDissLike?CourseCommandId=${id}`),
+      {
+        loading: "در حال پردازش",
         success: "دیسلایک شد",
         error: "خطایی رخ داد",
-    })
-  }
-
-
-
-
-  const likeArticleCommentReply = () => {
-    return toast.promise(instance.post(`/News/CommentLike/${id}?LikeType=true`), {
-      loading: "در حال پردازش",
-      success: "لایک شد",
-      error: "خطایی رخ داد",
-    });
+      }
+    );
   };
 
-  // const deleteCourseReplyCommentLike = () => {
-  //   toast.promise(instance.delete(`/Course/DeleteCourseCommentLike?CourseCommandId=${id}`) , {
-  //     loading : "در حال پردازش",
-  //     success : "لایک برداشته شد",
-  //     error : "خطایی رخ داد"
-  //   })
-  //   setIsCourseReplyCommentLiked(false);
-  // }
+  const likeArticleCommentReply = () => {
+    return toast.promise(
+      instance.post(`/News/CommentLike/${id}?LikeType=true`),
+      {
+        loading: "در حال پردازش",
+        success: "لایک شد",
+        error: "خطایی رخ داد",
+      }
+    );
+  };
+
+  const deleteArticleReplyCommentLike = () => {
+    return toast.promise(
+      instance.delete("/News/DeleteCommentLikeNews", {
+        data: {
+          deleteEntityId: id,
+        },
+      })
+    );
+  };
 
   return (
     <div className="flex flex-col gap-5 p-5 shadow-xl rounded-xl dark:border dark:shadow-none">
@@ -105,79 +101,69 @@ function CommentBox({
         )}
         {(author || autor) && (
           <div className="flex items-center gap-2">
-
             {courseId && (
               <>
-              <span className="cursor-pointer"
-                onClick={() => {
-                  if (!isCourseReplyCommentLiked) {
-                    likeCourseCommentReply().then(() => {
-                      setIsCourseReplyCommentLiked(true)})
-                      setIsCourseReplyCommentDisliked(false)
-                  }
-                }}
-              >
-                {isCourseReplyCommentLiked ? <BiSolidLike size={22}/> : <BiLike size={22}/>}
-              </span>
-
-
-              <span className="cursor-pointer" onClick={() => {
-                if (!isCourseReplyCommentDisliked) {
-                  dislikeCourseCommentReply().then(() => {
-                    setIsCourseReplyCommentDisliked(true)
-                    setIsCourseReplyCommentLiked(false)
-                  })
-                  
-                }
-              }}>{isCourseReplyCommentDisliked ? <BiSolidDislike size={22}/> : <BiDislike size={22}/>}</span>
+                <span
+                  className="cursor-pointer"
+                  onClick={() => {
+                    if (!isCourseReplyCommentLiked) {
+                      likeCourseCommentReply().then(() => {
+                        setIsCourseReplyCommentLiked(true);
+                      });
+                      setIsCourseReplyCommentDisliked(false);
+                    }
+                  }}
+                >
+                  {isCourseReplyCommentLiked ? (
+                    <BiSolidLike size={22} />
+                  ) : (
+                    <BiLike size={22} />
+                  )}
+                </span>
+                <span
+                  className="cursor-pointer"
+                  onClick={() => {
+                    if (!isCourseReplyCommentDisliked) {
+                      dislikeCourseCommentReply().then(() => {
+                        setIsCourseReplyCommentDisliked(true);
+                        setIsCourseReplyCommentLiked(false);
+                      });
+                    }
+                  }}
+                >
+                  {isCourseReplyCommentDisliked ? (
+                    <BiSolidDislike size={22} />
+                  ) : (
+                    <BiDislike size={22} />
+                  )}
+                </span>
               </>
             )}
-
-
-            
 
             {newsId && (
               <>
-                <span className="cursor-pointer" onClick={() => {
-                if (!isArticleReplyCommentLiked) {
-                  likeArticleCommentReply().then(() => {
-                    setIsArticleReplyCommentLiked(true);
-                    setIsArticleReplyCommentDisliked(false)
-                  })
-                }
-              }}>
-                {isArticleReplyCommentLiked ? <BiSolidLike /> : <BiLike />}
-              </span>
+                <span
+                  className="cursor-pointer"
+                  onClick={() => {
+                    if (!isArticleReplyCommentLiked) {
+                      likeArticleCommentReply().then(() => {
+                        setIsArticleReplyCommentLiked(true);
+                      });
+                    } else {
+                      deleteArticleReplyCommentLike().then(() => {
+                        setIsArticleReplyCommentLiked(false);
+                      });
+                    }
+                  }}
+                >
+                  {isArticleReplyCommentLiked ? (
+                    <BiSolidLike size={22} />
+                  ) : (
+                    <BiLike size={22} />
+                  )}
+                </span>
               </>
             )}
-
-
-            
-
-            {/* <span className="cursor-pointer">
-              <BiLike
-                size={24}
-                onClick={() => {
-                  if (courseId) {
-                    likeCourseCommentReply();
-                  } else {
-                    likeArticleCommentReply();
-                  }
-                }}
-              />
-            </span>
-            <span className="cursor-pointer">
-              <BiDislike size={24} />
-            </span> */}
-
-
-
-
-
-
-
-
-
 
             <span
               className="cursor-pointer"

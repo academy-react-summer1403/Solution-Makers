@@ -33,7 +33,7 @@ function UserPanelLayout() {
   useEffect(() => {
     axios
       .post(`/Sign/Login`, {
-        phoneOrGmail: "sanazkhosravi26@gmail.com",
+        phoneOrGmail: "masg1377@gmail.com",
         password: "123456",
         rememberMe: true,
       })
