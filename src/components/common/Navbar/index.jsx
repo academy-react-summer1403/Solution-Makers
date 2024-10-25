@@ -3,6 +3,10 @@ import {
   NavbarMenuToggle,
   NavbarMenu,
   Button,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  Avatar,
 } from "@nextui-org/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -11,10 +15,13 @@ import NavMenuLink from "./NavMenuLink";
 import ToggleTheme from "../ToggleTheme";
 import BagIcon from "../BagIcon";
 import "./index.css";
+import { getItem } from "../../../core/services/common/storage";
 
 function MyNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
+
+  console.log(getItem("userInfos"));
 
   return (
     <Navbar
@@ -54,6 +61,36 @@ function MyNavbar() {
           <Link className="bg-white h-[50px] w-[50px] rounded-full hidden sm:flex items-center justify-center">
             <BagIcon />
           </Link>
+          {getItem("token") && (
+            <Popover
+              placement="bottom-start"
+              offset={15}
+              classNames={{
+                content: "hidden md:inline-flex dark:border-2",
+                trigger: "hidden md:inline-flex",
+              }}
+            >
+              <PopoverTrigger>
+                <Avatar
+                  src={getItem("userInfos").userImage[0].puctureAddress}
+                  size="md"
+                  className="dark:border-2 cursor-pointer"
+                />
+              </PopoverTrigger>
+              <PopoverContent className="items-start gap-1 px-4 py-2">
+                <Link to="/my-panel/dashboard" className="hover:text-primary">
+                  پنل کاربری
+                </Link>
+                <Link
+                  to="/my-panel/edit-profile"
+                  className="hover:text-primary"
+                >
+                  ویرایش پروفایل
+                </Link>
+                <Link className="hover:text-primary">خروج</Link>
+              </PopoverContent>
+            </Popover>
+          )}
           <Button
             onClick={() => navigate("/login")}
             radius="full"
@@ -67,13 +104,11 @@ function MyNavbar() {
       </div>
 
       <NavbarMenu className="bg-[#e7f0fc] dark:bg-dark-200 space-y-2">
-        <NavMenuLink target="" title="ورود به حساب کاربری" />
-        <NavMenuLink target="" title="پنل کاربری" />
+        <NavMenuLink target="/login" title="ورود به حساب کاربری" />
+        <NavMenuLink target="/my-panel/dashboard" title="پنل کاربری" />
         <NavMenuLink target="" title="سبد خرید" />
-        <NavMenuLink target="" title="دوره‌ها" />
-        <NavMenuLink target="" title="اساتید" />
-        <NavMenuLink target="" title="ارتباط با ما" />
-        <NavMenuLink target="" title="اخبار مقالات" />
+        <NavMenuLink target="/courses" title="دوره‌ها" />
+        <NavMenuLink target="/articles" title="اخبار مقالات" />
         <NavMenuLink target="" title="خروج" />
       </NavbarMenu>
     </Navbar>

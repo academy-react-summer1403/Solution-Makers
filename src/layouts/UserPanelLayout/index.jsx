@@ -46,6 +46,7 @@ function UserPanelLayout() {
   useEffect(() => {
     if (data) {
       setUserInfos(data.data);
+      setItem("userInfos" , data.data)
     }
   }, [data]);
 
