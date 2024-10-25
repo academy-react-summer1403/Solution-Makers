@@ -21,8 +21,6 @@ function MyNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
 
-  console.log(getItem("userInfos"));
-
   return (
     <Navbar
       onMenuOpenChange={setIsMenuOpen}

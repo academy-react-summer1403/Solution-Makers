@@ -15,7 +15,7 @@ function UserIndexFavArticles() {
   const navigate = useNavigate();
 
   if (isLoading) {
-    return <Spinner size="lg" />;
+    return <Spinner size="lg" className="m-8" />;
   }
 
   if (data.data.myFavoriteNews.length == 0) {
