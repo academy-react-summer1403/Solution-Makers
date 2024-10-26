@@ -1,7 +1,10 @@
 import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { BeatLoader } from "react-spinners";
-import instance from "../../../core/services/middleware";
+import {
+  fetchUserReserveCourses,
+  deleteCourseReserve,
+} from "../../../core/api/userPanel/Courses";
 import {
   getKeyValue,
   Pagination,
@@ -13,29 +16,10 @@ import {
   TableRow,
 } from "@nextui-org/react";
 import { BsTrash } from "react-icons/bs";
-import toast from "react-hot-toast";
 
 function UserReserveCourses() {
   const [page, setPage] = useState(1);
   const rowsPerPage = 5;
-
-  const fetchUserReserveCourses = () =>
-    instance.get("/SharePanel/GetMyCoursesReserve");
-
-  const deleteCourseReserve = (id) => {
-    return toast.promise(
-      instance.delete("/CourseReserve", {
-        data: {
-          id,
-        },
-      }),
-      {
-        loading: "در حال پردازش",
-        success: "دوره از لیست رزرو شده ها حذف شد",
-        error: "خطایی رخ داد",
-      }
-    );
-  };
 
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["userReserveCourses"],

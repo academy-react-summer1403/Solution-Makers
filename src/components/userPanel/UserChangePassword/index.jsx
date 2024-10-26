@@ -1,11 +1,10 @@
+import { useContext, useEffect } from "react";
+import { AppContext } from "../../../context/Provider";
 import { Button } from "@nextui-org/react";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
+import { changePassword } from "../../../core/api/userPanel/ChangePassword";
 import ChangePasswordInput from "./ChangePasswordInput";
-import toast from "react-hot-toast";
-import instance from "../../../core/services/middleware";
-import { useContext, useEffect } from "react";
-import { AppContext } from "../../../context/Provider";
 
 function UserChangePassword() {
   const { setUserNavTitle } = useContext(AppContext);
@@ -28,19 +27,9 @@ function UserChangePassword() {
       initialValues={{ oldPassword: "", newPassword: "" }}
       validationSchema={schema}
       onSubmit={(values, { resetForm }) => {
-        toast
-          .promise(
-            instance.post("/SharePanel/ChangePassword", {
-              oldPassword: values.oldPassword,
-              newPassword: values.newPassword,
-            }),
-            {
-              loading: "در حال پردازش",
-              success: "اطلاعات با موفقیت ثبت شد",
-              error: "رمز عبور فعلی اشتباه است",
-            }
-          )
-          .then(() => resetForm());
+        changePassword(values.oldPassword, values.newPassword).then(() =>
+          resetForm()
+        );
       }}
     >
       <Form className="mt-28 mx-6">

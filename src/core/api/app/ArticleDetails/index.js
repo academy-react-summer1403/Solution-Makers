@@ -7,6 +7,16 @@ export const fetchArticleById = (id) => instance.get(`/News/${id}`);
 export const fetchArticleComments = (id) =>
   instance.get(`/News/GetNewsComments?NewsId=${id}`);
 
+export const getArticleCommentsReplies = (commentId) => {
+  return toast.promise(
+    instance.get(`/News/GetRepliesComments?Id=${commentId}`),
+    {
+      loading: "در حال دریافت اطلاعات",
+      error: "خطایی رخ داد",
+    }
+  );
+};
+
 export const addReplyArticleComment = (newsId, title, describe, parentId) => {
   return toast.promise(
     instance.post("/News/CreateNewsReplyComment", {

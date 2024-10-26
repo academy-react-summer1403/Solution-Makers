@@ -5,8 +5,7 @@ import { Button, DateInput } from "@nextui-org/react";
 import UserFormInput from "./UserFormInput";
 import { parseDate } from "@internationalized/date";
 import * as Yup from "yup";
-import instance from "../../../../core/services/middleware";
-import toast from "react-hot-toast";
+import { updateUserInfos } from "../../../../core/api/userPanel/EditProfile";
 
 function UserForm() {
   const { userInfos, setReFetch } = useContext(AppContext);
@@ -57,30 +56,17 @@ function UserForm() {
           }}
           validationSchema={UserFormSchema}
           onSubmit={(values) => {
-            console.log(values);
-            const formData = new FormData();
-            formData.append("FName", values.FName);
-            formData.append("LName", values.LName);
-            formData.append("BirthDay", `${dateInputValue.year}-${dateInputValue.month}-${dateInputValue.day}`);
-            formData.append("PhoneNumber", values.PhoneNumber);
-            formData.append("NationalCode", values.NationalCode);
-            formData.append("HomeAdderess", values.HomeAdderess);
-            formData.append("UserAbout", values.UserAbout);
-            // formData.append("Email", values.Email);
-            values.TelegramLink &&
-              formData.append("TelegramLink", values.TelegramLink);
-            values.LinkdinProfile &&
-              formData.append("LinkdinProfile", values.LinkdinProfile);
-            toast
-              .promise(
-                instance.put("/SharePanel/UpdateProfileInfo", formData),
-                {
-                  loading: "در حال پردازش اطلاعات",
-                  success: "اطلاعات با موفقیت ثبت شد",
-                  error: "خطایی رخ داد",
-                }
-              )
-              .then(() => setReFetch(true));
+            updateUserInfos(
+              values.FName,
+              values.LName,
+              `${dateInputValue.year}-${dateInputValue.month}-${dateInputValue.day}`,
+              values.PhoneNumber,
+              values.NationalCode,
+              values.HomeAdderess,
+              values.UserAbout,
+              values.TelegramLink,
+              values.LinkdinProfile
+            ).then(() => setReFetch(true));
           }}
         >
           <Form>

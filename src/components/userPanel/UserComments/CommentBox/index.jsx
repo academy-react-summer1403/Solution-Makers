@@ -2,6 +2,10 @@ import toast from "react-hot-toast";
 import { BiLike, BiDislike, BiSolidLike, BiSolidDislike } from "react-icons/bi";
 import { FaReply } from "react-icons/fa";
 import instance from "../../../../core/services/middleware";
+import {
+  addLikeForCourseComment,
+  dislikeCourseComment,
+} from "../../../../core/api/app/CourseDetails";
 import { getItem } from "../../../../core/services/common/storage";
 import { useState } from "react";
 
@@ -33,28 +37,6 @@ function CommentBox({
   const [isArticleReplyCommentLiked, setIsArticleReplyCommentLiked] = useState(
     currentUserIsLike ? true : false
   );
-
-  const likeCourseCommentReply = () => {
-    return toast.promise(
-      instance.post(`/Course/AddCourseCommentLike?CourseCommandId=${id}`),
-      {
-        loading: "در حال پردازش",
-        success: "لایک شد",
-        error: "خطایی رخ داد",
-      }
-    );
-  };
-
-  const dislikeCourseCommentReply = () => {
-    return toast.promise(
-      instance.post(`/Course/AddCourseCommentDissLike?CourseCommandId=${id}`),
-      {
-        loading: "در حال پردازش",
-        success: "دیسلایک شد",
-        error: "خطایی رخ داد",
-      }
-    );
-  };
 
   const likeArticleCommentReply = () => {
     return toast.promise(
@@ -107,7 +89,7 @@ function CommentBox({
                   className="cursor-pointer"
                   onClick={() => {
                     if (!isCourseReplyCommentLiked) {
-                      likeCourseCommentReply().then(() => {
+                      addLikeForCourseComment(id).then(() => {
                         setIsCourseReplyCommentLiked(true);
                       });
                       setIsCourseReplyCommentDisliked(false);
@@ -124,7 +106,7 @@ function CommentBox({
                   className="cursor-pointer"
                   onClick={() => {
                     if (!isCourseReplyCommentDisliked) {
-                      dislikeCourseCommentReply().then(() => {
+                      dislikeCourseComment(id).then(() => {
                         setIsCourseReplyCommentDisliked(true);
                         setIsCourseReplyCommentLiked(false);
                       });

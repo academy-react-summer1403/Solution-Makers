@@ -6,6 +6,10 @@ import {
   Image,
 } from "@nextui-org/react";
 import { useEffect, useState } from "react";
+import {
+  addCourseLike,
+  deleteCourseLike,
+} from "../../../../core/api/app/CourseDetails";
 import { GoClock } from "react-icons/go";
 import { IoCalendarOutline } from "react-icons/io5";
 import { FiBookOpen } from "react-icons/fi";
@@ -13,8 +17,6 @@ import { FaHeart, FaRegHeart } from "react-icons/fa";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
-import instance from "../../../../core/services/middleware";
 
 function ColumnCourseCard({
   courseId,
@@ -30,31 +32,7 @@ function ColumnCourseCard({
 }) {
   const [likesNumber, setLikesNumber] = useState(likeCount);
   const [isLiked, setIsLiked] = useState(userIsLiked);
-
   const navigate = useNavigate();
-
-  const addCourseLike = () =>
-    instance
-      .post(`/Course/AddCourseLike?CourseId=${courseId}`)
-      .then(() => refetch())
-      .then(() => {
-        setLikesNumber((prev) => prev + 1);
-        setIsLiked((prev) => !prev);
-        toast.success("لایک شد");
-      });
-
-  const deleteCourseLike = () => {
-    const formData = new FormData();
-    formData.append("CourseLikeId", userLikedId);
-    instance
-      .delete("/Course/DeleteCourseLike", { data: formData })
-      .then(() => refetch())
-      .then(() => {
-        toast.success("لایک برداشته شد");
-        setIsLiked((prev) => !prev);
-        setLikesNumber((prev) => prev - 1);
-      });
-  };
 
   useEffect(() => {
     AOS.init();
@@ -113,7 +91,13 @@ function ColumnCourseCard({
           <span
             id="likeHandler"
             className="flex items-center gap-1 text-lg text-[#f44336] bg-[#ffebee] py-2 px-5 rounded-full"
-            onClick={deleteCourseLike}
+            onClick={() =>
+              deleteCourseLike(userLikedId).then(() => {
+                refetch();
+                setIsLiked((prev) => !prev);
+                setLikesNumber((prev) => prev - 1);
+              })
+            }
           >
             <FaHeart id="likeHandlerIcon" />
             {likesNumber}
@@ -122,7 +106,13 @@ function ColumnCourseCard({
           <span
             id="likeHandler"
             className="flex items-center gap-1 text-lg text-[#f44336] bg-[#ffebee] py-2 px-5 rounded-full"
-            onClick={addCourseLike}
+            onClick={() =>
+              addCourseLike(courseId).then(() => {
+                refetch();
+                setLikesNumber((prev) => prev + 1);
+                setIsLiked((prev) => !prev);
+              })
+            }
           >
             <FaRegHeart id="likeHandlerIcon" />
             {likesNumber}

@@ -3,8 +3,8 @@ import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { BiMessageRounded } from "react-icons/bi";
 import { Avatar, Button } from "@nextui-org/react";
 import { AppContext } from "../../../../context/Provider";
+import { addLikeForCourseComment } from "../../../../core/api/app/CourseDetails";
 import instance from "../../../../core/services/middleware";
-import toast from "react-hot-toast";
 
 function CommentDetailsBox({
   id,
@@ -28,25 +28,12 @@ function CommentDetailsBox({
   const [replies, setReplies] = useState([]);
   const { setCommentId, reFetch, setReFetch } = useContext(AppContext);
 
-  const addLikeForCourseComment = () => {
-    toast
-      .promise(
-        instance.post(`/Course/AddCourseCommentLike?CourseCommandId=${id}`),
-        {
-          loading: "در حال پردازش",
-          success: "کامنت لایک شد",
-        }
-      )
-      .then(() => setReFetch(true));
-  };
-
   useEffect(() => {
     if (courseId) {
       instance
         .get(`/Course/GetCourseReplyCommnets/${courseId}/${id}`)
         .then((res) => setReplies(res.data));
-    }
-    else if (newsId) {
+    } else if (newsId) {
       instance
         .get(`/News/GetRepliesComments?Id=${id}`)
         .then((res) => setReplies(res.data));
@@ -90,7 +77,9 @@ function CommentDetailsBox({
           ) : (
             <span
               className="flex items-center gap-1 cursor-pointer text-red-500"
-              onClick={addLikeForCourseComment}
+              onClick={() =>
+                addLikeForCourseComment(id).then(() => setReFetch(true))
+              }
             >
               {likeCount} <FaRegHeart />
             </span>

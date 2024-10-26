@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { BeatLoader } from "react-spinners";
-import instance from "../../../../core/services/middleware";
+import { fetchUserArticleComments } from "../../../../core/api/userPanel/Comments";
 import {
   getKeyValue,
   Pagination,
@@ -18,12 +18,9 @@ function ArticleComments({ setComment, onOpen }) {
   const [page, setPage] = useState(1);
   const rowsPerPage = 5;
 
-  const fetchMyArticleComments = () =>
-    instance.get("/SharePanel/GetMyNewsComments");
-
   const { data, isLoading, error } = useQuery({
     queryKey: ["myArticleComments"],
-    queryFn: () => fetchMyArticleComments(),
+    queryFn: () => fetchUserArticleComments(),
   });
 
   const items = useMemo(() => {
@@ -49,7 +46,7 @@ function ArticleComments({ setComment, onOpen }) {
   }
 
   if (error) {
-    return <p className="text-xl font-bold m-5">خطا در دریافت اطلاعات</p>;
+    return <p className="text-xl font-bold m-5 px-10">خطا در دریافت اطلاعات</p>;
   }
 
   return (
