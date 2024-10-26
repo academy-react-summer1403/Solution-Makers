@@ -1,49 +1,37 @@
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import {
+  fetchCourseById,
+  fetchCourseComments,
+  addCommentCourse,
+} from "../../../core/api/app/CourseDetails";
 import { BeatLoader } from "react-spinners";
 import CourseRateSection from "../CourseRateSection";
 import CommentsBox from "../../common/comments/CommentsBox";
 import CourseDetailsTabs from "../CourseDetailsTabs";
 import CourseDescription from "../CourseDescription";
 import CourseSpecificationsBox from "../CourseSpecificationsBox";
-import instance from "../../../core/services/middleware";
 import toast from "react-hot-toast";
 import { AppContext } from "../../../context/Provider";
+import { Button } from "@nextui-org/react";
 
 function CourseMainContent() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const { reFetch, setReFetch } = useContext(AppContext);
   const [showBox, setShowBox] = useState("descriptions");
-  const [commentBody, setCommentBody] = useState("");
   const [commentTitle, setCommentTitle] = useState("");
-
-  const addComment = () => {
-    const formData = new FormData();
-    formData.append("CourseId", id);
-    formData.append("Title", commentTitle);
-    formData.append("Describe", commentBody);
-    instance.post("/Course/AddCommentCourse", formData).then(() => {
-      toast.success("عملیات با موفقیت انجام شد");
-      setCommentBody("");
-      setCommentTitle("");
-    });
-  };
-
-  const fetchCourseById = () =>
-    instance.get(`/Home/GetCourseDetails?CourseId=${id}`);
-
-  const fetchCourseComments = () =>
-    instance.get(`/Course/GetCourseCommnets/${id}`);
+  const [commentBody, setCommentBody] = useState("");
 
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["course", id],
-    queryFn: () => fetchCourseById(),
+    queryFn: () => fetchCourseById(id),
   });
 
   const comments = useQuery({
     queryKey: ["courseComments"],
-    queryFn: () => fetchCourseComments(),
+    queryFn: () => fetchCourseComments(id),
   });
 
   useEffect(() => {
@@ -54,6 +42,25 @@ function CourseMainContent() {
   useEffect(() => {
     toast.remove();
   }, []);
+
+  if (error) {
+    return (
+      <div className="flex flex-col justify-center gap-8 mt-14">
+        <span className=" text-center text-2xl">
+          دریافت اطلاعات با خطا مواجه گردید
+        </span>
+        <span className="text-center">
+          <Button
+            color="primary"
+            className="text-lg py-6 dark:bg-dark-100"
+            onClick={() => navigate("/courses")}
+          >
+            بازگشت به صفحه دوره ها
+          </Button>
+        </span>
+      </div>
+    );
+  }
 
   if (isLoading) {
     return (
@@ -109,7 +116,12 @@ function CourseMainContent() {
                 setCommentTitle={setCommentTitle}
                 commentBody={commentBody}
                 setCommentBody={setCommentBody}
-                addComment={addComment}
+                addComment={() =>
+                  addCommentCourse(id, commentTitle, commentBody).then(() => {
+                    setCommentTitle("");
+                    setCommentBody("");
+                  })
+                }
                 refetch={comments.refetch}
               />
             )}
