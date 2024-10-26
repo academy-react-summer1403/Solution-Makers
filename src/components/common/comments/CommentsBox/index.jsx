@@ -11,9 +11,8 @@ import {
   ModalFooter,
   useDisclosure,
 } from "@nextui-org/react";
-import instance from "../../../../core/services/middleware";
-import toast from "react-hot-toast";
-import { getItem } from "../../../../core/services/common/storage";
+import { addReplyCourseComment } from "../../../../core/api/app/CourseDetails";
+import { addReplyArticleComment } from "../../../../core/api/app/ArticleDetails";
 
 function CommentsBox({
   courseId,
@@ -34,35 +33,9 @@ function CommentsBox({
   const [replyTitle, setReplyTitle] = useState("");
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
-  const addReplyCourseComment = () => {
-    const formData = new FormData();
-    formData.append("CommentId", commentId);
-    formData.append("CourseId", courseId);
-    formData.append("Title", replyTitle);
-    formData.append("Describe", replyBody);
-    instance.post("/Course/AddReplyCourseComment", formData).then(() => {
-      toast.success("عملیات با موفقیت انجام شد");
-      setReplyBody("");
-      setReplyTitle("");
-    });
-  };
-
-  const addReplyArticleComment = () => {
-    instance
-      .post("/News/CreateNewsReplyComment", {
-        newsId,
-        userIpAddress: "tesssst",
-        title: replyTitle,
-        describe: replyBody,
-        userId: String(getItem("userId")),
-        parentId: commentId,
-      })
-      .then(() => {
-        toast.success("عملیات با موفقیت انجام شد");
-        setReplyBody("");
-        setReplyTitle("");
-      });
-  };
+  if (error) {
+    return <span className="text-lg">دریافت کامنت ها با خطا مواجه گردید</span>;
+  }
 
   if (isLoading) {
     return (
@@ -151,9 +124,25 @@ function CommentsBox({
                     color="primary"
                     onPress={() => {
                       if (courseId) {
-                        addReplyCourseComment();
+                        addReplyCourseComment(
+                          commentId,
+                          courseId,
+                          replyTitle,
+                          replyBody
+                        ).then(() => {
+                          setReplyBody("");
+                          setReplyTitle("");
+                        });
                       } else {
-                        addReplyArticleComment();
+                        addReplyArticleComment(
+                          newsId,
+                          replyTitle,
+                          replyBody,
+                          commentId
+                        ).then(() => {
+                          setReplyBody("");
+                          setReplyTitle("");
+                        });
                       }
                       onClose();
                     }}

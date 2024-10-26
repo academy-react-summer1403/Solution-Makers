@@ -5,7 +5,14 @@ import { BiSolidLike, BiSolidDislike } from "react-icons/bi";
 import { CiStar } from "react-icons/ci";
 import { FaStar } from "react-icons/fa";
 import { FaRegBookmark, FaBookmark } from "react-icons/fa";
-import instance from "../../../core/services/middleware";
+import {
+  submitScoreForCourse,
+  addCourseToFavorites,
+  removeCourseFromFavorites,
+  addCourseLike,
+  addCourseDislike,
+  deleteCourseLike,
+} from "../../../core/api/app/CourseDetails";
 import toast from "react-hot-toast";
 
 function RateSection({
@@ -24,65 +31,6 @@ function RateSection({
   const [isLiked, setIsLiked] = useState(currentUserLike);
   const [isDisLiked, setIsDisLiked] = useState(currentUserDissLike);
   const [isFavorite, setIsFavorite] = useState(isUserFavorite);
-
-  const submitScoreForCourse = () => {
-    if (!currentUserSetRate) {
-      instance
-        .post(`/Course/SetCourseRating?CourseId=${id}&RateNumber=${score}`)
-        .then(() => toast.success("امتیاز ثبت شد"))
-        .then(() => refetch());
-    } else {
-      toast.error(
-        `شما قبلا به این دوره امتیاز ${currentUserRateNumber} را دادید`
-      );
-    }
-  };
-
-  const addCourseToFavorites = () => {
-    toast
-      .promise(instance.post("/Course/AddCourseFavorite", { courseId: id }), {
-        loading: "در حال پردازش",
-        success: "به علاقمندی ها اضافه شد",
-        error: "خطایی رخ داد",
-      })
-      .then(() => refetch());
-  };
-
-  const removeCourseFromFavorites = () => {
-    const formData = new FormData();
-    formData.append("CourseFavoriteId", userFavoriteId);
-    toast
-      .promise(
-        instance.delete("/Course/DeleteCourseFavorite", { data: formData }),
-        {
-          loading: "در حال پردازش",
-          success: "از علاقمندی ها اضافه حذف شد",
-          error: "خطایی رخ داد",
-        }
-      )
-      .then(() => refetch());
-  };
-
-  const addCourseLike = () =>
-    instance
-      .post(`/Course/AddCourseLike?CourseId=${id}`)
-      .then(() => refetch())
-      .then(() => toast.success("لایک شد"));
-
-  const addCourseDislike = () =>
-    instance
-      .post(`/Course/AddCourseDissLike?CourseId=${id}`)
-      .then(() => refetch())
-      .then(() => toast.success("دیسلایک شد"));
-
-  const deleteCourseLike = () => {
-    const formData = new FormData();
-    formData.append("CourseLikeId", userLikeId);
-    instance
-      .delete("/Course/DeleteCourseLike", { data: formData })
-      .then(() => refetch())
-      .then(() => toast.success("لایک برداشته شد"));
-  };
 
   return (
     <div className="flex gap-8 flex-col xl:flex-row justify-between mt-12">
@@ -108,11 +56,19 @@ function RateSection({
             />
           ))}
         </div>
-        <p>امتیاز بدید</p>
+        <span>امتیاز بدید</span>
         <div>
           <Button
             className="text-[16px] text-white bg-primary rounded-full"
-            onClick={submitScoreForCourse}
+            onClick={() => {
+              if (!currentUserSetRate) {
+                submitScoreForCourse(id, score).then(() => refetch());
+              } else {
+                toast.error(
+                  `شما قبلا به این دوره امتیاز ${currentUserRateNumber} را دادید`
+                );
+              }
+            }}
           >
             ثبت امتیاز
           </Button>
@@ -124,7 +80,7 @@ function RateSection({
           <Button
             className="rounded-full bg-primary text-white"
             onClick={() => {
-              deleteCourseLike();
+              deleteCourseLike(userLikeId).then(() => refetch());
               setIsLiked(false);
             }}
           >
@@ -134,7 +90,7 @@ function RateSection({
           <Button
             className="rounded-full bg-primary text-white"
             onClick={() => {
-              addCourseLike();
+              addCourseLike(id).then(() => refetch());
               if (!isLiked && !isDisLiked) {
                 setIsLiked((prev) => !prev);
               } else {
@@ -154,7 +110,7 @@ function RateSection({
           <Button
             className="rounded-full bg-primary text-white"
             onClick={() => {
-              addCourseDislike();
+              addCourseDislike(id).then(() => refetch());
               if (!isLiked && !isDisLiked) {
                 setIsDisLiked((prev) => !prev);
               } else {
@@ -170,7 +126,7 @@ function RateSection({
           <Button
             className="rounded-full bg-primary text-white"
             onClick={() => {
-              removeCourseFromFavorites();
+              removeCourseFromFavorites(userFavoriteId).then(() => refetch());
               setIsFavorite((prev) => !prev);
             }}
           >
@@ -180,7 +136,7 @@ function RateSection({
           <Button
             className="rounded-full bg-primary text-white"
             onClick={() => {
-              addCourseToFavorites();
+              addCourseToFavorites(id).then(() => refetch());
               setIsFavorite((prev) => !prev);
             }}
           >

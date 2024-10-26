@@ -1,11 +1,11 @@
 import { useContext, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { fetchCourses } from "../../../../../core/api/app/Courses";
 import { Pagination } from "@nextui-org/react";
 import ColumnCourseCard from "../../../../common/courseCard/ColumnCourseCard";
 import RowCourseCard from "../../../../common/courseCard/RowCourseCard";
 import { AppContext } from "../../../../../context/Provider";
 import ColumnCourseCardSkeleton from "../../../../common/courseCard/ColumnCourseCard/Skeleton";
-import instance from "../../../../../core/services/middleware";
 
 function CoursesList() {
   const {
@@ -26,24 +26,23 @@ function CoursesList() {
     costUp,
   } = useContext(AppContext);
 
-  const fetchCourses = () =>
-    instance.get(
-      `/Home/GetCoursesWithPagination?PageNumber=${coursesPageNumber}&RowsOfPage=${rowsOfPage}${
-        courseLevelId ? `&courseLevelId=${courseLevelId}` : ""
-      }${courseTypeId ? `&CourseTypeId=${courseTypeId}` : ""}${
-        teacherId ? `&TeacherId=${teacherId}` : ""
-      }${listTech.length > 0 ? `&ListTech=${listTech.join(",")}` : ""}${
-        techCount ? `&TechCount=${String(techCount)}` : ""
-      }${coursesSortingCol ? `&SortingCol=${coursesSortingCol}` : ""}${
-        coursesQuery ? `&Query=${coursesQuery}` : ""
-      }${coursesSortType == "DESC" ? "&SortType=DESC" : "&SortType=ASC"}${
-        costDown ? `&CostDown=${costDown}` : ""
-      }${costUp ? `&CostUp=${costUp}` : ""}`
-    );
-
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["courses", coursesPageNumber],
-    queryFn: () => fetchCourses(),
+    queryFn: () =>
+      fetchCourses(
+        coursesPageNumber,
+        rowsOfPage,
+        courseLevelId,
+        courseTypeId,
+        teacherId,
+        listTech,
+        techCount,
+        coursesSortingCol,
+        coursesQuery,
+        coursesSortType,
+        costDown,
+        costUp
+      ),
   });
 
   useEffect(() => {
@@ -94,7 +93,11 @@ function CoursesList() {
               <>
                 {rowsOfPage == 9
                   ? data.data.courseFilterDtos.map((course) => (
-                      <ColumnCourseCard {...course} key={course.courseId} refetch={refetch} />
+                      <ColumnCourseCard
+                        {...course}
+                        key={course.courseId}
+                        refetch={refetch}
+                      />
                     ))
                   : data.data.courseFilterDtos.map((course) => (
                       <RowCourseCard {...course} key={course.courseId} />

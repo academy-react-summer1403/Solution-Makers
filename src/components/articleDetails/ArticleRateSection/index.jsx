@@ -5,7 +5,14 @@ import { BiSolidLike, BiSolidDislike } from "react-icons/bi";
 import { CiStar } from "react-icons/ci";
 import { FaStar } from "react-icons/fa";
 import { FaRegBookmark, FaBookmark } from "react-icons/fa";
-import instance from "../../../core/services/middleware";
+import {
+  submitScoreForArticle,
+  addArticleToFavorites,
+  removeArticleFromFavorites,
+  addArticleLike,
+  addArticleDislike,
+  deleteArticleLike,
+} from "../../../core/api/app/ArticleDetails";
 import toast from "react-hot-toast";
 
 function RateSection({
@@ -26,69 +33,6 @@ function RateSection({
   const [isLiked, setIsLiked] = useState(currentUserIsLike);
   const [isDisLiked, setIsDisLiked] = useState(currentUserIsDissLike);
   const [isFavorite, setIsFavorite] = useState(isCurrentUserFavorite);
-
-  const submitScoreForArticle = () => {
-    if (!currentUserSetRate) {
-      instance
-        .post(`/News/NewsRate?NewsId=${id}&RateNumber=${score}`)
-        .then(() => toast.success("امتیاز ثبت شد"))
-        .then(() => refetch());
-    } else {
-      toast.error(
-        `شما قبلا به این دوره امتیاز ${currentUserRateNumber} را دادید`
-      );
-    }
-  };
-
-  const addArticleToFavorites = () => {
-    toast
-      .promise(instance.post(`/News/AddFavoriteNews?NewsId=${id}`), {
-        loading: "در حال پردازش",
-        success: "به علاقمندی ها اضافه شد",
-        error: "خطایی رخ داد",
-      })
-      .then(() => refetch());
-  };
-
-  const removeArticleFromFavorites = () => {
-    toast
-      .promise(
-        instance.delete("/News/DeleteFavoriteNews", {
-          data: {
-            deleteEntityId: currentUserFavoriteId,
-          },
-        }),
-        {
-          loading: "در حال پردازش",
-          success: "از علاقمندی ها اضافه حذف شد",
-          error: "خطایی رخ داد",
-        }
-      )
-      .then(() => refetch());
-  };
-
-  const addArticleLike = () =>
-    instance
-      .post(`/News/NewsLike/${id}`)
-      .then(() => refetch())
-      .then(() => toast.success("لایک شد"));
-
-  const addArticleDislike = () =>
-    instance
-      .post(`/News/NewsDissLike/${id}`)
-      .then(() => refetch())
-      .then(() => toast.success("دیسلایک شد"));
-
-  const deleteArticleLike = () => {
-    instance
-      .delete("/News/DeleteLikeNews", {
-        data: {
-          deleteEntityId: likeId,
-        },
-      })
-      .then(() => refetch())
-      .then(() => toast.success("لایک برداشته شد"));
-  };
 
   return (
     <div className="flex gap-8 flex-col xl:flex-row justify-between mt-12">
@@ -114,11 +58,19 @@ function RateSection({
             />
           ))}
         </div>
-        <p>امتیاز بدید</p>
+        <span>امتیاز بدید</span>
         <div>
           <Button
             className="text-[16px] text-white bg-primary rounded-full"
-            onClick={submitScoreForArticle}
+            onClick={() => {
+              if (!currentUserSetRate) {
+                submitScoreForArticle(id, score).then(() => refetch());
+              } else {
+                toast.error(
+                  `شما قبلا به این دوره امتیاز ${currentUserRateNumber} را دادید`
+                );
+              }
+            }}
           >
             ثبت امتیاز
           </Button>
@@ -130,7 +82,7 @@ function RateSection({
           <Button
             className="rounded-full bg-primary text-white"
             onClick={() => {
-              deleteArticleLike();
+              deleteArticleLike(likeId).then(() => refetch());
               setIsLiked(false);
             }}
           >
@@ -140,7 +92,7 @@ function RateSection({
           <Button
             className="rounded-full bg-primary text-white"
             onClick={() => {
-              addArticleLike();
+              addArticleLike(id).then(() => refetch());
               if (!isLiked && !isDisLiked) {
                 setIsLiked((prev) => !prev);
               } else {
@@ -160,7 +112,7 @@ function RateSection({
           <Button
             className="rounded-full bg-primary text-white"
             onClick={() => {
-              addArticleDislike();
+              addArticleDislike(id).then(() => refetch());
               if (!isLiked && !isDisLiked) {
                 setIsDisLiked((prev) => !prev);
               } else {
@@ -176,7 +128,9 @@ function RateSection({
           <Button
             className="rounded-full bg-primary text-white"
             onClick={() => {
-              removeArticleFromFavorites();
+              removeArticleFromFavorites(currentUserFavoriteId).then(() =>
+                refetch()
+              );
               setIsFavorite((prev) => !prev);
             }}
           >
@@ -186,7 +140,7 @@ function RateSection({
           <Button
             className="rounded-full bg-primary text-white"
             onClick={() => {
-              addArticleToFavorites();
+              addArticleToFavorites(id).then(() => refetch());
               setIsFavorite((prev) => !prev);
             }}
           >

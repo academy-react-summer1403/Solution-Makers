@@ -1,57 +1,58 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { BeatLoader } from "react-spinners";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { GoDotFill } from "react-icons/go";
 import { IoCalendarOutline } from "react-icons/io5";
-import { Avatar } from "@nextui-org/react";
+import { Avatar, Button } from "@nextui-org/react";
 import CommentsBox from "../../common/comments/CommentsBox";
 import ArticleRateSection from "../ArticleRateSection";
-import instance from "../../../core/services/middleware";
-import { getItem } from "../../../core/services/common/storage";
+import {
+  addArticleComment,
+  fetchArticleById,
+  fetchArticleComments,
+} from "../../../core/api/app/ArticleDetails";
 import toast from "react-hot-toast";
 
 function ArticleMainContent() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [commentBody, setCommentBody] = useState("");
   const [commentTitle, setCommentTitle] = useState("");
 
-  const addComment = () => {
-    instance
-      .post("/News/CreateNewsComment", {
-        newsId: id,
-        userIpAddress: "tesssst",
-        title: commentTitle,
-        describe: commentBody,
-        userId: String(getItem("userId")),
-      })
-      .then(() => {
-        toast.success("عملیات با موفقیت انجام شد");
-        setCommentBody("");
-        setCommentTitle("");
-      });
-  };
-
-  const fetchArticleById = () => instance.get(`/News/${id}`);
-
-  const fetchArticleComments = () =>
-    axios.get(`/News/GetNewsComments?NewsId=${id}`);
-
-  const { data, isLoading, isError, refetch } = useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["article", id],
-    queryFn: () => fetchArticleById(),
+    queryFn: () => fetchArticleById(id),
   });
 
   const comments = useQuery({
     queryKey: ["articleComments"],
-    queryFn: () => fetchArticleComments(),
+    queryFn: () => fetchArticleComments(id),
   });
 
   useEffect(() => {
     toast.remove();
   }, []);
+
+  if (error) {
+    return (
+      <div className="flex flex-col justify-center gap-8 mt-14">
+        <span className=" text-center text-2xl">
+          دریافت اطلاعات با خطا مواجه گردید
+        </span>
+        <span className="text-center">
+          <Button
+            color="primary"
+            className="text-lg py-6 dark:bg-dark-100"
+            onClick={() => navigate("/articles")}
+          >
+            بازگشت به صفحه مقاله ها
+          </Button>
+        </span>
+      </div>
+    );
+  }
 
   if (isLoading) {
     return (
@@ -142,7 +143,12 @@ function ArticleMainContent() {
               commentTitle={commentTitle}
               setCommentBody={setCommentBody}
               setCommentTitle={setCommentTitle}
-              addComment={addComment}
+              addComment={() =>
+                addArticleComment(id, commentTitle, commentBody).then(() => {
+                  setCommentTitle("");
+                  setCommentBody("");
+                })
+              }
             />
           </div>
         </div>
