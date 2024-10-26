@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import instance from "../../../core/services/middleware";
+import { fetchUserFavoriteArticles } from "../../../core/api/userPanel/Articles";
+import { removeArticleFromFavorites } from "../../../core/api/app/ArticleDetails";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { AppContext } from "../../../context/Provider";
 import { BeatLoader } from "react-spinners";
@@ -16,19 +17,15 @@ import {
 import { BsTrash } from "react-icons/bs";
 import { FaEye } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import toast from "react-hot-toast";
 
 function UserFavoriteArticles() {
   const { setUserNavTitle } = useContext(AppContext);
   const [page, setPage] = useState(1);
   const rowsPerPage = 5;
 
-  const fetchFavoriteArticles = () =>
-    instance.get("/SharePanel/GetMyFavoriteNews");
-
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["favArticles"],
-    queryFn: () => fetchFavoriteArticles(),
+    queryFn: () => fetchUserFavoriteArticles(),
   });
 
   const items = useMemo(() => {
@@ -36,18 +33,6 @@ function UserFavoriteArticles() {
     const end = start + rowsPerPage;
     return data?.data.myFavoriteNews.slice(start, end);
   }, [page, data?.data.myFavoriteNews]);
-
-  const removeArticleFromFavorites = (favoriteId) => {
-    toast.promise(instance
-      .delete("/News/DeleteFavoriteNews", {
-        data: {
-          deleteEntityId: favoriteId,
-        },
-      }) , {
-        loading : "در حال پردازش",
-        success : "مقاله از لیست علاقمندی ها حذف شد"
-      }).then(() => refetch())
-  };
 
   useEffect(() => {
     setUserNavTitle("مقاله های های مورد علاقه");
@@ -130,7 +115,11 @@ function UserFavoriteArticles() {
               delete: (
                 <span
                   className="inline-flex items-center justify-center p-1 cursor-pointer"
-                  onClick={() => removeArticleFromFavorites(item.favoriteId)}
+                  onClick={() =>
+                    removeArticleFromFavorites(item.favoriteId).then(() =>
+                      refetch()
+                    )
+                  }
                 >
                   <BsTrash size={22} color="#E4125B" />
                 </span>

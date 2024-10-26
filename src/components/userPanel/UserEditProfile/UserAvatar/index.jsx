@@ -14,8 +14,11 @@ import {
 } from "@nextui-org/react";
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../../../context/Provider";
-import instance from "../../../../core/services/middleware";
-import toast from "react-hot-toast";
+import {
+  uploadProfileImage,
+  selectProfileImage,
+  deleteProfileImage,
+} from "../../../../core/api/userPanel/EditProfile";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "./index.css";
@@ -26,45 +29,6 @@ function UserAvatar() {
   const { userInfos, setReFetch, setUserNavTitle } = useContext(AppContext);
   const [profileImage, setProfileImage] = useState({});
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
-  const uploadProfileImage = () => {
-    const formData = new FormData();
-    formData.append("formFile", profileImage);
-    toast
-      .promise(instance.post("/SharePanel/AddProfileImage", formData), {
-        loading: "در حال آپلود عکس",
-        success: "عکس با موفقیت آپلود شد",
-        error: "خطایی رخ داد",
-      })
-      .then(() => setReFetch(true));
-  };
-
-  const selectProfileImage = (imageId) => {
-    const formData = new FormData();
-    formData.append("ImageId", imageId);
-    toast
-      .promise(instance.post("/SharePanel/SelectProfileImage", formData), {
-        loading: "در حال پردازش",
-        success: "عکس با موفقیت انتخاب شد",
-        error: "خطایی رخ داد",
-      })
-      .then(() => setReFetch(true));
-  };
-
-  const deleteProfileImage = (imageId) => {
-    const formData = new FormData();
-    formData.append("DeleteEntityId", imageId);
-    toast
-      .promise(
-        instance.delete("/SharePanel/DeleteProfileImage", { data: formData }),
-        {
-          loading: "در حال پردازش",
-          success: "عکس با موفقیت حذف شد",
-          error: "خطایی رخ داد",
-        }
-      )
-      .then(() => setReFetch(true));
-  };
 
   useEffect(() => {
     setUserNavTitle("ویرایش پروفایل");
@@ -138,13 +102,21 @@ function UserAvatar() {
                             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden group-hover:flex group-hover:gap-2">
                               <Button
                                 className="bg-primary text-white data-[hover]:opacity-100 data-[hover]:scale-105"
-                                onPress={() => deleteProfileImage(image.id)}
+                                onPress={() =>
+                                  deleteProfileImage(image.id).then(() =>
+                                    setReFetch(true)
+                                  )
+                                }
                               >
                                 حذف
                               </Button>
                               <Button
                                 className="bg-primary text-white data-[hover]:opacity-100 data-[hover]:scale-105"
-                                onPress={() => selectProfileImage(image.id)}
+                                onPress={() =>
+                                  selectProfileImage(image.id).then(() =>
+                                    setReFetch(true)
+                                  )
+                                }
                               >
                                 انتخاب
                               </Button>
@@ -172,7 +144,11 @@ function UserAvatar() {
                 </label>
                 <Button
                   className="bg-primary text-white dark:bg-dark-100 rounded-2xl text-lg"
-                  onClick={uploadProfileImage}
+                  onClick={() =>
+                    uploadProfileImage(profileImage).then(() =>
+                      setReFetch(true)
+                    )
+                  }
                 >
                   آپلود تصویر
                 </Button>

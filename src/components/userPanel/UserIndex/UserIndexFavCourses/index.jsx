@@ -1,18 +1,23 @@
 import { useQuery } from "@tanstack/react-query";
-import instance from "../../../../core/services/middleware";
+import { fetchUserFavoriteCourses } from "../../../../core/api/userPanel/Courses";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import UserIndexCard from "../UserIndexCard";
 import { Spinner } from "@nextui-org/react";
 import { useNavigate } from "react-router-dom";
+import ErrorBox from "../../Error";
 
 function UserIndexFavCourses() {
   const { data, isLoading, error } = useQuery({
     queryKey: ["userIndexFavCourses"],
-    queryFn: () => instance.get("/SharePanel/GetMyFavoriteCourses"),
+    queryFn: () => fetchUserFavoriteCourses(),
   });
 
   const navigate = useNavigate();
+
+  if (error) {
+    return <ErrorBox />;
+  }
 
   if (isLoading) {
     return <Spinner size="lg" className="m-8" />;

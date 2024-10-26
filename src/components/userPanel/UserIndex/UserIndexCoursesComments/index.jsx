@@ -1,21 +1,23 @@
 import { useQuery } from "@tanstack/react-query";
-import instance from "../../../../core/services/middleware";
+import { fetchUserCoursesComments } from "../../../../core/api/userPanel/Comments";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import UserIndexCommentCard from "../UserIndexCommentCard";
 import { Spinner } from "@nextui-org/react";
 import { useNavigate } from "react-router-dom";
+import ErrorBox from "../../Error";
 
 function UserIndexCoursesComments() {
-  const fetchMyCoursesComments = () =>
-    instance.get("/SharePanel/GetMyCoursesComments");
-
   const { data, isLoading, error } = useQuery({
     queryKey: ["userIndexCoursesComments"],
-    queryFn: () => fetchMyCoursesComments(),
+    queryFn: () => fetchUserCoursesComments(),
   });
 
   const navigate = useNavigate();
+
+  if (error) {
+    return <ErrorBox />;
+  }
 
   if (isLoading) {
     return <Spinner size="lg" className="m-8" />;

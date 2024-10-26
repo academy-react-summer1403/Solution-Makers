@@ -10,7 +10,7 @@ import {
   Input,
 } from "@nextui-org/react";
 import { FaEye } from "react-icons/fa";
-import instance from "../../../core/services/middleware";
+import { fetchUserCourses } from "../../../core/api/userPanel/Courses";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
@@ -36,16 +36,9 @@ function UserCourses() {
   const [query, setQuery] = useState(undefined);
   const { setUserNavTitle } = useContext(AppContext);
 
-  const fetchUserCourses = () =>
-    instance.get(
-      `/SharePanel/GetMyCourses?PageNumber=${page}&RowsOfPage=3&SortingCol=DESC&SortType=LastUpdate${
-        query ? `&Query=${query}` : ""
-      }`
-    );
-
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["userCourses", page],
-    queryFn: () => fetchUserCourses(),
+    queryFn: () => fetchUserCourses(page, query),
   });
 
   useEffect(() => {

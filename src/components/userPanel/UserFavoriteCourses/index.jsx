@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import instance from "../../../core/services/middleware";
+import { fetchUserFavoriteCourses } from "../../../core/api/userPanel/Courses";
+import { removeCourseFromFavorites } from "../../../core/api/app/CourseDetails";
 import { useContext, useEffect, useMemo, useState } from "react";
 import {
   getKeyValue,
@@ -16,35 +17,16 @@ import { BeatLoader } from "react-spinners";
 import { AppContext } from "../../../context/Provider";
 import { Link } from "react-router-dom";
 import { FaEye } from "react-icons/fa";
-import toast from "react-hot-toast";
 
 function UserFavoriteCourses() {
   const { setUserNavTitle } = useContext(AppContext);
   const [page, setPage] = useState(1);
   const rowsPerPage = 5;
 
-  const fetchFavoriteCourses = () =>
-    instance.get("/SharePanel/GetMyFavoriteCourses");
-
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["favCourses"],
-    queryFn: () => fetchFavoriteCourses(),
+    queryFn: () => fetchUserFavoriteCourses(),
   });
-
-  const removeCourseFromFavorites = (userFavoriteId) => {
-    const formData = new FormData();
-    formData.append("CourseFavoriteId", userFavoriteId);
-    toast
-      .promise(
-        instance.delete("/Course/DeleteCourseFavorite", { data: formData }),
-        {
-          loading: "در حال پردازش",
-          success: "از علاقمندی ها اضافه حذف شد",
-          error: "خطایی رخ داد",
-        }
-      )
-      .then(() => refetch());
-  };
 
   const items = useMemo(() => {
     const start = (page - 1) * rowsPerPage;
@@ -133,7 +115,11 @@ function UserFavoriteCourses() {
               delete: (
                 <span
                   className="inline-flex items-center justify-center p-1 cursor-pointer"
-                  onClick={() => removeCourseFromFavorites(item.favoriteId)}
+                  onClick={() =>
+                    removeCourseFromFavorites(item.favoriteId).then(() =>
+                      refetch()
+                    )
+                  }
                 >
                   <BsTrash size={22} color="#E4125B" />
                 </span>

@@ -7,6 +7,16 @@ export const fetchCourseById = (id) =>
 export const fetchCourseComments = (id) =>
   instance.get(`/Course/GetCourseCommnets/${id}`);
 
+export const getCourseCommentsReplies = (courseId, commentId) => {
+  return toast.promise(
+    instance.get(`/Course/GetCourseReplyCommnets/${courseId}/${commentId}`),
+    {
+      loading: "در حال دریافت اطلاعات",
+      error: "خطایی رخ داد",
+    }
+  );
+};
+
 export const addCommentCourse = (id, commentTitle, commentBody) => {
   const formData = new FormData();
   formData.append("CourseId", id);
@@ -102,6 +112,28 @@ export const deleteCourseLike = (userLikeId) => {
     {
       loading: "در حال پردازش",
       success: "لایک برداشته شد",
+      error: "خطایی رخ داد",
+    }
+  );
+};
+
+export const addLikeForCourseComment = (id) => {
+  return toast.promise(
+    instance.post(`/Course/AddCourseCommentLike?CourseCommandId=${id}`),
+    {
+      loading: "در حال پردازش",
+      success: "کامنت لایک شد",
+      error: "خطایی رخ داد",
+    }
+  );
+};
+
+export const dislikeCourseComment = (id) => {
+  return toast.promise(
+    instance.post(`/Course/AddCourseCommentDissLike?CourseCommandId=${id}`),
+    {
+      loading: "در حال پردازش",
+      success: "دیسلایک شد",
       error: "خطایی رخ داد",
     }
   );

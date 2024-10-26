@@ -14,8 +14,15 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import CommentBox from "./CommentBox";
+import {
+  getCourseCommentsReplies,
+  addReplyCourseComment,
+} from "../../../core/api/app/CourseDetails";
+import {
+  getArticleCommentsReplies,
+  addReplyArticleComment,
+} from "../../../core/api/app/ArticleDetails";
 import toast from "react-hot-toast";
-import instance from "../../../core/services/middleware";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 
@@ -27,77 +34,6 @@ function UserComments() {
   const [replyOfComment, setReplyOfComment] = useState({});
   const [replies, setReplies] = useState(undefined);
   const [isReplyModalOpen, setIsReplyModalOpen] = useState(false);
-
-  const getCourseCommentReplies = () => {
-    toast
-      .promise(
-        instance.get(
-          `/Course/GetCourseReplyCommnets/${comment.courseId}/${comment.commentId}`
-        ),
-        {
-          loading: "در حال دریافت اطلاعات",
-          error: "خطایی رخ داد",
-        }
-      )
-      .then((res) => {
-        setReplies(res.data);
-        toast.remove();
-        res.data.length == 0
-          ? toast.success("پاسخی یافت نشد")
-          : toast.success("اطلاعات دریافت شد");
-      });
-  };
-
-  const getArticleCommentReplies = () => {
-    toast
-      .promise(
-        instance.get(`/News/GetRepliesComments?Id=${comment.commentId}`),
-        {
-          loading: "در حال دریافت اطلاعات",
-          error: "خطایی رخ داد",
-        }
-      )
-      .then((res) => {
-        setReplies(res.data);
-        toast.remove();
-        res.data.length == 0
-          ? toast.success("پاسخی یافت نشد")
-          : toast.success("اطلاعات دریافت شد");
-      });
-  };
-
-  const replyToCourseCommentReplies = (title, body) => {
-    const formData = new FormData();
-    formData.append("CommentId", replyOfComment.id);
-    formData.append("CourseId", replyOfComment.courseId);
-    formData.append("Title", title);
-    formData.append("Describe", body);
-    return toast.promise(
-      instance.post("/Course/AddReplyCourseComment", formData),
-      {
-        loading: "در حال ارسال",
-        success: "پاسخ ارسال شد",
-        error: "خطایی رخ داد",
-      }
-    );
-  };
-
-  const replyToArticleCommentReplies = (title, describe) => {
-    return toast.promise(
-      instance.post("/News/CreateNewsReplyComment", {
-        newsId: replyOfComment.newsId,
-        parentId: replyOfComment.id,
-        userId: replyOfComment.userId,
-        title,
-        describe,
-      }),
-      {
-        loading: "در حال ارسال",
-        success: "پاسخ ارسال شد",
-        error: "خطایی رخ داد",
-      }
-    );
-  };
 
   const schema = Yup.object({
     replyTitle: Yup.string()
@@ -173,9 +109,26 @@ function UserComments() {
                     className="bg-primary text-white"
                     onClick={() => {
                       if (selected == "courses") {
-                        getCourseCommentReplies();
+                        getCourseCommentsReplies(
+                          comment.courseId,
+                          comment.commentId
+                        ).then((res) => {
+                          setReplies(res.data);
+                          toast.remove();
+                          res.data.length == 0
+                            ? toast.success("پاسخی یافت نشد")
+                            : toast.success("اطلاعات دریافت شد");
+                        });
                       } else {
-                        getArticleCommentReplies();
+                        getArticleCommentsReplies(comment.commentId).then(
+                          (res) => {
+                            setReplies(res.data);
+                            toast.remove();
+                            res.data.length == 0
+                              ? toast.success("پاسخی یافت نشد")
+                              : toast.success("اطلاعات دریافت شد");
+                          }
+                        );
                       }
                     }}
                   >
@@ -231,14 +184,18 @@ function UserComments() {
               validationSchema={schema}
               onSubmit={(values, { resetForm }) => {
                 if (selected == "courses") {
-                  replyToCourseCommentReplies(
+                  addReplyCourseComment(
+                    replyOfComment.id,
+                    replyOfComment.courseId,
                     values.replyTitle,
                     values.replyBody
                   ).then(() => resetForm());
                 } else {
-                  replyToArticleCommentReplies(
+                  addReplyArticleComment(
+                    replyOfComment.newsId,
                     values.replyTitle,
-                    values.replyBody
+                    values.replyBody,
+                    replyOfComment.id
                   ).then(() => resetForm());
                 }
               }}
