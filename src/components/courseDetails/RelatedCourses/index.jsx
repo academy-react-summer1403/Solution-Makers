@@ -1,14 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchCourses } from "../../../core/api/app/Courses";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import ColumnCourseCard from "../../common/courseCard/ColumnCourseCard";
 import { BeatLoader } from "react-spinners";
 import { useLocation } from "react-router-dom";
 import "swiper/css/navigation";
+import { AppContext } from "../../../context/Provider";
 
 function RelatedCourses({ id, courseLevelName, techs }) {
+  const { reFetch, setReFetch } = useContext(AppContext);
   const location = useLocation();
   const [courseLevelId, setCourseLevelId] = useState(undefined);
   const [listTech, setListTech] = useState([]);
@@ -67,11 +69,16 @@ function RelatedCourses({ id, courseLevelName, techs }) {
   }, [courseLevelId, listTech]);
 
   useEffect(() => {
+    reFetch && refetch();
+    setReFetch(false);
+  }, [reFetch]);
+
+  useEffect(() => {
     scrollTo({ top: "0", behavior: "smooth" });
   }, [location.pathname]);
 
   return (
-    <div className="hidden xs:flex flex-col gap-12 mt-28">
+    <div className="hidden xs:flex flex-col items-center gap-12 mt-28">
       <h3 className="text-3xl text-center">دوره های مشابه</h3>
       {error ? (
         <span className="text-xl">خطا در دریافت اطلاعات</span>

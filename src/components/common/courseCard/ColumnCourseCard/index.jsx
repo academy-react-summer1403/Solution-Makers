@@ -5,17 +5,25 @@ import {
   CardFooter,
   Image,
 } from "@nextui-org/react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { submitScoreForCourse } from "../../../../core/api/app/CourseDetails";
 import { FaStar } from "react-icons/fa";
 import { SiLevelsdotfyi } from "react-icons/si";
 import { RiGraduationCapLine } from "react-icons/ri";
 import { BsPeopleFill } from "react-icons/bs";
+import { BiLike, BiSolidLike, BiDislike, BiSolidDislike } from "react-icons/bi";
+import { IoArrowBackCircleSharp } from "react-icons/io5";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useNavigate } from "react-router-dom";
 import { CiStar } from "react-icons/ci";
 import toast from "react-hot-toast";
+import { AppContext } from "../../../../context/Provider";
+import {
+  addCourseLike,
+  deleteCourseLike,
+  addCourseDislike,
+} from "../../../../core/api/app/CourseDetails";
 
 function ColumnCourseCard({
   courseId,
@@ -28,15 +36,61 @@ function ColumnCourseCard({
   currentRegistrants,
   currentUserRateNumber,
   currentUserSetRate,
-  refetch,
+  likeCount,
+  dissLikeCount,
+  userIsLiked,
+  userLikedId,
+  currentUserDissLike,
 }) {
+  const { setReFetch } = useContext(AppContext);
   const [score, setScore] = useState(0);
+  const [isLiked, setIsLiked] = useState(undefined);
+  const [isDisLiked, setIsDisLiked] = useState(undefined);
+  const [likeCountState, setLikeCountState] = useState(likeCount);
+  const [dissLikeCountState, setDissLikeCountState] = useState(dissLikeCount);
   const navigate = useNavigate();
+
+  const likeHandler = () => {
+    if (!isLiked) {
+      addCourseLike(courseId)
+        .then(() => setReFetch(true))
+        .then(() => {
+          setIsLiked(true);
+          setIsDisLiked(false);
+          setLikeCountState((prev) => prev + 1);
+        });
+    } else {
+      deleteCourseLike(userLikedId)
+        .then(() => setReFetch(true))
+        .then(() => {
+          setIsLiked(false);
+          setLikeCountState((prev) => prev - 1);
+        });
+    }
+  };
+
+  const disLikeHandler = () => {
+    if (!isDisLiked) {
+      addCourseDislike(courseId)
+        .then(() => setReFetch(true))
+        .then(() => {
+          setIsDisLiked(true);
+          setIsLiked(false);
+          setLikeCountState((prev) => prev - 1);
+          setDissLikeCountState((prev) => prev + 1);
+        });
+    }
+  };
 
   useEffect(() => {
     AOS.init();
     AOS.refresh();
   }, []);
+
+  useEffect(() => {
+    setIsLiked(userIsLiked);
+    setIsDisLiked(currentUserDissLike);
+  }, [userIsLiked, currentUserDissLike]);
 
   return (
     <Card
@@ -45,6 +99,12 @@ function ColumnCourseCard({
       shadow="sm"
       isPressable
     >
+      <span
+        className="absolute top-5 left-5 z-50"
+        onClick={() => navigate(`/courses/${courseId}`)}
+      >
+        <IoArrowBackCircleSharp color="white" size={40} />
+      </span>
       <CardHeader
         className="overflow-visible p-0 max-w-full"
         onClick={() => navigate(`/courses/${courseId}`)}
@@ -61,12 +121,25 @@ function ColumnCourseCard({
           }
         />
       </CardHeader>
-      <CardBody
-        className="text-right px-0 gap-1 md:gap-0"
-        onClick={() => navigate(`/courses/${courseId}`)}
-      >
-        <h3 className="text-lg px-1">{title}</h3>
-        <div className="hidden sm:flex flex-wrap sm:justify-center lg:text-[14px] sm:mt-2 p-4 gap-5 sm:gap-14 md:gap-10 lg:gap-5 xl:gap-4 rounded-[1.5rem] sm:bg-gray dark:bg-dark-100">
+      <CardBody className="text-right px-0 gap-1 md:gap-0">
+        <div className="flex justify-between my-2">
+          <h3 className="text-lg px-1">{title}</h3>
+          <div className="hidden xs:flex gap-3">
+            <span onClick={likeHandler}>
+              {isLiked ? <BiSolidLike size={24} /> : <BiLike size={24} />}
+              {likeCountState}
+            </span>
+            <span onClick={disLikeHandler}>
+              {isDisLiked ? (
+                <BiSolidDislike size={24} />
+              ) : (
+                <BiDislike size={24} />
+              )}
+              {dissLikeCountState}
+            </span>
+          </div>
+        </div>
+        <div className="hidden sm:flex flex-wrap sm:justify-center lg:text-[14px] sm:mt-2 p-4 gap-5 sm:gap-14 md:gap-10 lg:gap-5 xl:gap-5 rounded-[1.5rem] sm:bg-gray dark:bg-dark-100">
           <span className="flex items-center gap-1">
             <SiLevelsdotfyi />
             {levelName}
@@ -76,10 +149,10 @@ function ColumnCourseCard({
           </span>
           <span className="flex items-center gap-1">{statusName}</span>
         </div>
-        <div className="sm:mt-4 lg:text-[15px] flex flex-col sm:flex-row items-start sm:items-center justify-between">
-          <span className="flex gap-1">
+        <div className="sm:mt-4 text-sm sm:text-xl lg:text-[15px] flex flex-col sm:flex-row items-start sm:items-center justify-between">
+          <span className="flex items-center gap-1 text-ellipsis whitespace-nowrap overflow-hidden">
             <b>مدرس:</b> {teacherName}
-            <RiGraduationCapLine />
+            <RiGraduationCapLine size={22} className="hidden xs:inline-flex" />
           </span>
           <span className="text-ellipsis whitespace-nowrap overflow-hidden">
             {cost > 0 ? (
@@ -107,7 +180,6 @@ function ColumnCourseCard({
                 onClick={() => setScore(index)}
               />
             ))}
-
             {new Array(5 - score).fill(0).map((item, index) => (
               <CiStar
                 key={index}
@@ -123,7 +195,9 @@ function ColumnCourseCard({
               className="text-[16px] text-white bg-primary rounded-full px-8 py-2"
               onClick={() => {
                 if (!currentUserSetRate) {
-                  submitScoreForCourse(courseId, score).then(() => refetch());
+                  submitScoreForCourse(courseId, score).then(() =>
+                    setReFetch(true)
+                  );
                 } else {
                   toast.error(
                     `شما قبلا به این دوره امتیاز ${currentUserRateNumber} را دادید`
