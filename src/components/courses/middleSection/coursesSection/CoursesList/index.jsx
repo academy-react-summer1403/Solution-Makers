@@ -68,6 +68,8 @@ function CoursesList() {
     reFetch,
   ]);
 
+  console.log(data?.data?.courseFilterDtos);
+
   if (error) {
     return (
       <p className="text-lg mt-8 ps-4">دریافت اطلاعات با خطا مواجه گردید !</p>

@@ -75,7 +75,7 @@ function RateSection({
         </div>
       </div>
       <div className="hidden xs:flex items-center gap-4">
-        <p>{title}</p>
+        <h3>{title}</h3>
         {isLiked ? (
           <Button
             className="rounded-full bg-primary text-white"

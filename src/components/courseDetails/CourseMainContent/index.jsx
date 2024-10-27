@@ -15,6 +15,7 @@ import CourseSpecificationsBox from "../CourseSpecificationsBox";
 import toast from "react-hot-toast";
 import { AppContext } from "../../../context/Provider";
 import { Button } from "@nextui-org/react";
+import RelatedCourses from "../RelatedCourses";
 
 function CourseMainContent() {
   const { id } = useParams();
@@ -40,6 +41,7 @@ function CourseMainContent() {
   }, [reFetch]);
 
   useEffect(() => {
+    scrollTo({ top: "0", behavior: "instant" });
     toast.remove();
   }, []);
 
@@ -156,6 +158,12 @@ function CourseMainContent() {
           />
         </div>
       </div>
+      <RelatedCourses
+        id={id}
+        teacherId={data.data.teacherId}
+        courseLevelName={data.data.courseLevelName}
+        techs={data.data.techs}
+      />
     </div>
   );
 }
