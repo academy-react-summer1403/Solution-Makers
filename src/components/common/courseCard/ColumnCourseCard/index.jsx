@@ -6,17 +6,16 @@ import {
   Image,
 } from "@nextui-org/react";
 import { useEffect, useState } from "react";
-import {
-  addCourseLike,
-  deleteCourseLike,
-} from "../../../../core/api/app/CourseDetails";
-import { GoClock } from "react-icons/go";
-import { IoCalendarOutline } from "react-icons/io5";
-import { FiBookOpen } from "react-icons/fi";
-import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { submitScoreForCourse } from "../../../../core/api/app/CourseDetails";
+import { FaStar } from "react-icons/fa";
+import { SiLevelsdotfyi } from "react-icons/si";
+import { RiGraduationCapLine } from "react-icons/ri";
+import { BsPeopleFill } from "react-icons/bs";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useNavigate } from "react-router-dom";
+import { CiStar } from "react-icons/ci";
+import toast from "react-hot-toast";
 
 function ColumnCourseCard({
   courseId,
@@ -24,20 +23,20 @@ function ColumnCourseCard({
   tumbImageAddress,
   cost,
   teacherName,
+  statusName,
+  levelName,
   currentRegistrants,
-  likeCount,
-  userIsLiked,
-  userLikedId,
+  currentUserRateNumber,
+  currentUserSetRate,
   refetch,
 }) {
-  const [likesNumber, setLikesNumber] = useState(likeCount);
-  const [isLiked, setIsLiked] = useState(userIsLiked);
+  const [score, setScore] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
     AOS.init();
     AOS.refresh();
-  }, [likesNumber]);
+  }, []);
 
   return (
     <Card
@@ -48,13 +47,13 @@ function ColumnCourseCard({
     >
       <CardHeader
         className="overflow-visible p-0 max-w-full"
-        onClick={() => navigate(courseId)}
+        onClick={() => navigate(`/courses/${courseId}`)}
       >
         <Image
           shadow="sm"
           radius="lg"
           width="100%"
-          className="w-full h-[330px] md:h-[275px] lg:h-[220px]"
+          className="w-full h-[150px] xs:h-[180px] sm:h-[275px] md:h-[275px] lg:h-[200px] xl:h-[180px]"
           classNames={{ wrapper: "w-full" }}
           src={
             tumbImageAddress ||
@@ -63,73 +62,79 @@ function ColumnCourseCard({
         />
       </CardHeader>
       <CardBody
-        className="text-right px-0 gap-4 md:gap-0"
-        onClick={() => navigate(courseId)}
+        className="text-right px-0 gap-1 md:gap-0"
+        onClick={() => navigate(`/courses/${courseId}`)}
       >
-        <h3 className="text-lg">{title}</h3>
-        <div className="flex flex-col sm:flex-row sm:justify-center lg:text-sm sm:mt-4 p-4 gap-5 sm:gap-14 md:gap-10 lg:gap-5 rounded-[1.5rem] sm:bg-gray dark:bg-dark-100">
-          <p className="flex items-center gap-1">
-            <FiBookOpen />
-            202درس
-          </p>
-          <p className="flex items-center gap-1">
-            <GoClock /> 14ساعت
-          </p>
-          <p className="flex items-center gap-1">
-            <IoCalendarOutline /> 1آذر1402
-          </p>
+        <h3 className="text-lg px-1">{title}</h3>
+        <div className="hidden sm:flex flex-wrap sm:justify-center lg:text-[14px] sm:mt-2 p-4 gap-5 sm:gap-14 md:gap-10 lg:gap-5 xl:gap-4 rounded-[1.5rem] sm:bg-gray dark:bg-dark-100">
+          <span className="flex items-center gap-1">
+            <SiLevelsdotfyi />
+            {levelName}
+          </span>
+          <span className="flex items-center gap-1">
+            <BsPeopleFill /> {currentRegistrants} نفر
+          </span>
+          <span className="flex items-center gap-1">{statusName}</span>
         </div>
-        <div className="flex flex-col justify-between sm:flex-row gap-2 sm:mt-4">
-          <p>
+        <div className="sm:mt-4 lg:text-[15px] flex flex-col sm:flex-row items-start sm:items-center justify-between">
+          <span className="flex gap-1">
             <b>مدرس:</b> {teacherName}
-          </p>
-          <p>{currentRegistrants} دانش‌آموز</p>
+            <RiGraduationCapLine />
+          </span>
+          <span className="text-ellipsis whitespace-nowrap overflow-hidden">
+            {cost > 0 ? (
+              <>
+                <b className="text-primary me-1 text-lg">
+                  {cost.toLocaleString()}
+                </b>{" "}
+                تومان
+              </>
+            ) : (
+              "رایگان"
+            )}
+          </span>
         </div>
       </CardBody>
-      <CardFooter className="flex items-center px-0 gap-2 justify-between lg:py-0 lg:mt-1">
-        {isLiked ? (
-          <span
-            id="likeHandler"
-            className="flex items-center gap-1 text-lg text-[#f44336] bg-[#ffebee] py-2 px-5 rounded-full"
-            onClick={() =>
-              deleteCourseLike(userLikedId).then(() => {
-                refetch();
-                setIsLiked((prev) => !prev);
-                setLikesNumber((prev) => prev - 1);
-              })
-            }
-          >
-            <FaHeart id="likeHandlerIcon" />
-            {likesNumber}
-          </span>
-        ) : (
-          <span
-            id="likeHandler"
-            className="flex items-center gap-1 text-lg text-[#f44336] bg-[#ffebee] py-2 px-5 rounded-full"
-            onClick={() =>
-              addCourseLike(courseId).then(() => {
-                refetch();
-                setLikesNumber((prev) => prev + 1);
-                setIsLiked((prev) => !prev);
-              })
-            }
-          >
-            <FaRegHeart id="likeHandlerIcon" />
-            {likesNumber}
-          </span>
-        )}
-        <p className="text-md">
-          {cost > 0 ? (
-            <>
-              <b className="text-primary me-1 text-lg">
-                {cost.toLocaleString()}
-              </b>{" "}
-              تومان
-            </>
-          ) : (
-            "رایگان"
-          )}
-        </p>
+      <CardFooter className="hidden sm:flex px-0 lg:mt-1">
+        <div className="w-full flex justify-between items-center">
+          <div className="flex" style={{ direction: "ltr" }}>
+            {new Array(score).fill(0).map((item, index) => (
+              <FaStar
+                key={index}
+                className="cursor-pointer"
+                size={28}
+                color="#FFC107"
+                onClick={() => setScore(index)}
+              />
+            ))}
+
+            {new Array(5 - score).fill(0).map((item, index) => (
+              <CiStar
+                key={index}
+                className="cursor-pointer"
+                size={28}
+                color="#FFC107"
+                onClick={() => setScore(score + index + 1)}
+              />
+            ))}
+          </div>
+          <div>
+            <span
+              className="text-[16px] text-white bg-primary rounded-full px-8 py-2"
+              onClick={() => {
+                if (!currentUserSetRate) {
+                  submitScoreForCourse(courseId, score).then(() => refetch());
+                } else {
+                  toast.error(
+                    `شما قبلا به این دوره امتیاز ${currentUserRateNumber} را دادید`
+                  );
+                }
+              }}
+            >
+              ثبت امتیاز
+            </span>
+          </div>
+        </div>
       </CardFooter>
     </Card>
   );
