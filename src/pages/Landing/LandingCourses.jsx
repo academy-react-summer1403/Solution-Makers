@@ -140,8 +140,6 @@ const LandingCourses = () => {
 
   return (
     <>
-      {/*******faahfjsgfjgjhfgjsagfgjjhsfjhb********* */}
-
       <div className=" w-full mt-[70px] flex flex-col justify-between items-center ">
         <SectionsTitle name="دوره های آموزشی" />
 
