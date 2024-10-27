@@ -1,7 +1,12 @@
+/* eslint-disable react/prop-types */
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { IoCalendarOutline } from "react-icons/io5";
 import { GoDotFill } from "react-icons/go";
-import { Card, CardBody, CardFooter } from "@nextui-org/react";
+import {
+  Card,
+  CardBody,
+  CardFooter,
+} from "@nextui-org/react";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import AOS from "aos";
@@ -48,12 +53,19 @@ function ArticleCard({
       </CardBody>
       <CardFooter className="flex-col items-center gap-4 justify-start sm:flex-row text-primary">
         <span className="flex items-center gap-1">
-          <MdOutlineRemoveRedEye size={20} />
+          <MdOutlineRemoveRedEye
+            size={20}
+          />
           {currentView}
         </span>
-        <GoDotFill size={20} className="hidden sm:inline-block" />
+        <GoDotFill
+          size={20}
+          className="hidden sm:inline-block"
+        />
         <span className="flex items-center gap-1">
-          <IoCalendarOutline size={20} />
+          <IoCalendarOutline
+            size={20}
+          />
           {updateDate.slice(0, 10)}
         </span>
       </CardFooter>
