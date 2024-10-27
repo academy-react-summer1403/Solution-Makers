@@ -36,6 +36,11 @@ function CourseMainContent() {
   });
 
   useEffect(() => {
+    reFetch && refetch();
+    setReFetch(false);
+  }, [reFetch]);
+
+  useEffect(() => {
     reFetch && comments?.refetch();
     setReFetch(false);
   }, [reFetch]);
