@@ -1,12 +1,30 @@
-import { useContext, useEffect, useState } from "react";
+/* eslint-disable react/prop-types */
+import {
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
-import { IoArrowBackCircleSharp, IoCalendarOutline } from "react-icons/io5";
+import {
+  IoArrowBackCircleSharp,
+  IoCalendarOutline,
+} from "react-icons/io5";
 import { GoDotFill } from "react-icons/go";
-import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/react";
+import {
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+} from "@nextui-org/react";
 import { useNavigate } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { BiDislike, BiLike, BiSolidDislike, BiSolidLike } from "react-icons/bi";
+import {
+  BiDislike,
+  BiLike,
+  BiSolidDislike,
+  BiSolidLike,
+} from "react-icons/bi";
 import {
   addArticleDislike,
   addArticleLike,
@@ -15,7 +33,11 @@ import {
   removeArticleFromFavorites,
 } from "../../../core/api/app/ArticleDetails";
 import { AppContext } from "../../../context/Provider";
-import { FaStar, FaRegBookmark, FaBookmark } from "react-icons/fa";
+import {
+  FaStar,
+  FaRegBookmark,
+  FaBookmark,
+} from "react-icons/fa";
 import { CiStar } from "react-icons/ci";
 
 function ArticleCard({
@@ -36,13 +58,22 @@ function ArticleCard({
   addUserProfileImage,
 }) {
   const navigate = useNavigate();
-  const { setReFetch } = useContext(AppContext);
-  const [isFavorite, setIsFavorite] = useState(undefined);
-  const [isLiked, setIsLiked] = useState(undefined);
-  const [isDisLiked, setIsDisLiked] = useState(undefined);
-  const [likeCountState, setLikeCountState] = useState(currentLikeCount);
-  const [dissLikeCountState, setDissLikeCountState] =
-    useState(currentDissLikeCount);
+  const { setReFetch } =
+    useContext(AppContext);
+  const [isFavorite, setIsFavorite] =
+    useState(undefined);
+  const [isLiked, setIsLiked] =
+    useState(undefined);
+  const [isDisLiked, setIsDisLiked] =
+    useState(undefined);
+  const [
+    likeCountState,
+    setLikeCountState,
+  ] = useState(currentLikeCount);
+  const [
+    dissLikeCountState,
+    setDissLikeCountState,
+  ] = useState(currentDissLikeCount);
 
   const likeHandler = () => {
     if (!isLiked) {
@@ -51,9 +82,13 @@ function ArticleCard({
         .then(() => {
           setIsLiked(true);
           setIsDisLiked(false);
-          setLikeCountState((prev) => prev + 1);
+          setLikeCountState(
+            (prev) => prev + 1
+          );
           if (isDisLiked) {
-            setDissLikeCountState((prev) => prev - 1);
+            setDissLikeCountState(
+              (prev) => prev - 1
+            );
           }
         });
     } else {
@@ -61,7 +96,9 @@ function ArticleCard({
         .then(() => setReFetch(true))
         .then(() => {
           setIsLiked(false);
-          setLikeCountState((prev) => prev - 1);
+          setLikeCountState(
+            (prev) => prev - 1
+          );
         });
     }
   };
@@ -74,16 +111,22 @@ function ArticleCard({
           setIsDisLiked(true);
           setIsLiked(false);
           if (isLiked) {
-            setLikeCountState((prev) => prev - 1);
+            setLikeCountState(
+              (prev) => prev - 1
+            );
           }
-          setDissLikeCountState((prev) => prev + 1);
+          setDissLikeCountState(
+            (prev) => prev + 1
+          );
         });
     }
   };
 
   const bookMarkHandler = () => {
     if (isFavorite) {
-      removeArticleFromFavorites(currentUserFavoriteId)
+      removeArticleFromFavorites(
+        currentUserFavoriteId
+      )
         .then(() => setReFetch(true))
         .then(() => {
           setIsFavorite(false);
@@ -104,9 +147,17 @@ function ArticleCard({
 
   useEffect(() => {
     setIsLiked(currentUserIsLike);
-    setIsDisLiked(currentUserIsDissLike);
-    setIsFavorite(isCurrentUserFavorite);
-  }, [currentUserIsLike, currentUserIsDissLike, isCurrentUserFavorite]);
+    setIsDisLiked(
+      currentUserIsDissLike
+    );
+    setIsFavorite(
+      isCurrentUserFavorite
+    );
+  }, [
+    currentUserIsLike,
+    currentUserIsDissLike,
+    isCurrentUserFavorite,
+  ]);
 
   return (
     <Card
@@ -116,11 +167,21 @@ function ArticleCard({
     >
       <span
         className="absolute top-5 left-5 z-50"
-        onClick={() => navigate(`/articles/${id}`)}
+        onClick={() =>
+          navigate(`/articles/${id}`)
+        }
       >
-        <IoArrowBackCircleSharp color="#2196F3" size={40} />
+        <IoArrowBackCircleSharp
+          color="#2196F3"
+          size={40}
+        />
       </span>
-      <CardHeader className="p-0" onClick={() => navigate(`/articles/${id}`)}>
+      <CardHeader
+        className="p-0"
+        onClick={() =>
+          navigate(`/articles/${id}`)
+        }
+      >
         <div className="flex justify-center w-full rounded-3xl overflow-hidden">
           <img
             src={
@@ -137,20 +198,34 @@ function ArticleCard({
             {title}
           </h3>
           <div className="hidden xs:flex gap-3">
-            <span onClick={bookMarkHandler}>
+            <span
+              onClick={bookMarkHandler}
+            >
               {isFavorite ? (
                 <FaBookmark size={22} />
               ) : (
-                <FaRegBookmark size={22} />
+                <FaRegBookmark
+                  size={22}
+                />
               )}
             </span>
             <span onClick={likeHandler}>
-              {isLiked ? <BiSolidLike size={24} /> : <BiLike size={24} />}
+              {isLiked ? (
+                <BiSolidLike
+                  size={24}
+                />
+              ) : (
+                <BiLike size={24} />
+              )}
               {likeCountState}
             </span>
-            <span onClick={disLikeHandler}>
+            <span
+              onClick={disLikeHandler}
+            >
               {isDisLiked ? (
-                <BiSolidDislike size={24} />
+                <BiSolidDislike
+                  size={24}
+                />
               ) : (
                 <BiDislike size={24} />
               )}
@@ -164,31 +239,45 @@ function ArticleCard({
       </CardBody>
       <CardFooter className="flex-col items-center gap-4 justify-start sm:flex-row sm:justify-between text-primary">
         <span className="flex items-center gap-1">
-          <MdOutlineRemoveRedEye size={20} />
+          <MdOutlineRemoveRedEye
+            size={20}
+          />
           {currentView}
         </span>
-        <GoDotFill size={20} className="hidden sm:inline-block" />
+        <GoDotFill
+          size={20}
+          className="hidden sm:inline-block"
+        />
         <span className="flex items-center gap-1">
-          <IoCalendarOutline size={20} />
+          <IoCalendarOutline
+            size={20}
+          />
           {updateDate.slice(0, 10)}
         </span>
-        <span className="flex" style={{ direction: "ltr" }}>
-          {new Array(currentRate).fill(0).map((item, index) => (
-            <FaStar
-              key={index}
-              className="cursor-pointer"
-              size={28}
-              color="#FFC107"
-            />
-          ))}
-          {new Array(5 - currentRate).fill(0).map((item, index) => (
-            <CiStar
-              key={index}
-              className="cursor-pointer"
-              size={28}
-              color="#FFC107"
-            />
-          ))}
+        <span
+          className="flex"
+          style={{ direction: "ltr" }}
+        >
+          {new Array(currentRate)
+            .fill(0)
+            .map((item, index) => (
+              <FaStar
+                key={index}
+                className="cursor-pointer"
+                size={28}
+                color="#FFC107"
+              />
+            ))}
+          {new Array(5 - currentRate)
+            .fill(0)
+            .map((item, index) => (
+              <CiStar
+                key={index}
+                className="cursor-pointer"
+                size={28}
+                color="#FFC107"
+              />
+            ))}
         </span>
       </CardFooter>
     </Card>

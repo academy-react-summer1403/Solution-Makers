@@ -3,6 +3,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 import "../../Check.css";
+import { baseApi } from "../../config";
 import axios from "axios";
 
 function Login() {
@@ -31,14 +32,18 @@ function Login() {
       "https://classapi.sepehracademy.ir/api/Sign/Login",
       obj
     );
+    console.log(res.data);
 
     const Exist = res.data.success;
     const Error = res.data.message;
     const Number = res.data.phoneNumber;
     if (Exist === true) {
       console.log(Number);
-
-      navigate("/");
+      await axios.post(
+        "https://api-academy.iran.liara.run/api/Sign/LoginTwoStep?VerifyCode=verify_code",
+        Number
+      );
+      // navigate("/");
     } else {
       alert(Error);
     }
