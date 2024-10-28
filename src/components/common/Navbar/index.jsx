@@ -3,29 +3,23 @@ import {
   NavbarMenuToggle,
   NavbarMenu,
   Button,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
   Avatar,
-  Badge,
 } from "@nextui-org/react";
-import {
-  useContext,
-  useState,
-} from "react";
-import { AppContext } from "../../../context/Provider";
-import {
-  NavLink,
-  Link,
-} from "react-router-dom";
-import NavMenuLink from "./NavMenuLink";
-import "./index.css";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
+import NavMenuLink from "./NavMenuLink";
 import ToggleTheme from "../ToggleTheme";
+import BagIcon from "../BagIcon";
+import "./index.css";
+import { getItem } from "../../../core/services/common/storage";
 
 function MyNavbar() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
-  const [isMenuOpen, setIsMenuOpen] =
-    useState(false);
-  const { bagIconNum } =
-    useContext(AppContext);
 
   return (
     <Navbar
@@ -37,11 +31,7 @@ function MyNavbar() {
     >
       <div className="w-full h-[50px] flex justify-start sm:justify-between sm:px-4 items-center gap-2">
         <NavbarMenuToggle
-          aria-label={
-            isMenuOpen
-              ? "Close menu"
-              : "Open menu"
-          }
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           className="md:hidden"
         />
         <Link to="/">
@@ -52,55 +42,55 @@ function MyNavbar() {
         </Link>
         <ul className="hidden md:flex gap-12">
           <li>
-            <NavLink to="/courses">
-              دوره‌ها
-            </NavLink>
+            <NavLink to="/courses">دوره‌ها</NavLink>
           </li>
           <li>
-            <NavLink to="/teachers">
-              اساتید
-            </NavLink>
+            <NavLink to="/teachers">اساتید</NavLink>
           </li>
           <li>
-            <NavLink to="/contact">
-              ارتباط با ما
-            </NavLink>
+            <NavLink to="/contact">ارتباط با ما</NavLink>
           </li>
           <li>
-            <NavLink to="/articles">
-              اخبار مقالات
-            </NavLink>
+            <NavLink to="/articles">اخبار مقالات</NavLink>
           </li>
         </ul>
         <div className="flex justify-between items-center gap-4">
-          <ToggleTheme />
+          <ToggleTheme hideInMobile={true} />
           <Link className="bg-white h-[50px] w-[50px] rounded-full hidden sm:flex items-center justify-center">
-            <Badge
-              content={
-                bagIconNum > 0
-                  ? bagIconNum
-                  : null
-              }
-              color="primary"
-              shape="circle"
-              placement="top-right"
-              className="-top-[2.5px] -right-[2.5px]"
-            >
-              <Avatar
-                radius="full"
-                size="sm"
-                src="/src/assets/images/navbar/shopping-bag.png"
-                className="w-6 h-6"
-                classNames={{
-                  base: "bg-white",
-                }}
-              />
-            </Badge>
+            <BagIcon />
           </Link>
+          {getItem("token") && (
+            <Popover
+              placement="bottom-start"
+              offset={15}
+              classNames={{
+                content: "hidden md:inline-flex dark:border-2",
+                trigger: "hidden md:inline-flex",
+              }}
+            >
+              <PopoverTrigger>
+                <Avatar
+                  src={getItem("userInfos").userImage[0].puctureAddress}
+                  size="md"
+                  className="dark:border-2 cursor-pointer"
+                />
+              </PopoverTrigger>
+              <PopoverContent className="items-start gap-1 px-4 py-2">
+                <Link to="/my-panel/dashboard" className="hover:text-primary">
+                  پنل کاربری
+                </Link>
+                <Link
+                  to="/my-panel/edit-profile"
+                  className="hover:text-primary"
+                >
+                  ویرایش پروفایل
+                </Link>
+                <Link className="hover:text-primary">خروج</Link>
+              </PopoverContent>
+            </Popover>
+          )}
           <Button
-            onClick={() => {
-              navigate("/login");
-            }}
+            onClick={() => navigate("/login")}
             radius="full"
             size="lg"
             color="primary"
@@ -111,39 +101,13 @@ function MyNavbar() {
         </div>
       </div>
 
-      <NavbarMenu className="bg-[#e7f0fc] space-y-2">
-        <NavMenuLink
-          target=""
-          title="ورود به حساب کاربری"
-        />
-        <NavMenuLink
-          target=""
-          title="پنل کاربری"
-        />
-        <NavMenuLink
-          target=""
-          title="سبد خرید"
-        />
-        <NavMenuLink
-          target=""
-          title="دوره‌ها"
-        />
-        <NavMenuLink
-          target=""
-          title="اساتید"
-        />
-        <NavMenuLink
-          target=""
-          title="ارتباط با ما"
-        />
-        <NavMenuLink
-          target=""
-          title="اخبار مقالات"
-        />
-        <NavMenuLink
-          target=""
-          title="خروج"
-        />
+      <NavbarMenu className="bg-[#e7f0fc] dark:bg-dark-200 space-y-2">
+        <NavMenuLink target="/login" title="ورود به حساب کاربری" />
+        <NavMenuLink target="/my-panel/dashboard" title="پنل کاربری" />
+        <NavMenuLink target="" title="سبد خرید" />
+        <NavMenuLink target="/courses" title="دوره‌ها" />
+        <NavMenuLink target="/articles" title="اخبار مقالات" />
+        <NavMenuLink target="" title="خروج" />
       </NavbarMenu>
     </Navbar>
   );

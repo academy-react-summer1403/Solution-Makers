@@ -1,14 +1,13 @@
-import axios from "axios";
 import ArticleCard from "../../../common/ArticleCard";
-import { baseApi } from "../../../../config";
 import { useQuery } from "@tanstack/react-query";
-import { BeatLoader } from "react-spinners";
 import { Pagination } from "@nextui-org/react";
 import {
   useContext,
   useEffect,
 } from "react";
 import { AppContext } from "../../../../context/Provider";
+import { fetchArticles } from "../../../../core/api/app/Articles";
+import ArticleCardSkeleton from "../../../common/ArticleCard/Skeleton";
 
 function ArticlesList() {
   const {
@@ -21,28 +20,10 @@ function ArticlesList() {
     articlesSortingCol,
   } = useContext(AppContext);
 
-  const fetchArticles = () =>
-    axios.get(
-      `${baseApi}/News?PageNumber=${articlesPageNumber}&RowsOfPage=9${
-        articlesSortingCol
-          ? `&SortingCol=${articlesSortingCol}`
-          : ""
-      }&SortType=DESC${
-        articlesQuery
-          ? `&Query=${articlesQuery}`
-          : ""
-      }`
-    );
-
-  // eslint-disable-next-line no-unused-vars
-  const {
-    data,
-    isLoading,
-    error,
-    refetch,
-  } = useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["articles"],
-    queryFn: () => fetchArticles(),
+    queryFn: () =>
+      fetchArticles(articlesPageNumber, articlesSortingCol, articlesQuery),
   });
 
   useEffect(() => {
@@ -51,13 +32,17 @@ function ArticlesList() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [articlesQuery, reFetch]);
 
+  if (error) {
+    return <span className="text-lg">دریافت اطلاعات با خطا مواجه گردید</span>;
+  }
+
   if (isLoading) {
     return (
-      <BeatLoader
-        color="#2196F3"
-        className="flex justify-center mt-10"
-        size={20}
-      />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {new Array(9).fill(0).map((item, index) => (
+          <ArticleCardSkeleton key={index} />
+        ))}
+      </div>
     );
   }
 

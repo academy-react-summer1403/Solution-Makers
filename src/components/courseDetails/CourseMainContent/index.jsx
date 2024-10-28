@@ -1,38 +1,77 @@
-import axios from "axios";
-import { useParams } from "react-router-dom";
-import { baseApi } from "../../../config";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import {
+  fetchCourseById,
+  fetchCourseComments,
+  addCommentCourse,
+} from "../../../core/api/app/CourseDetails";
 import { BeatLoader } from "react-spinners";
-import RateSection from "../../common/RateSection";
+import CourseRateSection from "../CourseRateSection";
 import CommentsBox from "../../common/comments/CommentsBox";
 import CourseDetailsTabs from "../CourseDetailsTabs";
-import { useState } from "react";
 import CourseDescription from "../CourseDescription";
 import CourseSpecificationsBox from "../CourseSpecificationsBox";
+import toast from "react-hot-toast";
+import { AppContext } from "../../../context/Provider";
+import { Button } from "@nextui-org/react";
+import RelatedCourses from "../RelatedCourses";
 
 function CourseMainContent() {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const { reFetch, setReFetch } = useContext(AppContext);
   const [showBox, setShowBox] = useState("descriptions");
+  const [commentTitle, setCommentTitle] = useState("");
+  const [commentBody, setCommentBody] = useState("");
 
-  const fetchCourseById = () =>
-    axios.get(`${baseApi}/Home/GetCourseDetails?CourseId=${id}`);
-
-  const fetchCourseComments = () =>
-    axios.get(`${baseApi}/Course/GetCourseCommnets/${id}`);
-
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["course", id],
-    queryFn: () => fetchCourseById(),
+    queryFn: () => fetchCourseById(id),
   });
 
   const comments = useQuery({
     queryKey: ["courseComments"],
-    queryFn: () => fetchCourseComments(),
+    queryFn: () => fetchCourseComments(id),
   });
+
+  useEffect(() => {
+    reFetch && refetch();
+    setReFetch(false);
+  }, [reFetch]);
+
+  useEffect(() => {
+    reFetch && comments?.refetch();
+    setReFetch(false);
+  }, [reFetch]);
+
+  useEffect(() => {
+    scrollTo({ top: "0", behavior: "instant" });
+    toast.remove();
+  }, []);
+
+  if (error) {
+    return (
+      <div className="flex flex-col justify-center gap-8 mt-14">
+        <span className=" text-center text-2xl">
+          دریافت اطلاعات با خطا مواجه گردید
+        </span>
+        <span className="text-center">
+          <Button
+            color="primary"
+            className="text-lg py-6 dark:bg-dark-100"
+            onClick={() => navigate("/courses")}
+          >
+            بازگشت به صفحه دوره ها
+          </Button>
+        </span>
+      </div>
+    );
+  }
 
   if (isLoading) {
     return (
-      <BeatLoader color="#2196F3" className="text-center mt-10" size={20} />
+      <BeatLoader color="#2196F3" className="text-center my-[56px]" size={20} />
     );
   }
 
@@ -55,7 +94,17 @@ function CourseMainContent() {
           <p className="text-justify text-ellipsis whitespace-nowrap overflow-hidden sm:whitespace-normal">
             {data.data.describe}
           </p>
-          <RateSection />
+          <CourseRateSection
+            id={id}
+            currentUserLike={Boolean(Number(data.data.currentUserLike))}
+            currentUserDissLike={Boolean(Number(data.data.currentUserDissLike))}
+            isUserFavorite={data.data.isUserFavorite}
+            userFavoriteId={data.data.userFavoriteId}
+            userLikeId={data.data.userLikeId}
+            currentUserSetRate={data.data.currentUserSetRate}
+            currentUserRateNumber={data.data.currentUserRateNumber}
+            refetch={refetch}
+          />
           <div className="bg-white dark:bg-dark-200 p-7 mt-12 rounded-3xl overflow-hidden">
             <CourseDetailsTabs setShowBox={setShowBox} />
             {showBox == "descriptions" && (
@@ -70,6 +119,17 @@ function CourseMainContent() {
                 comments={comments?.data?.data}
                 isLoading={comments?.isLoading}
                 error={comments?.error}
+                commentTitle={commentTitle}
+                setCommentTitle={setCommentTitle}
+                commentBody={commentBody}
+                setCommentBody={setCommentBody}
+                addComment={() =>
+                  addCommentCourse(id, commentTitle, commentBody).then(() => {
+                    setCommentTitle("");
+                    setCommentBody("");
+                  })
+                }
+                refetch={comments.refetch}
               />
             )}
             {showBox == "details" && (
@@ -103,6 +163,12 @@ function CourseMainContent() {
           />
         </div>
       </div>
+      <RelatedCourses
+        id={id}
+        teacherId={data.data.teacherId}
+        courseLevelName={data.data.courseLevelName}
+        techs={data.data.techs}
+      />
     </div>
   );
 }

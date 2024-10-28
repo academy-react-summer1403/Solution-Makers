@@ -12,6 +12,12 @@ function Provider({ children }) {
     localStorage.getItem("theme") ||
       "light"
   );
+  const [userInfos, setUserInfos] =
+    useState({});
+  const [
+    showUserPanelSidebar,
+    setShowUserPanelSidebar,
+  ] = useState(false);
   const [reFetch, setReFetch] =
     useState(false);
   const [isLogin, setIsLogin] =
@@ -66,18 +72,28 @@ function Provider({ children }) {
     articlesSortingCol,
     setArticlesSortingCol,
   ] = useState(undefined);
+  const [
+    userNavTitle,
+    setUserNavTitle,
+  ] = useState("");
+  const [commentId, setCommentId] =
+    useState(75);
 
   return (
     <AppContext.Provider
       value={{
         theme,
         setTheme,
+        userInfos,
+        setUserInfos,
         reFetch,
         setReFetch,
         isLogin,
         setIsLogin,
         bagIconNum,
         setBagIconNum,
+        showUserPanelSidebar,
+        setShowUserPanelSidebar,
         coursesPageNumber,
         setCoursesPageNumber,
         coursesSortType,
@@ -108,6 +124,10 @@ function Provider({ children }) {
         setArticlesQuery,
         articlesSortingCol,
         setArticlesSortingCol,
+        userNavTitle,
+        setUserNavTitle,
+        commentId,
+        setCommentId,
       }}
     >
       {children}

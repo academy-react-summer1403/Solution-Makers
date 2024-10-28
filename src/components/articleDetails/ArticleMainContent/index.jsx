@@ -1,36 +1,73 @@
-import axios from "axios";
-import { useParams } from "react-router-dom";
-import { baseApi } from "../../../config";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { BeatLoader } from "react-spinners";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { GoDotFill } from "react-icons/go";
 import { IoCalendarOutline } from "react-icons/io5";
-import { Avatar } from "@nextui-org/react";
+import { Avatar, Button } from "@nextui-org/react";
 import CommentsBox from "../../common/comments/CommentsBox";
-import RateSection from "../../common/RateSection";
+import ArticleRateSection from "../ArticleRateSection";
+import {
+  addArticleComment,
+  fetchArticleById,
+  fetchArticleComments,
+} from "../../../core/api/app/ArticleDetails";
+import toast from "react-hot-toast";
+import { AppContext } from "../../../context/Provider";
 
 function ArticleMainContent() {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const {reFetch, setReFetch} = useContext(AppContext);
+  const [commentBody, setCommentBody] = useState("");
+  const [commentTitle, setCommentTitle] = useState("");
 
-  const fetchArticleById = () => axios.get(`${baseApi}/News/${id}`);
-
-  const fetchArticleComments = () =>
-    axios.get(`${baseApi}/News/GetNewsComments?NewsId=${id}`);
-
-  const { data, isLoading, isError } = useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["article", id],
-    queryFn: () => fetchArticleById(),
+    queryFn: () => fetchArticleById(id),
   });
 
   const comments = useQuery({
     queryKey: ["articleComments"],
-    queryFn: () => fetchArticleComments(),
+    queryFn: () => fetchArticleComments(id),
   });
+
+  useEffect(() => {
+    toast.remove();
+  }, []);
+
+  useEffect(() => {
+    reFetch && comments?.refetch();
+    setReFetch(false);
+  }, [reFetch]);
+
+  if (error) {
+    return (
+      <div className="flex flex-col justify-center gap-8 mt-14">
+        <span className=" text-center text-2xl">
+          دریافت اطلاعات با خطا مواجه گردید
+        </span>
+        <span className="text-center">
+          <Button
+            color="primary"
+            className="text-lg py-6 dark:bg-dark-100"
+            onClick={() => navigate("/articles")}
+          >
+            بازگشت به صفحه مقاله ها
+          </Button>
+        </span>
+      </div>
+    );
+  }
+
+  useEffect(() => {
+    scrollTo({ top: "0", behavior: "instant" });
+  }, []);
 
   if (isLoading) {
     return (
-      <BeatLoader color="#2196F3" className="text-center mt-10" size={20} />
+      <BeatLoader color="#2196F3" className="text-center my-[56px]" size={20} />
     );
   }
 
@@ -47,7 +84,6 @@ function ArticleMainContent() {
               className="w-full h-full"
             />
           </div>
-
           <div className="flex flex-col justify-between w-full md:w-[60%]">
             <h1 className="text-ellipsis whitespace-nowrap overflow-hidden">
               {data.data.detailsNewsDto.title}
@@ -55,7 +91,6 @@ function ArticleMainContent() {
             <p className="text-justify mt-5 md:mt-0 overflow-hidden text-[#455A64] dark:text-white">
               {data.data.detailsNewsDto.describe}
             </p>
-
             <div className="flex flex-col sm:flex-row justify-between sm:text-[16px]">
               <div className="text-primary mt-5 md:mt-0 flex flex-col items-start sm:flex-row sm:items-center gap-4">
                 <span className="flex items-center gap-1">
@@ -68,7 +103,6 @@ function ArticleMainContent() {
                   1402/7/2
                 </span>
               </div>
-
               <div className="xs:flex mt-5 md:mt-0 justify-start items-center gap-3 sm:bg-white dark:bg-dark-100 sm:pe-12 sm:ps-4 sm:py-3 rounded-2xl">
                 <Avatar
                   radius="lg"
@@ -87,14 +121,45 @@ function ArticleMainContent() {
             </h3>
             <p>{data.data.detailsNewsDto.googleDescribe}</p>
           </div>
-          <RateSection title="آیا از این مقاله راضی بودید؟" />
+          <ArticleRateSection
+            title="آیا از این مقاله راضی بودید؟"
+            id={id}
+            likeId={data.data.detailsNewsDto.likeId}
+            currentUserFavoriteId={
+              data.data.detailsNewsDto.currentUserFavoriteId
+            }
+            currentUserIsLike={data.data.detailsNewsDto.currentUserIsLike}
+            currentUserIsDissLike={
+              data.data.detailsNewsDto.currentUserIsDissLike
+            }
+            currentUserRateNumber={
+              data.data.detailsNewsDto.currentUserRateNumber
+            }
+            currentUserSetRate={data.data.detailsNewsDto.currentUserSetRate}
+            isCurrentUserFavorite={
+              data.data.detailsNewsDto.isCurrentUserFavorite
+            }
+            currentLikeCount={data.data.detailsNewsDto.currentLikeCount}
+            currentDissLikeCount={data.data.detailsNewsDto.currentDissLikeCount}
+            refetch={refetch}
+          />
           <div className="bg-white dark:bg-dark-200 p-7 mt-12 rounded-3xl">
             <CommentsBox
-              articleId={id}
+              newsId={id}
               title="نظرات کاربران درباره این مقاله"
               comments={comments.data?.data}
               isLoading={comments.isLoading}
               error={comments.error}
+              commentBody={commentBody}
+              commentTitle={commentTitle}
+              setCommentBody={setCommentBody}
+              setCommentTitle={setCommentTitle}
+              addComment={() =>
+                addArticleComment(id, commentTitle, commentBody).then(() => {
+                  setCommentTitle("");
+                  setCommentBody("");
+                })
+              }
             />
           </div>
         </div>
