@@ -27,7 +27,7 @@ function SignUp() {
 
     if (res.data.success === true) {
       console.log(res.data);
-      navigate("/SignUpVerification");
+      // navigate("/SignUpVerification");
     }
   };
 
@@ -65,7 +65,7 @@ function SignUp() {
                   type="phonenumber"
                   required
                   autoComplete="email"
-                  placeholder="ایمیل یا شماره موبایل"
+                  placeholder="شماره موبایل"
                   className=" pr-[15px] text-right h-[56px] rounded-[32px] block w-full  border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>

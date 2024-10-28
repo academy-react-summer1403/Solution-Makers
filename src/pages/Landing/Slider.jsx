@@ -15,10 +15,16 @@ const Slider = () => {
         <SectionsTitle name="اساتید برتر" />
       </div>
 
-      <Carousel className="mt-[50px] ">
+      <Carousel
+        className="mt-[50px] "
+        opts={{
+          align: "start",
+          loop: true,
+        }}
+      >
         <CarouselContent className=" w-[1280px] h-[446px] p-0  flex-row-reverse odd:mt-0 ">
           {Array.from({
-            length: 12,
+            length: 6,
           }).map((_, index) => (
             <CarouselItem
               className=" mb-0 basis-1/4 even:mt-[55px] "

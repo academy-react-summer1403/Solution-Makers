@@ -67,7 +67,7 @@ const LandingNews = () => {
       />
     );
   }
-
+  console.log(data.data.news[0].title);
   return (
     <>
       {data.data.news.length !== 0 ? (
@@ -79,7 +79,10 @@ const LandingNews = () => {
               <div className=" hover:scale-[1.03] cursor-pointer duration-200   w-[624px] h-full flex flex-col flex-nowrap justify-between  ">
                 <div className="  w-[616px] h-[340px] ">
                   <img
-                    src="/src/pages/Landing/Objects/photo.png"
+                    src={
+                      data.data.news[0]
+                        .currentImageAddressTumb
+                    }
                     className=" w-full h-full "
                   />
                 </div>
@@ -101,22 +104,16 @@ const LandingNews = () => {
                     </span>
                   </div>
                   <h1 className=" text-[32px] mt-[6px] ">
-                    چگونه مطالعه موثر را
-                    برای شما آسانتر
-                    کنیم.
+                    {
+                      data.data.news[0]
+                        .title
+                    }
                   </h1>
                   <p className=" text-[16px] ">
-                    لورم ایپسوم متن
-                    ساختگی با تولید
-                    سادگی نامفهوم از
-                    صنعت چاپ و با
-                    استفاده از طراحان
-                    گرافیک است چاپگرها و
-                    متون بلکه روزنامه و
-                    مجله در ستون و
-                    سطرآنچنان که لازم
-                    است و برای شرایط
-                    فعلی تکنولوژی مورد.s
+                    {
+                      data.data.news[0]
+                        .miniDescribe
+                    }
                   </p>
                 </div>
               </div>

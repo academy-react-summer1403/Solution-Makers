@@ -74,15 +74,47 @@ const Carousel = React.forwardRef(
       },
       []
     );
+    // const scrollItems = 3; // Number of items to scroll
+
+    // const scrollPrev =
+    //   React.useCallback(() => {
+    //     if (!api) return;
+    //     const currentIndex =
+    //       api.selectedScrollSnap();
+    //     // Calculate the new target index (ensure it stays within bounds)
+    //     const targetIndex = Math.max(
+    //       currentIndex -
+    //         Math.floor(scrollItems),
+    //       0
+    //     );
+    //     api.scrollTo(targetIndex);
+    //   }, [api]);
+
+    // const scrollNext =
+    //   React.useCallback(() => {
+    //     if (!api) return;
+    //     const currentIndex =
+    //       api.selectedScrollSnap();
+    //     const targetIndex = Math.min(
+    //       currentIndex +
+    //         Math.floor(scrollItems),
+    //       api.slideNodes().length - 1
+    //     );
+    //     api.scrollTo(targetIndex);
+    //   }, [api]);
 
     const scrollPrev =
       React.useCallback(() => {
-        api?.scrollPrev();
+        api?.scrollTo(
+          api.selectedScrollSnap() - 1 // scroll's step
+        );
       }, [api]);
 
     const scrollNext =
       React.useCallback(() => {
-        api?.scrollNext();
+        api?.scrollTo(
+          api.selectedScrollSnap() + 1 // scroll's step
+        );
       }, [api]);
 
     const handleKeyDown =

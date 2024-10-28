@@ -117,11 +117,12 @@ function SignUpVerification() {
       "https://classapi.sepehracademy.ir/api/Sign/VerifyMessage",
       obj
     );
+    console.log(res.data);
 
     console.log(res.data);
 
     if (res.data.success === true) {
-      navigate("/SetPassword");
+      // navigate("/SetPassword");
     }
   };
 

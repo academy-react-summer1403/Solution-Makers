@@ -2,7 +2,7 @@ import Articles from "./pages/Articles";
 import Courses from "./pages/Courses";
 import Landing from "./pages/Landing";
 import LoginCodeVerifiction from "./pages/Login/LoginCodeVerifiction";
-import Login from "./pages/Login";
+// import Login from "./pages/Login";
 import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
 import ForgetPasswordVerification from "./pages/ForgetPassword/ForgetPasswordVerification";
 import Teachers from "./pages/Teachers";
@@ -11,6 +11,7 @@ import ArticleDetails from "./pages/ArticleDetails";
 import SignUp from "./pages/SignUp/SignUp";
 import SignUpVerification from "./pages/SignUp/SignUpVerification";
 import SetPassword from "./pages/SignUp/SetPassword";
+import SignUpLoginIndex from "./pages/Login/SignUpLoginIndex";
 
 const routes = [
   { path: "/", element: <Landing /> },
@@ -36,7 +37,7 @@ const routes = [
   },
   {
     path: "/login",
-    element: <Login />,
+    element: <SignUpLoginIndex />,
   },
   {
     path: "/LoginCodeVerifiction",

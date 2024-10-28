@@ -6,6 +6,7 @@ import { GoDotFill } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 import AOS from "aos";
 import { useEffect } from "react";
+import { cn } from "@nextui-org/react";
 
 const NewsCard = ({
   id,
@@ -24,11 +25,12 @@ const NewsCard = ({
   }, []);
   return (
     <>
+      {/* <div className={cn('w-10', state ? 'block' : hidden)}></div> */}
       <div
         onClick={() =>
           navigate("/articles/" + id)
         }
-        className=" shadow shadow-[#ccc] rounded-[25px] overflow-hidden  bg-none  w-[624px] h-[161px] flex flex-row hover:scale-[1.03] cursor-pointer duration-200 "
+        className="   rounded-[25px] overflow-hidden  bg-none  w-[624px] h-[161px] flex flex-row hover:scale-[1.03] cursor-pointer duration-200 "
       >
         <div className="  w-[224px] h-[161px] rounded-[25px] overflow-hidden ">
           <img
