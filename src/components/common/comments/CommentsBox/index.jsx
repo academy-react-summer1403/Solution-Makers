@@ -179,6 +179,7 @@ function CommentsBox({
               onOpen={onOpen}
               courseId={courseId}
               newsId={newsId}
+              hasShowRepliesBtn={true}
             />
           ))}
       </div>

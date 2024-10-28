@@ -133,7 +133,7 @@ export const dislikeCourseComment = (id) => {
     instance.post(`/Course/AddCourseCommentDissLike?CourseCommandId=${id}`),
     {
       loading: "در حال پردازش",
-      success: "دیسلایک شد",
+      success: "کامنت دیسلایک شد",
       error: "خطایی رخ داد",
     }
   );

@@ -52,6 +52,29 @@ export const addArticleComment = (newsId, title, describe) => {
   );
 };
 
+export const likeArticleComment = (id) => {
+  return toast.promise(instance.post(`/News/CommentLike/${id}?LikeType=true`), {
+    loading: "در حال پردازش",
+    success: "لایک شد",
+    error: "خطایی رخ داد",
+  });
+};
+
+export const deleteLikeArticleComment = (id) => {
+  return toast.promise(
+    instance.delete("/News/DeleteCommentLikeNews", {
+      data: {
+        deleteEntityId: id,
+      },
+    }),
+    {
+      loading: "در حال پردازش",
+      success: "لایک برداشته شد",
+      error: "خطایی رخ داد",
+    }
+  );
+};
+
 export const submitScoreForArticle = (id, score) => {
   return toast.promise(
     instance.post(`/News/NewsRate?NewsId=${id}&RateNumber=${score}`),
