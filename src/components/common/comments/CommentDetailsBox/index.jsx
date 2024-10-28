@@ -45,7 +45,7 @@ function CommentDetailsBox({
   const [isLiked, setIsLiked] = useState(undefined);
   const [isDisLiked, setIsDisLiked] = useState(undefined);
   const [isShowReplies, setIsShowReplies] = useState(false);
-  const { setCommentId, reFetch, setReFetch } = useContext(AppContext);
+  const { setCommentId, setReFetch } = useContext(AppContext);
 
   useEffect(() => {
     if (courseId) {
@@ -63,7 +63,7 @@ function CommentDetailsBox({
         })
         .catch(() => setError(true));
     }
-  }, [reFetch]);
+  }, []);
 
   useEffect(() => {
     toast.remove();
@@ -74,23 +74,8 @@ function CommentDetailsBox({
     setIsDisLiked(currentUserEmotion == "DISSLIKED");
   }, [currentUserEmotion, currentUserIsLike, currentUserIsDissLike]);
 
-  if (hasLoading && isLoading) {
-    return (
-      <div className="text-center">
-        <Spinner />
-      </div>
-    );
-  }
-
-  if (hasError && error) {
-    return <span className="text-red-500 text-lg">خطا در دریافت اطلاعات</span>;
-  }
-
   return (
-    <div
-      className={`text-sm xs:text-medium flex flex-col gap-2 py-4`}
-      onClick={() => console.log(isLiked)}
-    >
+    <div className={`text-sm xs:text-medium flex flex-col gap-2 py-4`}>
       <div className={`flex flex-col gap-5 ${myClassName}`}>
         <div className={`flex justify-between items-center`}>
           <div className="flex flex-col xs:flex-row items-center gap-3">
@@ -170,7 +155,7 @@ function CommentDetailsBox({
               onOpen();
             }}
           >
-            پاسخ
+            <b>پاسخ</b>
             <BiMessageRounded />
           </Button>
           {hasShowRepliesBtn && replies.length > 0 && (
@@ -184,9 +169,11 @@ function CommentDetailsBox({
                 }
               }}
             >
-              {isShowReplies
-                ? "بستن پاسخ ها"
-                : `نمایش پاسخ ها ... ${`(${replies.length})`}`}
+              {isShowReplies ? (
+                <b className="text-red-500">بستن پاسخ ها</b>
+              ) : (
+                <b>نمایش پاسخ ها ... {`(${replies.length})`}</b>
+              )}
             </Button>
           )}
         </div>
@@ -194,16 +181,32 @@ function CommentDetailsBox({
       <div>
         {isShowReplies && (
           <>
-            {replies.map((reply) => (
-              <CommentDetailsBox
-                key={reply.id}
-                {...reply}
-                myClassName="mt-4 md:ms-12 ps-5 border-[#CFD8DC] border-r-2"
-                onOpen={onOpen}
-                hasLoading={true}
-                hasError={true}
-              />
-            ))}
+            {error ? (
+              <span className="text-red-500 inline-flex text-lg my-10">
+                خطا در دریافت اطلاعات
+              </span>
+            ) : (
+              <>
+                {isLoading ? (
+                  <div className="text-center my-4">
+                    <Spinner />
+                  </div>
+                ) : (
+                  <>
+                    {replies.map((reply) => (
+                      <CommentDetailsBox
+                        key={reply.id}
+                        {...reply}
+                        myClassName="mt-4 md:ms-12 ps-5 border-[#CFD8DC] border-r-2"
+                        onOpen={onOpen}
+                        hasLoading={true}
+                        hasError={true}
+                      />
+                    ))}
+                  </>
+                )}
+              </>
+            )}
           </>
         )}
       </div>
