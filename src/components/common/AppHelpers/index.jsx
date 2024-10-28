@@ -15,7 +15,7 @@ function AppHelpers() {
 
   return (
     <div
-      className={`inline-flex flex-col-reverse gap-4 ${
+      className={`hidden xs:inline-flex flex-col-reverse gap-4 ${
         isShow ? "left-4" : "-left-[500px]"
       } fixed bottom-5 transition-all`}
     >

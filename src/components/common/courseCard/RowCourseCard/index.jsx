@@ -46,7 +46,9 @@ function RowCourseCard({
         />
       </div>
       <div className="flex flex-col gap-5 md:justify-between w-[70%] lg:w-[60%] xl:w-[70%]">
-        <h3 className="text-2xl lg:text-lg">{title}</h3>
+        <h3 className="text-xl sm:text-2xl lg:text-lg text-ellipsis whitespace-nowrap overflow-hidden">
+          {title}
+        </h3>
         <p className="hidden md:block text-justify">
           {describe} Lorem ipsum dolor sit amet consectetur adipisicing elit.
           Quod sed architecto fuga explicabo voluptates error sunt porro maxime
@@ -67,15 +69,15 @@ function RowCourseCard({
             <Details text={statusName} icon={<TbProgressCheck size={20} />} />
             <Details text={lastUpdate.slice(0, 10)} />
           </div>
-          <div className="flex items-center pt-4 ps-2 xl:pt-0 xl:ps-0 gap-1">
-            <span className="text-xl xl:hidden">قیمت :</span>
+          <div className="hidden xs:flex items-center pt-4 ps-2 xl:pt-0 xl:ps-0 gap-1">
+            <span className="text-[12px] xs:text-xl xl:hidden">قیمت :</span>
             {cost > 0 ? (
-              <>
-                <b className="text-primary me-1 text-3xl lg:text-xl">
+              <span>
+                <b className="text-primary me-1 xs:text-2xl sm:text-3xl lg:text-xl">
                   {cost.toLocaleString()}
                 </b>{" "}
                 تومان
-              </>
+              </span>
             ) : (
               "رایگان"
             )}
@@ -91,8 +93,10 @@ export default RowCourseCard;
 function Details({ text, icon }) {
   return (
     <div className="flex items-center gap-2">
-      {icon}
-      <span>{text}</span>
+      <span className="hidden sm:inline-flex">{icon}</span>
+      <span className="text-sm xs:text-xl lg:text-[15px] text-ellipsis whitespace-nowrap overflow-hidden">
+        {text}
+      </span>
     </div>
   );
 }

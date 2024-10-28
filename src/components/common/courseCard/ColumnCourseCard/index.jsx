@@ -46,8 +46,8 @@ function ColumnCourseCard({
   const [score, setScore] = useState(0);
   const [isLiked, setIsLiked] = useState(undefined);
   const [isDisLiked, setIsDisLiked] = useState(undefined);
-  const [likeCountState, setLikeCountState] = useState(likeCount);
-  const [dissLikeCountState, setDissLikeCountState] = useState(dissLikeCount);
+  const [likeCountState, setLikeCountState] = useState(undefined);
+  const [dissLikeCountState, setDissLikeCountState] = useState(undefined);
   const navigate = useNavigate();
 
   const likeHandler = () => {
@@ -58,6 +58,9 @@ function ColumnCourseCard({
           setIsLiked(true);
           setIsDisLiked(false);
           setLikeCountState((prev) => prev + 1);
+          if (isDisLiked) {
+            setDissLikeCountState((prev) => prev - 1);
+          }
         });
     } else {
       deleteCourseLike(userLikedId)
@@ -76,7 +79,9 @@ function ColumnCourseCard({
         .then(() => {
           setIsDisLiked(true);
           setIsLiked(false);
-          setLikeCountState((prev) => prev - 1);
+          if (isLiked) {
+            setLikeCountState((prev) => prev - 1);
+          }
           setDissLikeCountState((prev) => prev + 1);
         });
     }
@@ -90,7 +95,9 @@ function ColumnCourseCard({
   useEffect(() => {
     setIsLiked(userIsLiked);
     setIsDisLiked(currentUserDissLike);
-  }, [userIsLiked, currentUserDissLike]);
+    setLikeCountState(likeCount);
+    setDissLikeCountState(dissLikeCount);
+  }, [userIsLiked, currentUserDissLike, likeCount, dissLikeCount]);
 
   return (
     <Card
@@ -139,7 +146,7 @@ function ColumnCourseCard({
             </span>
           </div>
         </div>
-        <div className="hidden sm:flex flex-wrap sm:justify-center lg:text-[14px] sm:mt-2 p-4 gap-5 sm:gap-14 md:gap-10 lg:gap-5 xl:gap-5 rounded-[1.5rem] sm:bg-gray dark:bg-dark-100">
+        <div className="hidden sm:flex flex-wrap sm:justify-center lg:text-[14px] sm:mt-2 p-4 gap-5 sm:gap-14 md:gap-10 lg:gap-5 xl:gap-3 rounded-[1.5rem] sm:bg-gray dark:bg-dark-100">
           <span className="flex items-center gap-1">
             <SiLevelsdotfyi />
             {levelName}
@@ -192,7 +199,7 @@ function ColumnCourseCard({
           </div>
           <div>
             <span
-              className="text-[16px] text-white bg-primary rounded-full px-8 py-2"
+              className="text-[16px] text-white bg-primary rounded-full px-8 py-2 xl:px-4"
               onClick={() => {
                 if (!currentUserSetRate) {
                   submitScoreForCourse(courseId, score).then(() =>
