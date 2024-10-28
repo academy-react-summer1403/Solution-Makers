@@ -1,5 +1,4 @@
 import CategoryCard from "./Objects/categoryCard";
-// import "/src/pages/Landing/Category.css";
 
 const Category = () => {
   return (
