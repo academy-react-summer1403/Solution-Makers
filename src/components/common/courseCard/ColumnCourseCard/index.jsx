@@ -46,8 +46,8 @@ function ColumnCourseCard({
   const [score, setScore] = useState(0);
   const [isLiked, setIsLiked] = useState(undefined);
   const [isDisLiked, setIsDisLiked] = useState(undefined);
-  const [likeCountState, setLikeCountState] = useState(undefined);
-  const [dissLikeCountState, setDissLikeCountState] = useState(undefined);
+  const [likeCountState, setLikeCountState] = useState(likeCount);
+  const [dissLikeCountState, setDissLikeCountState] = useState(dissLikeCount);
   const navigate = useNavigate();
 
   const likeHandler = () => {
@@ -95,9 +95,7 @@ function ColumnCourseCard({
   useEffect(() => {
     setIsLiked(userIsLiked);
     setIsDisLiked(currentUserDissLike);
-    setLikeCountState(likeCount);
-    setDissLikeCountState(dissLikeCount);
-  }, [userIsLiked, currentUserDissLike, likeCount, dissLikeCount]);
+  }, [userIsLiked, currentUserDissLike]);
 
   return (
     <Card

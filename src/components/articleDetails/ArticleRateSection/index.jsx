@@ -1,5 +1,5 @@
 import { Button } from "@nextui-org/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiLike, BiDislike } from "react-icons/bi";
 import { BiSolidLike, BiSolidDislike } from "react-icons/bi";
 import { CiStar } from "react-icons/ci";
@@ -30,9 +30,15 @@ function RateSection({
   refetch,
 }) {
   const [score, setScore] = useState(0);
-  const [isLiked, setIsLiked] = useState(currentUserIsLike);
-  const [isDisLiked, setIsDisLiked] = useState(currentUserIsDissLike);
-  const [isFavorite, setIsFavorite] = useState(isCurrentUserFavorite);
+  const [isLiked, setIsLiked] = useState(undefined);
+  const [isDisLiked, setIsDisLiked] = useState(undefined);
+  const [isFavorite, setIsFavorite] = useState(undefined);
+
+  useEffect(() => {
+    setIsLiked(currentUserIsLike);
+    setIsDisLiked(currentUserIsDissLike);
+    setIsFavorite(isCurrentUserFavorite);
+  }, [currentUserIsLike, currentUserIsDissLike, isCurrentUserFavorite]);
 
   return (
     <div className="flex gap-8 flex-col xl:flex-row justify-between mt-12">
