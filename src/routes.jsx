@@ -21,6 +21,7 @@ import UserPanelEditProfile from "./pages/userPanel/EditProfile";
 import UserPanelChangePassword from "./pages/userPanel/ChangePassword";
 import UserPanelComments from "./pages/userPanel/Comments";
 import SignUpLoginIndex from "./pages/Login/SignUpLoginIndex";
+import UserPrivateRoute from "./components/private/UserPrivateRoute";
 
 const routes = [
   { path: "/", element: <Landing /> },
@@ -80,7 +81,11 @@ const routes = [
   },
   {
     path: "/my-panel/*",
-    element: <UserPanelLayout />,
+    element: (
+      <UserPrivateRoute>
+        <UserPanelLayout />
+      </UserPrivateRoute>
+    ),
     children: [
       {
         path: "dashboard",

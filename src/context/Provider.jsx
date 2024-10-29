@@ -7,6 +7,7 @@ export const AppContext =
   createContext();
 
 // eslint-disable-next-line react/prop-types
+
 function Provider({ children }) {
   const [phoneNumber, setPhoneNumber] =
     useState();

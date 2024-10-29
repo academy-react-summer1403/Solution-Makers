@@ -2,7 +2,6 @@ import { Outlet } from "react-router-dom";
 import UserPanelSidebar from "../../components/userPanel/Sidebar";
 import UserPanelNavbar from "../../components/userPanel/Navbar";
 import { useContext, useEffect } from "react";
-import axios from "axios";
 import instance from "../../core/services/middleware";
 import { setItem } from "../../core/services/common/storage";
 import { AppContext } from "../../context/Provider";
@@ -31,22 +30,9 @@ function UserPanelLayout() {
   });
 
   useEffect(() => {
-    axios
-      .post(`/Sign/Login`, {
-        phoneOrGmail: "sanazkhosravi26@gmail.com",
-        password: "123456",
-        rememberMe: true,
-      })
-      .then((res) => {
-        setItem("token", res.data.token);
-        setItem("userId", res.data.id);
-      });
-  }, []);
-
-  useEffect(() => {
     if (data) {
       setUserInfos(data.data);
-      setItem("userInfos" , data.data)
+      setItem("userInfos", data.data);
     }
   }, [data]);
 
