@@ -95,15 +95,7 @@ function MyNavbar() {
               {isLogin() && (
                 <PopoverTrigger>
                   <Avatar
-                    src={
-                      getItem(
-                        "userInfos"
-                      ) &&
-                      getItem(
-                        "userInfos"
-                      ).userImage[0]
-                        .puctureAddress
-                    }
+                    src="/src/assets/images/navbar/Group 33.png"
                     size="md"
                     className="dark:border-2 cursor-pointer"
                   />
