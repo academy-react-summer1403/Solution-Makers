@@ -31,11 +31,11 @@ const clearStorage = () => {
   localStorage.clear();
 };
 
-export {
-  setItem,
-  getItem,
-  getItemGeneric,
-  setItemGeneric,
-  removeItem,
-  clearStorage,
-};
+// export {
+//   setItem,
+//   getItem,
+//   getItemGeneric,
+//   setItemGeneric,
+//   removeItem,
+//   clearStorage,
+// };
