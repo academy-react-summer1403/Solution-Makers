@@ -8,44 +8,48 @@ import { getItem } from "../../core/services/common/storage";
 function Login() {
   const navigate = useNavigate();
 
-  const onSubmit = (event) => {
-    event.preventDefault();
-    const phoneOrGmail = event.target.email.value;
-    const password = event.target.password.value;
-
-    // const obj = {
-    //   phoneOrGmail,
-    //   password,
-    // };
-
-    // console.log(obj);
-
-    loginUser(phoneOrGmail, password).then(() => {
-      setTimeout(() => {
-        navigate("/my-panel/dashboard");
-      }, 2000);
-    });
-
-    //   const res = await axios.post(
-    //     "https://classapi.sepehracademy.ir/api/Sign/Login",
-    //     obj
-    //   );
-    //   console.log(res.data);
-
-    //   const Exist = res.data.success;
-    //   const Error = res.data.message;
-    //   const Number = res.data.phoneNumber;
-    //   if (Exist === true) {
-    //     console.log(Number);
-    //     await axios.post(
-    //       "https://api-academy.iran.liara.run/api/Sign/LoginTwoStep?VerifyCode=verify_code",
-    //       Number
-    //     );
-    //   } else {
-    //     alert(Error);
-    //   }
-    //   console.log("exist", { Exist });
+  const onSubmit = () => {
+    
   };
+
+  // const onSubmit = (event) => {
+  //   event.preventDefault();
+  // const phoneOrGmail = event.target.email.value;
+  // const password = event.target.password.value;
+
+  // const obj = {
+  //   phoneOrGmail,
+  //   password,
+  // };
+
+  // console.log(obj);
+
+  // loginUser(phoneOrGmail, password).then(() => {
+  //   setTimeout(() => {
+  //     navigate("/my-panel/dashboard");
+  //   }, 2000);
+  // });
+
+  //   const res = await axios.post(
+  //     "https://classapi.sepehracademy.ir/api/Sign/Login",
+  //     obj
+  //   );
+  //   console.log(res.data);
+
+  //   const Exist = res.data.success;
+  //   const Error = res.data.message;
+  //   const Number = res.data.phoneNumber;
+  //   if (Exist === true) {
+  //     console.log(Number);
+  //     await axios.post(
+  //       "https://api-academy.iran.liara.run/api/Sign/LoginTwoStep?VerifyCode=verify_code",
+  //       Number
+  //     );
+  //   } else {
+  //     alert(Error);
+  //   }
+  //   console.log("exist", { Exist });
+  // };
 
   const Close = () => {
     navigate("/");
