@@ -1,20 +1,28 @@
+/* eslint-disable react/prop-types */
 // import { useState } from "react";
 // import "./App.css";
 // import "./tailwind.css";
 // import Login from "./components/login/login";
 import axios from "axios";
+import { useContext } from "react";
 import {
   // Navigate,
   useNavigate,
 } from "react-router-dom";
+import { AppContext } from "../../context/Provider";
 
-function SignUp() {
+function SignUp({ back, set }) {
+  const { setPhoneNumber } =
+    useContext(AppContext);
   // const [count, setCount] = useState(0)
   const navigate = useNavigate();
 
   const onSubmit = async (e) => {
     e.preventDefault();
     console.log(e.target.email.value);
+    setPhoneNumber(
+      e.target.email.value
+    );
 
     const obj = {
       phoneNumber: e.target.email.value,
@@ -27,7 +35,7 @@ function SignUp() {
 
     if (res.data.success === true) {
       console.log(res.data);
-      // navigate("/SignUpVerification");
+      set(true);
     }
   };
 
@@ -84,8 +92,8 @@ function SignUp() {
             {" "}
             حساب کاربری دارید؟{" "}
             <a
-              href="\login"
-              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+              onClick={back}
+              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500 cursor-pointer"
             >
               وارد شوید
             </a>

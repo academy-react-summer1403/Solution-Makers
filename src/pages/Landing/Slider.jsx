@@ -22,12 +22,12 @@ const Slider = () => {
           loop: true,
         }}
       >
-        <CarouselContent className=" w-[1280px] h-[446px] p-0  flex-row-reverse odd:mt-0 ">
+        <CarouselContent className=" border-2 w-[1280px] h-[446px] p-0  flex-row-reverse odd:mt-0 ">
           {Array.from({
             length: 6,
           }).map((_, index) => (
             <CarouselItem
-              className=" mb-0 basis-1/4 even:mt-[55px] "
+              className=" mb-0 h-[382px] border-2 basis-1/4 even:mt-[55px] "
               key={index}
             >
               <Slides />

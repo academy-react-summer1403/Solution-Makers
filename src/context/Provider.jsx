@@ -8,6 +8,8 @@ export const AppContext =
 
 // eslint-disable-next-line react/prop-types
 function Provider({ children }) {
+  const [phoneNumber, setPhoneNumber] =
+    useState();
   const [theme, setTheme] = useState(
     localStorage.getItem("theme") ||
       "light"
@@ -128,6 +130,8 @@ function Provider({ children }) {
         setUserNavTitle,
         commentId,
         setCommentId,
+        phoneNumber,
+        setPhoneNumber,
       }}
     >
       {children}

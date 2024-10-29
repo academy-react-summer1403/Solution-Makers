@@ -3,11 +3,12 @@ import {
   useNavigate,
 } from "react-router-dom";
 import "../../Check.css";
-import { baseApi } from "../../config";
+// import { baseApi } from "../../config";
 import axios from "axios";
+import { setItem } from "../../components/common/storage.services";
 
-function Login() {
-  const navigate = useNavigate();
+function Login({ set }) {
+  // const navigate = useNavigate();
   // const [count, setCount] = useState(0)
   const onSubmit = async (event) => {
     const Email =
@@ -36,13 +37,11 @@ function Login() {
 
     const Exist = res.data.success;
     const Error = res.data.message;
-    const Number = res.data.phoneNumber;
+    const Token = res.data.token;
     if (Exist === true) {
-      console.log(Number);
-      await axios.post(
-        "https://api-academy.iran.liara.run/api/Sign/LoginTwoStep?VerifyCode=verify_code",
-        Number
-      );
+      console.log(Token);
+      setItem("token", Token);
+
       // navigate("/");
     } else {
       alert(Error);
@@ -50,7 +49,7 @@ function Login() {
     console.log("exist", { Exist });
   };
   const Close = () => {
-    navigate("/");
+    // navigate("/");
   };
 
   return (
@@ -137,8 +136,8 @@ function Login() {
             {" "}
             حساب کاربری ندارید؟{" "}
             <a
-              href="/SignUp"
-              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+              onClick={set}
+              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500 cursor-pointer"
             >
               ثبت نام
             </a>
