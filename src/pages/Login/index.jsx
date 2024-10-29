@@ -5,7 +5,7 @@ import {
 import "../../Check.css";
 // import { baseApi } from "../../config";
 import axios from "axios";
-import { setItem } from "../../components/common/storage.services";
+import { setItem } from "../../core/services/common/storage";
 
 function Login({ set }) {
   const navigate = useNavigate();
