@@ -8,7 +8,7 @@ import axios from "axios";
 import { setItem } from "../../components/common/storage.services";
 
 function Login({ set }) {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   // const [count, setCount] = useState(0)
   const onSubmit = async (event) => {
     const Email =
@@ -42,14 +42,14 @@ function Login({ set }) {
       console.log(Token);
       setItem("token", Token);
 
-      // navigate("/");
+      navigate("/");
     } else {
       alert(Error);
     }
     console.log("exist", { Exist });
   };
   const Close = () => {
-    // navigate("/");
+    navigate("/");
   };
 
   return (
