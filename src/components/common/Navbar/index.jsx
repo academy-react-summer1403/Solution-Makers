@@ -15,7 +15,8 @@ import NavMenuLink from "./NavMenuLink";
 import ToggleTheme from "../ToggleTheme";
 import BagIcon from "../BagIcon";
 import "./index.css";
-import { getItem } from "../../../core/services/common/storage";
+import { getItem, removeItem } from "../../../core/services/common/storage";
+import { isLogin } from "../../../utils/auth";
 
 function MyNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -42,10 +43,10 @@ function MyNavbar() {
         </Link>
         <ul className="hidden md:flex gap-12">
           <li>
-            <NavLink to="/courses">دوره‌ها</NavLink>
+            <NavLink to="/">صفحه اصلی</NavLink>
           </li>
           <li>
-            <NavLink to="/teachers">اساتید</NavLink>
+            <NavLink to="/courses">دوره‌ها</NavLink>
           </li>
           <li>
             <NavLink to="/contact">ارتباط با ما</NavLink>
@@ -59,7 +60,7 @@ function MyNavbar() {
           <Link className="bg-white h-[50px] w-[50px] rounded-full hidden sm:flex items-center justify-center">
             <BagIcon />
           </Link>
-          {getItem("token") && (
+          {isLogin() && (
             <Popover
               placement="bottom-start"
               offset={15}
@@ -68,13 +69,15 @@ function MyNavbar() {
                 trigger: "hidden md:inline-flex",
               }}
             >
-              <PopoverTrigger>
-                <Avatar
-                  src={getItem("userInfos").userImage[0].puctureAddress}
-                  size="md"
-                  className="dark:border-2 cursor-pointer"
-                />
-              </PopoverTrigger>
+              {isLogin() && (
+                <PopoverTrigger>
+                  <Avatar
+                    src={getItem("userInfos").userImage[0].puctureAddress}
+                    size="md"
+                    className="dark:border-2 cursor-pointer"
+                  />
+                </PopoverTrigger>
+              )}
               <PopoverContent className="items-start gap-1 px-4 py-2">
                 <Link to="/my-panel/dashboard" className="hover:text-primary">
                   پنل کاربری
@@ -89,25 +92,57 @@ function MyNavbar() {
               </PopoverContent>
             </Popover>
           )}
-          <Button
-            onClick={() => navigate("/login")}
-            radius="full"
-            size="lg"
-            color="primary"
-            className="hidden md:inline-block"
-          >
-            ورود به حساب
-          </Button>
+          {isLogin() ? (
+            <Button
+              onClick={() => {
+                removeItem("token");
+                removeItem("userId");
+                removeItem("userInfos");
+                navigate("/login");
+              }}
+              radius="full"
+              size="lg"
+              color="primary"
+              className="hidden md:inline-block"
+            >
+              خروج از حساب
+            </Button>
+          ) : (
+            <Button
+              onClick={() => navigate("/login")}
+              radius="full"
+              size="lg"
+              color="primary"
+              className="hidden md:inline-block"
+            >
+              ورود به حساب
+            </Button>
+          )}
         </div>
       </div>
 
       <NavbarMenu className="bg-[#e7f0fc] dark:bg-dark-200 space-y-2">
-        <NavMenuLink target="/login" title="ورود به حساب کاربری" />
-        <NavMenuLink target="/my-panel/dashboard" title="پنل کاربری" />
-        <NavMenuLink target="" title="سبد خرید" />
+        {!isLogin() && (
+          <NavMenuLink target="/login" title="ورود به حساب کاربری" />
+        )}
+        <NavMenuLink target="/" title="صفحه اصلی" />
+        {isLogin() && (
+          <NavMenuLink target="/my-panel/dashboard" title="پنل کاربری" />
+        )}
         <NavMenuLink target="/courses" title="دوره‌ها" />
         <NavMenuLink target="/articles" title="اخبار مقالات" />
-        <NavMenuLink target="" title="خروج" />
+        <NavMenuLink target="" title="سبد خرید" />
+        {isLogin() && (
+          <NavMenuLink
+            target="/login"
+            title="خروج"
+            func={() => {
+              removeItem("token");
+              removeItem("userId");
+              removeItem("userInfos");
+            }}
+          />
+        )}
       </NavbarMenu>
     </Navbar>
   );
