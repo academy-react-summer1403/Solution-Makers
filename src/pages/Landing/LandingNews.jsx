@@ -77,7 +77,7 @@ const LandingNews = () => {
 
             <div className=" mt-[40px] w-full h-[556px] flex flex-nowrap justify-between ">
               <div className=" hover:scale-[1.03] cursor-pointer duration-200   w-[624px] h-full flex flex-col flex-nowrap justify-between  ">
-                <div className="  w-[616px] h-[340px] ">
+                <div className=" rounded-[25px] overflow-hidden w-[616px] h-[340px] ">
                   <img
                     src={
                       data.data.news[0]

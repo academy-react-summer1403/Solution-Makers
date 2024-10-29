@@ -41,7 +41,7 @@ const NewsCard = ({
             className=" w-full h-full "
           />
         </div>
-        <div className=" flex flex-col justify-between w-[376px] mr-[5px] ">
+        <div className=" flex flex-col justify-between w-[376px] mr-[20px] ">
           <h1 className=" text-[20px] mt-[6px] ">
             {title}
           </h1>
