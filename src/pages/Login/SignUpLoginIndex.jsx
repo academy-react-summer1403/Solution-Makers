@@ -5,25 +5,59 @@ import SignUp from "../SignUp/SignUp";
 import SignUpVerification from "../SignUp/SignUpVerification";
 import SetPassword from "../SignUp/SetPassword";
 import {
-  useEffect,
+  useContext,
   useState,
 } from "react";
+import { AppContext } from "../../context/Provider";
 // import { useRef } from "react";
 
 const SignUpLoginIndex = () => {
-  // const login = useRef(0)
-  // const logVer = useRef(1)
-  // const signUp = useRef(2)
-  // const signVer = useRef(3)
-  // const setPas = useRef(4)
+  const { phoneNumber } =
+    useContext(AppContext);
+
+  const [stepLogin, setStepLogin] =
+    useState(0);
+  const SetLogin = () => {
+    setStepLogin(0);
+  };
+  const SetSignUp = () => {
+    setStepLogin(1);
+  };
+  const SetSignUpVerification = () => {
+    setStepLogin(2);
+  };
+  const SetSetPassword = () => {
+    setStepLogin(3);
+  };
+  console.log(phoneNumber);
 
   return (
-    <div>
-      {/* <Login /> */}
-      <LoginCodeVerification />
+    <div className="fixed w-full h-full backdrop:blur-sm">
+      <div>
+        {stepLogin === 1 ? (
+          <SignUp
+            back={SetLogin}
+            set={SetSignUpVerification}
+          />
+        ) : stepLogin === 2 ? (
+          <SignUpVerification
+            set={SetSetPassword}
+            numRef={phoneNumber}
+          />
+        ) : stepLogin === 3 ? (
+          <SetPassword
+            set={SetLogin}
+            numRef={phoneNumber}
+          />
+        ) : (
+          <Login set={SetSignUp} />
+        )}
+
+        {/* 
       <SignUp />
-      <SignUpVerification />
-      <SetPassword />
+      
+       */}
+      </div>
     </div>
   );
 };

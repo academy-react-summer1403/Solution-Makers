@@ -6,7 +6,10 @@ import "../../app/App.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-function SignUpVerification() {
+function SignUpVerification({
+  set,
+  numRef,
+}) {
   const navigate = useNavigate();
 
   // const [resendShow, setResendShow] =
@@ -109,7 +112,7 @@ function SignUpVerification() {
     console.log(VeriCode);
 
     const obj = {
-      phoneNumber: "09309119882",
+      phoneNumber: numRef,
       verifyCode: VeriCode,
     };
 
@@ -119,10 +122,8 @@ function SignUpVerification() {
     );
     console.log(res.data);
 
-    console.log(res.data);
-
     if (res.data.success === true) {
-      // navigate("/SetPassword");
+      set(true);
     }
   };
 
@@ -140,7 +141,7 @@ function SignUpVerification() {
         </div>
         <div className=" items-center w-[356px] mx-auto sm:w-full sm:max-w-[356px]  ">
           <div className=" w-[356px] mt-10 text-right text-[14px] text-gray-500">
-            کد به شماره 989118045177+
+            کد به شماره {numRef}
             ارسال شد، در صورت اشتباه
             بودن شماره آنرا{" "}
             <a
@@ -196,7 +197,7 @@ function SignUpVerification() {
               type="submit"
               className="flex text-center items-center rounded-[32px] w-[208px] h-[56px] m-auto  justify-center  bg-[#2196F3] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
-              ورود به حساب
+              مرحله بعد{" "}
             </button>
           </form>
           <p className="mt-[15px] text-center text-sm text-gray-500">
