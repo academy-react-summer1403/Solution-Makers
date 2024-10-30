@@ -1,6 +1,5 @@
 import Landing from "./pages/Landing";
 import Courses from "./pages/Courses";
-import CourseComparison from "./pages/CourseComparison";
 import Articles from "./pages/Articles";
 import CourseDetails from "./pages/CourseDetails";
 import ArticleDetails from "./pages/ArticleDetails";
@@ -26,15 +25,42 @@ import UserPrivateRoute from "./components/private/UserPrivateRoute";
 
 const routes = [
   { path: "/", element: <Landing /> },
-  { path: "/courses", element: <Courses /> },
-  { path: "/articles", element: <Articles /> },
-  { path: "/articles/:id", element: <ArticleDetails /> },
-  { path: "/courses/:id", element: <CourseDetails /> },
-  { path: "/teachers", element: <Teachers /> },
-  { path: "/contact", element: <Contact /> },
-  { path: "/login", element: <Login /> },
-  { path: "/LoginCodeVerifiction", element: <LoginCodeVerifiction /> },
-  { path: "/ForgetPassword", element: <ForgetPassword /> },
+  {
+    path: "/courses",
+    element: <Courses />,
+  },
+  {
+    path: "/articles",
+    element: <Articles />,
+  },
+  {
+    path: "/articles/:id",
+    element: <ArticleDetails />,
+  },
+  {
+    path: "/courses/:id",
+    element: <CourseDetails />,
+  },
+  {
+    path: "/teachers",
+    element: <Teachers />,
+  },
+  {
+    path: "/contact",
+    element: <Contact />,
+  },
+  {
+    path: "/login",
+    element: <SignUpLoginIndex />,
+  },
+  {
+    path: "/LoginCodeVerifiction",
+    element: <LoginCodeVerifiction />,
+  },
+  {
+    path: "/ForgetPassword",
+    element: <ForgetPassword />,
+  },
   {
     path: "/ForgetPasswordVerification",
     element: (
