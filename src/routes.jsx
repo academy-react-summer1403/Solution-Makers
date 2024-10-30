@@ -1,5 +1,6 @@
 import Landing from "./pages/Landing";
 import Courses from "./pages/Courses";
+import CourseComparison from "./pages/CourseComparison";
 import Articles from "./pages/Articles";
 import CourseDetails from "./pages/CourseDetails";
 import ArticleDetails from "./pages/ArticleDetails";
@@ -24,6 +25,7 @@ import UserPanelComments from "./pages/userPanel/Comments";
 const routes = [
   { path: "/", element: <Landing /> },
   { path: "/courses", element: <Courses /> },
+  { path: "/CourseComparison", element: <CourseComparison /> },
   { path: "/articles", element: <Articles /> },
   { path: "/articles/:id", element: <ArticleDetails /> },
   { path: "/courses/:id", element: <CourseDetails /> },
