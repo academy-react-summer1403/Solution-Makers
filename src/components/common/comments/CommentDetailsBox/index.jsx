@@ -1,10 +1,19 @@
 import { useContext, useEffect, useState } from "react";
-import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { BiMessageRounded } from "react-icons/bi";
-import { Avatar, Button } from "@nextui-org/react";
+import { BiLike, BiSolidLike, BiDislike, BiSolidDislike } from "react-icons/bi";
+import { Avatar, Button, Spinner } from "@nextui-org/react";
 import { AppContext } from "../../../../context/Provider";
-import { addLikeForCourseComment } from "../../../../core/api/app/CourseDetails";
-import instance from "../../../../core/services/middleware";
+import {
+  addLikeForCourseComment,
+  dislikeCourseComment,
+  getCourseCommentsReplies,
+} from "../../../../core/api/app/CourseDetails";
+import {
+  deleteLikeArticleComment,
+  getArticleCommentsReplies,
+  likeArticleComment,
+} from "../../../../core/api/app/ArticleDetails";
+import toast from "react-hot-toast";
 
 function CommentDetailsBox({
   id,
@@ -13,6 +22,8 @@ function CommentDetailsBox({
   pictureAddress,
   currentUserLikeId,
   currentUserEmotion,
+  currentUserIsLike,
+  currentUserIsDissLike,
   userId,
   parentId,
   author,
@@ -24,21 +35,44 @@ function CommentDetailsBox({
   insertDate,
   onOpen,
   myClassName,
+  hasShowRepliesBtn,
+  hasLoading,
+  hasError,
 }) {
   const [replies, setReplies] = useState([]);
-  const { setCommentId, reFetch, setReFetch } = useContext(AppContext);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [isLiked, setIsLiked] = useState(undefined);
+  const [isDisLiked, setIsDisLiked] = useState(undefined);
+  const [isShowReplies, setIsShowReplies] = useState(false);
+  const { setCommentId, setReFetch } = useContext(AppContext);
 
   useEffect(() => {
     if (courseId) {
-      instance
-        .get(`/Course/GetCourseReplyCommnets/${courseId}/${id}`)
-        .then((res) => setReplies(res.data));
+      getCourseCommentsReplies(courseId, id)
+        .then((res) => {
+          setIsLoading(false);
+          setReplies(res.data);
+        })
+        .catch(() => setError(true));
     } else if (newsId) {
-      instance
-        .get(`/News/GetRepliesComments?Id=${id}`)
-        .then((res) => setReplies(res.data));
+      getArticleCommentsReplies(id)
+        .then((res) => {
+          setIsLoading(false);
+          setReplies(res.data);
+        })
+        .catch(() => setError(true));
     }
-  }, [reFetch]);
+  }, []);
+
+  useEffect(() => {
+    toast.remove();
+  }, [replies]);
+
+  useEffect(() => {
+    setIsLiked(currentUserEmotion == "LIKED" || currentUserIsLike);
+    setIsDisLiked(currentUserEmotion == "DISSLIKED");
+  }, [currentUserEmotion, currentUserIsLike, currentUserIsDissLike]);
 
   return (
     <div className={`text-sm xs:text-medium flex flex-col gap-2 py-4`}>
@@ -67,21 +101,51 @@ function CommentDetailsBox({
           {describe}
         </p>
         <div className="flex flex-col xs:flex-row gap-1">
-          {currentUserEmotion == "LIKED" ? (
+          {isLiked ? (
             <span
-              className="flex items-center gap-1 cursor-pointer text-red-500"
-              onClick={() => console.log(currentUserLikeId)}
+              className="flex items-center gap-1 cursor-pointer"
+              onClick={() => {
+                if (courseId) {
+                } else {
+                  deleteLikeArticleComment(currentUserLikeId).then(() =>
+                    setReFetch(true)
+                  );
+                }
+              }}
             >
-              {likeCount} <FaHeart />
+              <BiSolidLike size={22} />
             </span>
           ) : (
             <span
-              className="flex items-center gap-1 cursor-pointer text-red-500"
-              onClick={() =>
-                addLikeForCourseComment(id).then(() => setReFetch(true))
-              }
+              className="flex items-center gap-1 cursor-pointer"
+              onClick={() => {
+                if (courseId) {
+                  addLikeForCourseComment(id).then(() => setReFetch(true));
+                } else {
+                  likeArticleComment(id).then(() => setReFetch(true));
+                }
+              }}
             >
-              {likeCount} <FaRegHeart />
+              <BiLike size={22} />
+            </span>
+          )}
+          {isDisLiked ? (
+            <span className="flex items-center gap-1 cursor-pointer">
+              <BiSolidDislike size={22} />
+            </span>
+          ) : (
+            <span
+              className="flex items-center gap-1 cursor-pointer"
+              onClick={() => {
+                if (courseId) {
+                  dislikeCourseComment(id).then(() => {
+                    setReFetch(true);
+                    // setIsDisLiked(true)
+                  });
+                }
+              }}
+            >
+              <BiDislike size={22} />
             </span>
           )}
           <Button
@@ -91,20 +155,61 @@ function CommentDetailsBox({
               onOpen();
             }}
           >
-            پاسخ
+            <b>پاسخ</b>
             <BiMessageRounded />
           </Button>
+          {hasShowRepliesBtn && replies.length > 0 && (
+            <Button
+              className="flex items-center bg-transparent px-1"
+              onClick={() => {
+                if (!isShowReplies) {
+                  setIsShowReplies(true);
+                } else {
+                  setIsShowReplies(false);
+                }
+              }}
+            >
+              {isShowReplies ? (
+                <b className="text-red-500">بستن پاسخ ها</b>
+              ) : (
+                <b>نمایش پاسخ ها ... {`(${replies.length})`}</b>
+              )}
+            </Button>
+          )}
         </div>
       </div>
-      {replies.length > 0 &&
-        replies.map((reply) => (
-          <CommentDetailsBox
-            key={reply.id}
-            {...reply}
-            myClassName="mt-4 md:ms-12 ps-5 border-[#CFD8DC] border-r-2"
-            onOpen={onOpen}
-          />
-        ))}
+      <div>
+        {isShowReplies && (
+          <>
+            {error ? (
+              <span className="text-red-500 inline-flex text-lg my-10">
+                خطا در دریافت اطلاعات
+              </span>
+            ) : (
+              <>
+                {isLoading ? (
+                  <div className="text-center my-4">
+                    <Spinner />
+                  </div>
+                ) : (
+                  <>
+                    {replies.map((reply) => (
+                      <CommentDetailsBox
+                        key={reply.id}
+                        {...reply}
+                        myClassName="mt-4 md:ms-12 ps-5 border-[#CFD8DC] border-r-2"
+                        onOpen={onOpen}
+                        hasLoading={true}
+                        hasError={true}
+                      />
+                    ))}
+                  </>
+                )}
+              </>
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 }

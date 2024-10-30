@@ -36,6 +36,11 @@ function CourseMainContent() {
   });
 
   useEffect(() => {
+    reFetch && refetch();
+    setReFetch(false);
+  }, [reFetch]);
+
+  useEffect(() => {
     reFetch && comments?.refetch();
     setReFetch(false);
   }, [reFetch]);
@@ -66,7 +71,7 @@ function CourseMainContent() {
 
   if (isLoading) {
     return (
-      <BeatLoader color="#2196F3" className="text-center mt-10" size={20} />
+      <BeatLoader color="#2196F3" className="text-center my-[56px]" size={20} />
     );
   }
 

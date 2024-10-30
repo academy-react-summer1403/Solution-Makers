@@ -1,5 +1,5 @@
 import { Button } from "@nextui-org/react";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { BiLike, BiDislike } from "react-icons/bi";
 import { BiSolidLike, BiSolidDislike } from "react-icons/bi";
 import { CiStar } from "react-icons/ci";
@@ -14,6 +14,7 @@ import {
   deleteCourseLike,
 } from "../../../core/api/app/CourseDetails";
 import toast from "react-hot-toast";
+import { AppContext } from "../../../context/Provider";
 
 function RateSection({
   id,
@@ -27,10 +28,17 @@ function RateSection({
   currentUserRateNumber,
   refetch,
 }) {
+  const { setReFetch } = useContext(AppContext);
   const [score, setScore] = useState(0);
-  const [isLiked, setIsLiked] = useState(currentUserLike);
-  const [isDisLiked, setIsDisLiked] = useState(currentUserDissLike);
-  const [isFavorite, setIsFavorite] = useState(isUserFavorite);
+  const [isLiked, setIsLiked] = useState(undefined);
+  const [isDisLiked, setIsDisLiked] = useState(undefined);
+  const [isFavorite, setIsFavorite] = useState(undefined);
+
+  useEffect(() => {
+    setIsLiked(currentUserLike);
+    setIsDisLiked(currentUserDissLike);
+    setIsFavorite(isUserFavorite);
+  }, [currentUserLike, currentUserDissLike, isUserFavorite]);
 
   return (
     <div className="flex gap-8 flex-col xl:flex-row justify-between mt-12">
@@ -80,8 +88,10 @@ function RateSection({
           <Button
             className="rounded-full bg-primary text-white"
             onClick={() => {
-              deleteCourseLike(userLikeId).then(() => refetch());
-              setIsLiked(false);
+              deleteCourseLike(userLikeId).then(() => {
+                setReFetch(true);
+                setIsLiked(false);
+              });
             }}
           >
             <BiSolidLike size={25} />
@@ -90,13 +100,15 @@ function RateSection({
           <Button
             className="rounded-full bg-primary text-white"
             onClick={() => {
-              addCourseLike(id).then(() => refetch());
-              if (!isLiked && !isDisLiked) {
-                setIsLiked((prev) => !prev);
-              } else {
-                setIsLiked((prev) => !prev);
-                setIsDisLiked((prev) => !prev);
-              }
+              addCourseLike(id).then(() => {
+                setReFetch(true);
+                if (!isLiked && !isDisLiked) {
+                  setIsLiked((prev) => !prev);
+                } else {
+                  setIsLiked((prev) => !prev);
+                  setIsDisLiked((prev) => !prev);
+                }
+              });
             }}
           >
             <BiLike size={25} />
@@ -110,13 +122,15 @@ function RateSection({
           <Button
             className="rounded-full bg-primary text-white"
             onClick={() => {
-              addCourseDislike(id).then(() => refetch());
-              if (!isLiked && !isDisLiked) {
-                setIsDisLiked((prev) => !prev);
-              } else {
-                setIsDisLiked((prev) => !prev);
-                setIsLiked((prev) => !prev);
-              }
+              addCourseDislike(id).then(() => {
+                setReFetch(true);
+                if (!isLiked && !isDisLiked) {
+                  setIsDisLiked((prev) => !prev);
+                } else {
+                  setIsDisLiked((prev) => !prev);
+                  setIsLiked((prev) => !prev);
+                }
+              });
             }}
           >
             <BiDislike size={25} />
@@ -126,8 +140,10 @@ function RateSection({
           <Button
             className="rounded-full bg-primary text-white"
             onClick={() => {
-              removeCourseFromFavorites(userFavoriteId).then(() => refetch());
-              setIsFavorite((prev) => !prev);
+              removeCourseFromFavorites(userFavoriteId).then(() => {
+                setReFetch(true);
+                setIsFavorite((prev) => !prev);
+              });
             }}
           >
             <FaBookmark size={22} />
@@ -136,8 +152,10 @@ function RateSection({
           <Button
             className="rounded-full bg-primary text-white"
             onClick={() => {
-              addCourseToFavorites(id).then(() => refetch());
-              setIsFavorite((prev) => !prev);
+              addCourseToFavorites(id).then(() => {
+                setReFetch(true);
+                setIsFavorite((prev) => !prev);
+              });
             }}
           >
             <FaRegBookmark size={22} />

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { BeatLoader } from "react-spinners";
@@ -14,10 +14,12 @@ import {
   fetchArticleComments,
 } from "../../../core/api/app/ArticleDetails";
 import toast from "react-hot-toast";
+import { AppContext } from "../../../context/Provider";
 
 function ArticleMainContent() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const {reFetch, setReFetch} = useContext(AppContext);
   const [commentBody, setCommentBody] = useState("");
   const [commentTitle, setCommentTitle] = useState("");
 
@@ -34,6 +36,11 @@ function ArticleMainContent() {
   useEffect(() => {
     toast.remove();
   }, []);
+
+  useEffect(() => {
+    reFetch && comments?.refetch();
+    setReFetch(false);
+  }, [reFetch]);
 
   if (error) {
     return (
@@ -54,9 +61,13 @@ function ArticleMainContent() {
     );
   }
 
+  useEffect(() => {
+    scrollTo({ top: "0", behavior: "instant" });
+  }, []);
+
   if (isLoading) {
     return (
-      <BeatLoader color="#2196F3" className="text-center mt-10" size={20} />
+      <BeatLoader color="#2196F3" className="text-center my-[56px]" size={20} />
     );
   }
 

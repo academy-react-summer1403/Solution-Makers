@@ -21,11 +21,12 @@ import UserPanelFavoriteArticles from "./pages/userPanel/FavoriteArticles";
 import UserPanelEditProfile from "./pages/userPanel/EditProfile";
 import UserPanelChangePassword from "./pages/userPanel/ChangePassword";
 import UserPanelComments from "./pages/userPanel/Comments";
+import SignUpLoginIndex from "./pages/Login/SignUpLoginIndex";
+import UserPrivateRoute from "./components/private/UserPrivateRoute";
 
 const routes = [
   { path: "/", element: <Landing /> },
   { path: "/courses", element: <Courses /> },
-  { path: "/CourseComparison", element: <CourseComparison /> },
   { path: "/articles", element: <Articles /> },
   { path: "/articles/:id", element: <ArticleDetails /> },
   { path: "/courses/:id", element: <CourseDetails /> },
@@ -36,14 +37,29 @@ const routes = [
   { path: "/ForgetPassword", element: <ForgetPassword /> },
   {
     path: "/ForgetPasswordVerification",
-    element: <ForgetPasswordVerification />,
+    element: (
+      <ForgetPasswordVerification />
+    ),
   },
-  { path: "/SignUp", element: <SignUp /> },
-  { path: "/SignUpVerification", element: <SignUpVerification /> },
-  { path: "/SetPassword", element: <SetPassword /> },
+  {
+    path: "/SignUp",
+    element: <SignUp />,
+  },
+  {
+    path: "/SignUpVerification",
+    element: <SignUpVerification />,
+  },
+  {
+    path: "/SetPassword",
+    element: <SetPassword />,
+  },
   {
     path: "/my-panel/*",
-    element: <UserPanelLayout />,
+    element: (
+      <UserPrivateRoute>
+        <UserPanelLayout />
+      </UserPrivateRoute>
+    ),
     children: [
       {
         path: "dashboard",
@@ -55,11 +71,15 @@ const routes = [
       },
       {
         path: "favorite-courses",
-        element: <UserPanelFavoriteCourses />,
+        element: (
+          <UserPanelFavoriteCourses />
+        ),
       },
       {
         path: "favorite-articles",
-        element: <UserPanelFavoriteArticles />,
+        element: (
+          <UserPanelFavoriteArticles />
+        ),
       },
       {
         path: "comments",
@@ -67,11 +87,15 @@ const routes = [
       },
       {
         path: "edit-profile",
-        element: <UserPanelEditProfile />,
+        element: (
+          <UserPanelEditProfile />
+        ),
       },
       {
         path: "change-password",
-        element: <UserPanelChangePassword />,
+        element: (
+          <UserPanelChangePassword />
+        ),
       },
     ],
   },

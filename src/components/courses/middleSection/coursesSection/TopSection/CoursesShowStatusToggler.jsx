@@ -9,7 +9,9 @@ function CoursesShowStatusToggler() {
   return (
     <div className="lg:w-full px-2 flex gap-3 items-center justify-center py-2 rounded-xl bg-white shadow-lg dark:bg-dark-100">
       <Button
-        className={`${rowsOfPage == 9 ? "bg-[#dbdbdb]" : "bg-white"}`}
+        className={`${
+          rowsOfPage == 9 ? "bg-[#dbdbdb]" : "bg-white"
+        } text-xl xs:text-2xl`}
         isIconOnly
         variant="faded"
         onClick={() => {
@@ -17,10 +19,12 @@ function CoursesShowStatusToggler() {
           setReFetch(true);
         }}
       >
-        <BsGrid3X3 size={25} className="text-black" />
+        <BsGrid3X3 className="text-black" />
       </Button>
       <Button
-        className={`${rowsOfPage == 5 ? "bg-[#dbdbdb]" : "bg-white"}`}
+        className={`${
+          rowsOfPage == 5 ? "bg-[#dbdbdb]" : "bg-white"
+        } text-xl xs:text-3xl`}
         isIconOnly
         variant="faded"
         onClick={() => {
@@ -28,7 +32,7 @@ function CoursesShowStatusToggler() {
           setReFetch(true);
         }}
       >
-        <MdOutlineTableRows size={32} className="text-black" />
+        <MdOutlineTableRows className="text-black" />
       </Button>
     </div>
   );

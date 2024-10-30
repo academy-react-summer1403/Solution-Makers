@@ -3,9 +3,11 @@ import {
   useNavigate,
 } from "react-router-dom";
 import "../../Check.css";
+// import { baseApi } from "../../config";
 import axios from "axios";
+import { setItem } from "../../core/services/common/storage";
 
-function Login() {
+function Login({ set }) {
   const navigate = useNavigate();
   // const [count, setCount] = useState(0)
   const onSubmit = async (event) => {
@@ -31,12 +33,14 @@ function Login() {
       "https://classapi.sepehracademy.ir/api/Sign/Login",
       obj
     );
+    console.log(res.data);
 
     const Exist = res.data.success;
     const Error = res.data.message;
-    const Number = res.data.phoneNumber;
+    const Token = res.data.token;
     if (Exist === true) {
-      console.log(Number);
+      console.log(Token);
+      setItem("token", Token);
 
       navigate("/");
     } else {
@@ -132,8 +136,8 @@ function Login() {
             {" "}
             حساب کاربری ندارید؟{" "}
             <a
-              href="/SignUp"
-              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+              onClick={set}
+              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500 cursor-pointer"
             >
               ثبت نام
             </a>
