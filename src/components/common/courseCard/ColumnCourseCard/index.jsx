@@ -4,6 +4,7 @@ import {
   CardHeader,
   CardFooter,
   Image,
+  Checkbox,
 } from "@nextui-org/react";
 import { useContext, useEffect, useState } from "react";
 import { submitScoreForCourse } from "../../../../core/api/app/CourseDetails";
@@ -42,7 +43,8 @@ function ColumnCourseCard({
   userLikedId,
   currentUserDissLike,
 }) {
-  const { setReFetch } = useContext(AppContext);
+  const { setReFetch, comparisonIds, setComparisonIds } =
+    useContext(AppContext);
   const [score, setScore] = useState(0);
   const [isLiked, setIsLiked] = useState(undefined);
   const [isDisLiked, setIsDisLiked] = useState(undefined);
@@ -129,7 +131,28 @@ function ColumnCourseCard({
       <CardBody className="text-right px-0 gap-1 md:gap-0">
         <div className="flex justify-between my-2">
           <h3 className="text-lg px-1">{title}</h3>
-          <div className="hidden xs:flex gap-3">
+          <div className="hidden xs:flex items-start gap-2">
+            <span className="pt-1">
+              <Checkbox
+                onValueChange={(selected) => {
+                  if (selected) {
+                    if (comparisonIds.some((id) => id == courseId)) {
+                      return false;
+                    } else {
+                      if (comparisonIds.length == 2) {
+                        comparisonIds.shift();
+                      }
+                      setComparisonIds([...comparisonIds, courseId]);
+                    }
+                  } else {
+                    setComparisonIds(
+                      comparisonIds.filter((id) => id != courseId)
+                    );
+                  }
+                }}
+                isSelected={comparisonIds.includes(courseId)}
+              />
+            </span>
             <span onClick={likeHandler}>
               {isLiked ? <BiSolidLike size={24} /> : <BiLike size={24} />}
               {likeCountState}
