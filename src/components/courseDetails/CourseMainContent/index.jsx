@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -37,15 +37,11 @@ function CourseMainContent() {
 
   useEffect(() => {
     reFetch && refetch();
-    setReFetch(false);
-  }, [reFetch]);
-
-  useEffect(() => {
     reFetch && comments?.refetch();
     setReFetch(false);
   }, [reFetch]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     scrollTo({ top: "0", behavior: "instant" });
     toast.remove();
   }, []);
