@@ -22,6 +22,7 @@ import UserPanelChangePassword from "./pages/userPanel/ChangePassword";
 import UserPanelComments from "./pages/userPanel/Comments";
 import SignUpLoginIndex from "./pages/Login/SignUpLoginIndex";
 import UserPrivateRoute from "./components/private/UserPrivateRoute";
+import CourseComparison from "./pages/CourseComparison";
 
 const routes = [
   { path: "/", element: <Landing /> },
@@ -29,6 +30,7 @@ const routes = [
     path: "/courses",
     element: <Courses />,
   },
+  { path: "/courseComparison", element: <CourseComparison /> },
   {
     path: "/articles",
     element: <Articles />,
