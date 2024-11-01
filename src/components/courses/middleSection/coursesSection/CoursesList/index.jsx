@@ -14,6 +14,8 @@ import ColumnCourseCard from "../../../../common/courseCard/ColumnCourseCard";
 import RowCourseCard from "../../../../common/courseCard/RowCourseCard";
 import { AppContext } from "../../../../../context/Provider";
 import ColumnCourseCardSkeleton from "../../../../common/courseCard/ColumnCourseCard/Skeleton";
+import { useNavigate } from "react-router-dom";
+import CourseComparison from './../../../../../pages/CourseComparison';
 
 function CoursesList() {
   const {
@@ -36,6 +38,11 @@ function CoursesList() {
   } = useContext(AppContext);
 
   const [isCompareModalOpen, setIsCompareModalOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const GoToComparison = () => {
+    navigate("/CourseComparison");
+  }
 
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["courses", coursesPageNumber],
@@ -169,6 +176,7 @@ function CoursesList() {
                   color="primary"
                   onPress={() => {
                     setIsCompareModalOpen(false);
+                    GoToComparison();
                     //  با زدن دکمه بله کاربر ریدایرکت میشه به صفحه مقایسه دوره ها
                   }}
                 >
