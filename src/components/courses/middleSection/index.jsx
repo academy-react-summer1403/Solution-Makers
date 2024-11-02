@@ -16,7 +16,7 @@ function CoursesMiddleSection() {
       <div className="w-full lg:w-[70%] xl:w-[75%] px-5 sm:px-2">
         <CoursesSection />
       </div>
-    </div>
+    </div> 
   );
 }
 

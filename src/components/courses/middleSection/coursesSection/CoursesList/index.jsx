@@ -1,7 +1,15 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchCourses } from "../../../../../core/api/app/Courses";
-import { Pagination } from "@nextui-org/react";
+import {
+  Button,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  Pagination,
+} from "@nextui-org/react";
 import ColumnCourseCard from "../../../../common/courseCard/ColumnCourseCard";
 import RowCourseCard from "../../../../common/courseCard/RowCourseCard";
 import { AppContext } from "../../../../../context/Provider";
@@ -24,7 +32,10 @@ function CoursesList() {
     coursesSortType,
     costDown,
     costUp,
+    comparisonIds,
   } = useContext(AppContext);
+
+  const [isCompareModalOpen, setIsCompareModalOpen] = useState(false);
 
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["courses", coursesPageNumber],
@@ -68,7 +79,12 @@ function CoursesList() {
     reFetch,
   ]);
 
-  console.log(data?.data?.courseFilterDtos);
+  useEffect(() => {
+    console.log(comparisonIds);
+    if (comparisonIds.length == 2) {
+      setIsCompareModalOpen(true);
+    }
+  }, [comparisonIds]);
 
   if (error) {
     return (
@@ -132,6 +148,44 @@ function CoursesList() {
           }}
         />
       )}
+      <Modal
+        isOpen={isCompareModalOpen}
+        onOpenChange={() => setIsCompareModalOpen(false)}
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                مقایسه دو دوره
+              </ModalHeader>
+              <ModalBody>
+                <p className="text-xl">
+                  میخوای این دو دوره رو با هم مقایسه کنی ؟
+                </p>
+              </ModalBody>
+              <ModalFooter>
+                <Button
+                  className="text-lg"
+                  color="primary"
+                  onPress={() => {
+                    setIsCompareModalOpen(false);
+                    //  با زدن دکمه بله کاربر ریدایرکت میشه به صفحه مقایسه دوره ها
+                  }}
+                >
+                  بله
+                </Button>
+                <Button
+                  className="text-lg"
+                  color="danger"
+                  onPress={() => setIsCompareModalOpen(false)}
+                >
+                  خیر
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
     </>
   );
 }
