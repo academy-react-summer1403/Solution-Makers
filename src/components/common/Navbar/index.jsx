@@ -49,7 +49,7 @@ function MyNavbar() {
         <Link to="/">
           <div className="hidden sm:flex items-center gap-2">
             <img src="/src/assets/images/navbar/Group 33.png" />
-            <p>هگزا اسکواد</p>
+            <p>Solution Markers</p>
           </div>
         </Link>
         <ul className="hidden md:flex gap-12">

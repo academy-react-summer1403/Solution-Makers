@@ -77,7 +77,7 @@ function Login({ set }) {
                 <input
                   id="email"
                   name="email"
-                  type="email"
+                  type="text"
                   required
                   autoComplete="email"
                   placeholder="ایمیل "
