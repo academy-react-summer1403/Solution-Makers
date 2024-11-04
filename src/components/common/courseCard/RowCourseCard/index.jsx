@@ -3,9 +3,6 @@ import { RiGraduationCapLine } from "react-icons/ri";
 import { BsPeopleFill } from "react-icons/bs";
 import { TbProgressCheck } from "react-icons/tb";
 import { SiLevelsdotfyi } from "react-icons/si";
-import { useEffect } from "react";
-import AOS from "aos";
-import "aos/dist/aos.css";
 import { useNavigate } from "react-router-dom";
 
 function RowCourseCard({
@@ -20,17 +17,11 @@ function RowCourseCard({
   teacherName,
   currentRegistrants,
 }) {
-  useEffect(() => {
-    AOS.init();
-    AOS.refresh();
-  }, []);
-
   const navigate = useNavigate();
 
   return (
     <div
       className="flex flex-col md:flex-row gap-8 bg-white dark:bg-dark-200 dark:border-2 dark:border-[#707070] p-4 rounded-xl shadow-lg cursor-pointer mt-10"
-      data-aos="fade-up"
       onClick={() => navigate(`/courses/${courseId}`)}
     >
       <div className="relative w-full md:w-[30%] lg:w-[40%] xl:w-[30%] flex items-center">
