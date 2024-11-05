@@ -4,9 +4,9 @@ import { IoCalendarOutline } from "react-icons/io5";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { GoDotFill } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
-import AOS from "aos";
-import { useEffect } from "react";
-import { cn } from "@nextui-org/react";
+// import { useEffect } from "react";
+// import { cn } from "@nextui-org/react";
+// import AOS from "aos";
 
 const NewsCard = ({
   id,
@@ -19,10 +19,11 @@ const NewsCard = ({
 }) => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    AOS.init();
-    AOS.refresh();
-  }, []);
+  // useEffect(() => {
+  //   AOS.init();
+  //   AOS.refresh();
+  // }, []);
+
   return (
     <>
       {/* <div className={cn('w-10', state ? 'block' : hidden)}></div> */}
