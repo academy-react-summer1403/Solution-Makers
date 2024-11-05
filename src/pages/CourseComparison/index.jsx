@@ -10,8 +10,8 @@ const CourseComparison = () => {
             <AppLayout>
                 <Header
                     img="/src/assets/images/courses/Asset11.png"
-                    heading="آموزش برنامه نویسی با بهترین ها"
-                    reminding="مهمه از کی یاد می گیری!!"
+                    heading="با مقایسه کردن دوره های آموزشی با هم دیگه میتونی دوره مناسب خودتو پیدا کنی!"
+                    reminding="مقایسه دو دوره باهم !"
                 />
                 <CourseCompSec />
             </AppLayout>

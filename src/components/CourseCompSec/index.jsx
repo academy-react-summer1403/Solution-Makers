@@ -1,13 +1,12 @@
 import React from "react";
 import { useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
-import CompHeader from "./CompHeader";
 import CompBody from "./CompBody";
 import Loading from "./../common/Loading/index";
 import { fetchCourseById } from "../../core/api/app/CourseDetails";
 import { AppContext } from "../../context/Provider";
 
-const CourseCompSec = ({ }) => {
+const CourseCompSec = ({}) => {
   const { comparisonIds } = useContext(AppContext);
 
   const {
@@ -37,10 +36,22 @@ const CourseCompSec = ({ }) => {
 
   return (
     <>
-      <div className="container mt-20 px-0 sm:px-[2rem] md:px-[3rem] lg:px-[3rem] flex flex-col items-center">
-        <div className="rounded-lg flex flex-col items-center">
-          <CompHeader title1={courseDataOne.data.title} title2={courseDataTwo.data.title} />
-          <CompBody />
+      <div className="container mt-28 px-0 sm:px-[2rem] md:px-[3rem] lg:px-[3rem] flex flex-col items-center">
+        <div className="flex flex-row gap-10 lg:gap-16">
+          <CompBody
+            title={courseDataOne.data.title}
+            image={courseDataOne.data.imageAddress}
+            list={courseDataOne.data}
+          />
+          <img
+            src="/src/assets/images/comparison/vs.svg"
+            className="w-48 h-48"
+          />
+          <CompBody
+            title={courseDataTwo.data.title}
+            image={courseDataTwo.data.imageAddress}
+            list={courseDataTwo.data}
+          />
         </div>
       </div>
     </>
