@@ -6,10 +6,10 @@ import DetailWrapper from "../../common/Comparison/DetailWrapper";
 const CompBody = ({ title, image, list }) => {
   return (
     <>
-      <div className="bg-primary-200 flex flex-col items-center w-[300px] lg:w-[350px] rounded-xl border-1 border-primary-300">
+      <div className="bg-primary-100 flex flex-col items-center w-[300px] lg:w-[350px] rounded-xl border-1 border-primary-300">
         <img
           src={image}
-          alt=""
+          alt="CourseImage"
           className="w-[250px] h-[150px] relative top-[-70px] rounded-lg"
         />
         <h3 className="text-center text-xl lg:text-2xl mt-[-30px] mb-2">
