@@ -52,7 +52,7 @@ function UserPanelLayout() {
   }
 
   return (
-    <div className="flex h-screen bg-white dark:bg-black">
+    <div className="flex bg-white dark:bg-black">
       <Toaster position="top-center" />
       <UserPanelSidebar />
       <div
