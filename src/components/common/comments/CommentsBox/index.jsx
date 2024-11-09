@@ -31,6 +31,7 @@ function CommentsBox({
   const [count, setCount] = useState(5);
   const [replyBody, setReplyBody] = useState("");
   const [replyTitle, setReplyTitle] = useState("");
+  const [isShowReplies, setIsShowReplies] = useState(false);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   if (error) {
@@ -180,6 +181,8 @@ function CommentsBox({
               courseId={courseId}
               newsId={newsId}
               hasShowRepliesBtn={true}
+              isShowReplies={isShowReplies}
+              setIsShowReplies={setIsShowReplies}
             />
           ))}
       </div>

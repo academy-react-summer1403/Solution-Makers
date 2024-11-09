@@ -112,7 +112,9 @@ function CourseMainContent() {
             {showBox == "comments" && (
               <CommentsBox
                 courseId={id}
-                comments={comments?.data?.data}
+                comments={comments?.data?.data.filter(
+                  (comment) => comment.accept == true
+                )}
                 isLoading={comments?.isLoading}
                 error={comments?.error}
                 commentTitle={commentTitle}

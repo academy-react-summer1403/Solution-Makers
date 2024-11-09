@@ -19,7 +19,7 @@ function UserPanelSidebar() {
 
   return (
     <div
-      className={`bg-primary dark:bg-dark-200 dark:border-l fixed z-50 w-[250px] ${
+      className={`bg-primary dark:bg-dark-200 dark:border-l h-screen fixed z-50 w-[250px] ${
         showUserPanelSidebar ? "right-0" : "-right-[1000px]"
       } lg:static flex flex-col h-full lg:w-[20%] gap-2 transition-all`}
       onClick={(e) => {

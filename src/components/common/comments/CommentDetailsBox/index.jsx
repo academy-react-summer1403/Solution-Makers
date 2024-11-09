@@ -36,15 +36,14 @@ function CommentDetailsBox({
   onOpen,
   myClassName,
   hasShowRepliesBtn,
-  hasLoading,
-  hasError,
+  isShowReplies,
+  setIsShowReplies,
 }) {
   const [replies, setReplies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isLiked, setIsLiked] = useState(undefined);
   const [isDisLiked, setIsDisLiked] = useState(undefined);
-  const [isShowReplies, setIsShowReplies] = useState(false);
   const { setCommentId, setReFetch } = useContext(AppContext);
 
   useEffect(() => {
@@ -172,7 +171,7 @@ function CommentDetailsBox({
               {isShowReplies ? (
                 <b className="text-red-500">بستن پاسخ ها</b>
               ) : (
-                <b>نمایش پاسخ ها ... {`(${replies.length})`}</b>
+                <b>نمایش پاسخ ها ...</b>
               )}
             </Button>
           )}
@@ -201,6 +200,7 @@ function CommentDetailsBox({
                         onOpen={onOpen}
                         hasLoading={true}
                         hasError={true}
+                        isShowReplies={true}
                       />
                     ))}
                   </>
