@@ -19,7 +19,7 @@ import { AppContext } from "../../../context/Provider";
 function ArticleMainContent() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const {reFetch, setReFetch} = useContext(AppContext);
+  const { reFetch, setReFetch } = useContext(AppContext);
   const [commentBody, setCommentBody] = useState("");
   const [commentTitle, setCommentTitle] = useState("");
 
@@ -147,7 +147,9 @@ function ArticleMainContent() {
             <CommentsBox
               newsId={id}
               title="نظرات کاربران درباره این مقاله"
-              comments={comments.data?.data}
+              comments={comments.data?.data.filter(
+                (comment) => comment.accept == true
+              )}
               isLoading={comments.isLoading}
               error={comments.error}
               commentBody={commentBody}

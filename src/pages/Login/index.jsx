@@ -41,7 +41,7 @@ function Login({ set }) {
     if (Exist === true) {
       console.log(Token);
       setItem("token", Token);
-
+      setItem("userId", res.data.id)
       navigate("/");
     } else {
       alert(Error);
