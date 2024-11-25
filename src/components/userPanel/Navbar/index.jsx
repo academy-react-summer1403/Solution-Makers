@@ -21,10 +21,10 @@ function UserPanelNavbar() {
         <h2 className="hidden sm:block text-3xl font-bold">{userNavTitle}</h2>
       </div>
       <div className="flex items-center gap-2 sm:gap-4">
-        <span className="flex items-center justify-center rounded-full">
+        <span className="flex items-center justify-center rounded-full shadow-lg">
           <ToggleTheme />
         </span>
-        <Link className="bg-background h-[50px] w-[50px] rounded-full flex items-center justify-center">
+        <Link className="bg-white h-[50px] w-[50px] rounded-full flex items-center justify-center shadow-lg">
           <BagIcon />
         </Link>
       </div>

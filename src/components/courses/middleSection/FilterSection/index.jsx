@@ -69,7 +69,7 @@ function FilterSection({ onclose }) {
   };
 
   return (
-    <div className="bg-white rounded-xl p-3 dark:bg-dark-200">
+    <div className="bg-white shadow-xl rounded-xl p-3 dark:bg-dark-200">
       <div className="bg-gray dark:bg-dark-100 h-12 rounded-2xl flex justify-between items-center px-2">
         <p className="flex items-center gap-2 text-lg">
           <BiFilterAlt size={25} />

@@ -42,7 +42,7 @@ function TopSection({ onOpen }) {
             aria-label="coursesSortingCol"
             className="max-w-xs"
             classNames={{
-              trigger: "bg-white dark:bg-dark-100 h-14",
+              trigger: "bg-white dark:bg-dark-100 h-14 shadow-lg",
               value: "text-md",
             }}
             onChange={(e) => {

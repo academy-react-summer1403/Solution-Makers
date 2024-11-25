@@ -1,12 +1,11 @@
-import { useNavigate } from "react-router-dom";
 import "../../Check.css";
 import axios from "axios";
 import { setItem } from "../../core/services/common/storage";
 import { useContext } from "react";
 import { AppContext } from "../../context/Provider";
+import toast from "react-hot-toast";
 
 function Login({ set }) {
-  const navigate = useNavigate();
   const { setisSignUpLoginModalOpen } = useContext(AppContext);
 
   const onSubmit = async (event) => {
@@ -24,17 +23,14 @@ function Login({ set }) {
     const Error = res.data.message;
     const Token = res.data.token;
     if (Exist === true) {
-      console.log(Token);
       setItem("token", Token);
       setItem("userId", res.data.id);
-      navigate("/");
+      setisSignUpLoginModalOpen(false);
+      toast.success("با موفقیت وارد شدید");
     } else {
-      alert(Error);
+      toast.error(Error);
     }
-    console.log("exist", { Exist });
   };
-
-  // const Close = () => navigate("/");
 
   return (
     <div className="shadow-slate-500 m-auto w-[420px] h-[490px] flex min-h-full flex-col px-8 bg-[#fff] rounded-[25px]">
@@ -43,7 +39,6 @@ function Login({ set }) {
           ورود به حساب
         </h2>
         <button
-          // onClick={Close}
           onClick={() => setisSignUpLoginModalOpen(false)}
           className="mt-[30px] bg-[url('/src/assets/images/close.png')] bg-cover left-[30px] w-[48px] h-[48px]"
         ></button>

@@ -6,22 +6,20 @@ import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-  Avatar,
 } from "@nextui-org/react";
 import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { NavLink, Link } from "react-router-dom";
 import NavMenuLink from "./NavMenuLink";
 import ToggleTheme from "../ToggleTheme";
 import BagIcon from "../BagIcon";
+import { LuLayoutDashboard } from "react-icons/lu";
 import "./index.css";
-import { getItem, removeItem } from "../../../core/services/common/storage";
+import { removeItem } from "../../../core/services/common/storage";
 import { isLogin } from "../../../utils/auth";
 import { AppContext } from "../../../context/Provider";
 
 function MyNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const navigate = useNavigate();
 
   const { setisSignUpLoginModalOpen } = useContext(AppContext);
 
@@ -52,9 +50,6 @@ function MyNavbar() {
             <NavLink to="/courses">دوره‌ها</NavLink>
           </li>
           <li>
-            <NavLink to="/contact">ارتباط با ما</NavLink>
-          </li>
-          <li>
             <NavLink to="/articles">اخبار مقالات</NavLink>
           </li>
         </ul>
@@ -74,11 +69,9 @@ function MyNavbar() {
             >
               {isLogin() && (
                 <PopoverTrigger>
-                  <Avatar
-                    src="/src/assets/images/navbar/Group 33.png"
-                    size="md"
-                    className="dark:border-2 cursor-pointer"
-                  />
+                  <span className="p-3 rounded-full cursor-pointer bg-white dark:bg-dark-100">
+                    <LuLayoutDashboard size={26} />
+                  </span>
                 </PopoverTrigger>
               )}
               <PopoverContent className="items-start gap-1 px-4 py-2">
@@ -101,7 +94,7 @@ function MyNavbar() {
                 removeItem("token");
                 removeItem("userId");
                 removeItem("userInfos");
-                navigate("/login");
+                location.reload();
               }}
               radius="full"
               size="lg"
@@ -112,7 +105,6 @@ function MyNavbar() {
             </Button>
           ) : (
             <Button
-              // onClick={() => navigate("/login")}
               onClick={() => setisSignUpLoginModalOpen(true)}
               radius="full"
               size="lg"
