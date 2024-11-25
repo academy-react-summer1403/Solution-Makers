@@ -1,11 +1,12 @@
-import axios from "axios";
 import { useContext } from "react";
 import { AppContext } from "../../context/Provider";
+import { sendVerifyMessage } from "../../core/api/app/auth";
+import toast from "react-hot-toast";
 
 function SignUp({ back, set }) {
   const { setPhoneNumber, setisSignUpLoginModalOpen } = useContext(AppContext);
 
-  const onSubmit = async (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
     setPhoneNumber(e.target.phoneNumber.value);
 
@@ -13,12 +14,12 @@ function SignUp({ back, set }) {
       phoneNumber: e.target.phoneNumber.value,
     };
 
-    const res = await axios.post("/Sign/SendVerifyMessage", obj);
-
-    if (res.data.success === true) {
-      console.log(res.data);
-      set(true);
-    }
+    sendVerifyMessage(obj).then((res) => {
+      if (res.data.success === true) {
+        toast.success("کد شناسایی برای شما ارسال شد");
+        set(true);
+      }
+    });
   };
 
   return (

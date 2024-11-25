@@ -1,11 +1,11 @@
-import axios from "axios";
 import { useContext } from "react";
 import toast from "react-hot-toast";
 import { AppContext } from "../../context/Provider";
+import { forgetPassword } from "../../core/api/app/auth";
 
 function ForgetPassword({ setStepLogin }) {
   const { setisSignUpLoginModalOpen } = useContext(AppContext);
-  
+
   const onSubmit = (e) => {
     e.preventDefault();
 
@@ -14,7 +14,7 @@ function ForgetPassword({ setStepLogin }) {
       baseUrl: "http://localhost:5173/resetpassword",
     };
 
-    axios.post("/Sign/ForgetPassword", obj).then((res) => {
+    forgetPassword(obj).then((res) => {
       if (res.data.success) {
         toast.success("لطفا ایمیل ارسال شده را تایید کنید");
         setisSignUpLoginModalOpen(false);

@@ -1,7 +1,7 @@
 import { useContext, useRef, useState } from "react";
 import "../../app/App.css";
-import axios from "axios";
 import { AppContext } from "../../context/Provider";
+import { verifyMessage } from "../../core/api/app/auth";
 
 function SignUpVerification({ set, setStepLogin, numRef }) {
   const { setisSignUpLoginModalOpen } = useContext(AppContext);
@@ -61,7 +61,7 @@ function SignUpVerification({ set, setStepLogin, numRef }) {
     setOtp(digits);
   };
 
-  const onSubmit = async (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
 
     const verifyCode = otp[0] + otp[1] + otp[2] + otp[3] + otp[4];
@@ -71,11 +71,11 @@ function SignUpVerification({ set, setStepLogin, numRef }) {
       verifyCode: verifyCode,
     };
 
-    const res = await axios.post("/Sign/VerifyMessage", obj);
-
-    if (res.data.success === true) {
-      set(true);
-    }
+    verifyMessage(obj).then((res) => {
+      if (res.data.success === true) {
+        set(true);
+      }
+    });
   };
 
   return (

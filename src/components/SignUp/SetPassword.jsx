@@ -1,9 +1,9 @@
-import axios from "axios";
 import "../../Check.css";
 import toast from "react-hot-toast";
+import { register } from "../../core/api/app/auth";
 
 function SetPassword({ set, numRef }) {
-  const onSubmit = async (event) => {
+  const onSubmit = (event) => {
     event.preventDefault();
     const Email = event.target.email.value;
     const Pass = event.target.password.value;
@@ -16,14 +16,15 @@ function SetPassword({ set, numRef }) {
         phoneNumber: numRef,
       };
 
-      const res = await axios.post("/Sign/Register", User);
-      if (res.data.success === true) {
-        toast.success("حساب کاربری با موفقیت ایجاد شد");
-        set(true);
-      }
-    } else {
-      toast.error("کلمات عبور وارد شده متفاوت هستند");
-      return;
+      register(User).then((res) => {
+        if (res.data.success === true) {
+          toast.success("حساب کاربری با موفقیت ایجاد شد");
+          set(true);
+        } else {
+          toast.error("کلمات عبور وارد شده متفاوت هستند");
+          return;
+        }
+      });
     }
   };
 

@@ -7,6 +7,7 @@ import { Avatar, Button } from "@nextui-org/react";
 import { RiGraduationCapLine } from "react-icons/ri";
 import { SiLevelsdotfyi } from "react-icons/si";
 import { MdReduceCapacity } from "react-icons/md";
+import { addCourseReserve } from "../../../core/api/app/CourseDetails";
 
 function CourseSpecificationsBox({
   currentRegistrants,
@@ -18,10 +19,11 @@ function CourseSpecificationsBox({
   cost,
   teacherName,
   uniqeUrlString,
+  courseId,
 }) {
   return (
     <>
-      <div className="bg-white dark:bg-dark-200 px-8 py-5 flex flex-col items-center sm:items-stretch divide-y-1 divide-gray rounded-3xl">
+      <div className="bg-white dark:bg-dark-200 px-8 py-5 flex flex-col items-center sm:items-stretch divide-y-1 divide-gray rounded-3xl shadow-lg">
         <h3 className="text-center text-2xl pb-5">مشخصات دوره</h3>
         <CourseSpecificationsDiv
           icon={<HiOutlineUsers />}
@@ -54,7 +56,12 @@ function CourseSpecificationsBox({
           textValue={endTime.slice(0, 10)}
         />
         <div className="py-5 flex flex-col sm:flex-row gap-4 justify-between items-center">
-          <Button color="primary" size="lg" className="rounded-full ">
+          <Button
+            color="primary"
+            size="lg"
+            className="rounded-full"
+            onClick={() => addCourseReserve(courseId)}
+          >
             شرکت در دوره
           </Button>
           <span className="flex items-center gap-2">
@@ -63,7 +70,7 @@ function CourseSpecificationsBox({
           </span>
         </div>
       </div>
-      <div className="bg-white dark:bg-dark-200 flex flex-col sm:flex-row items-center p-6 gap-5 rounded-3xl">
+      <div className="bg-white dark:bg-dark-200 flex flex-col sm:flex-row items-center p-6 gap-5 rounded-3xl shadow-lg">
         <div>
           <Avatar
             size="lg"

@@ -1,14 +1,14 @@
 import "../../Check.css";
-import axios from "axios";
 import { setItem } from "../../core/services/common/storage";
 import { useContext } from "react";
 import { AppContext } from "../../context/Provider";
 import toast from "react-hot-toast";
+import { loginUser } from "../../core/api/app/auth";
 
 function Login({ set, setStepLogin }) {
   const { setisSignUpLoginModalOpen } = useContext(AppContext);
 
-  const onSubmit = async (event) => {
+  const onSubmit = (event) => {
     event.preventDefault();
     const Email = event.target.email.value;
     const Pass = event.target.password.value;
@@ -17,19 +17,19 @@ function Login({ set, setStepLogin }) {
       password: Pass,
     };
 
-    const res = await axios.post("/Sign/Login", obj);
-
-    const Exist = res.data.success;
-    const Error = res.data.message;
-    const Token = res.data.token;
-    if (Exist === true) {
-      setItem("token", Token);
-      setItem("userId", res.data.id);
-      setisSignUpLoginModalOpen(false);
-      toast.success("با موفقیت وارد شدید");
-    } else {
-      toast.error(Error);
-    }
+    loginUser(obj).then((res) => {
+      const Exist = res.data.success;
+      const Error = res.data.message;
+      const Token = res.data.token;
+      if (Exist === true) {
+        setItem("token", Token);
+        setItem("userId", res.data.id);
+        setisSignUpLoginModalOpen(false);
+        toast.success("با موفقیت وارد شدید");
+      } else {
+        toast.error(Error);
+      }
+    });
   };
 
   return (
@@ -75,7 +75,10 @@ function Login({ set, setStepLogin }) {
 
             <div className="mt-[16pX] flex items-center flex-row-reverse justify-between">
               <div className="text-sm">
-                <span className="font-semibold text-indigo-600 hover:text-indigo-500 cursor-pointer" onClick={() => setStepLogin(-1)}>
+                <span
+                  className="font-semibold text-indigo-600 hover:text-indigo-500 cursor-pointer"
+                  onClick={() => setStepLogin(-1)}
+                >
                   رمز عبور را فراموش کردم
                 </span>
               </div>

@@ -87,9 +87,10 @@ function CourseMainContent() {
           <h1 className="text-ellipsis whitespace-nowrap overflow-hidden sm:whitespace-normal">
             {data.data.title}
           </h1>
-          <p className="text-justify text-ellipsis whitespace-nowrap overflow-hidden sm:whitespace-normal">
-            {data.data.describe}
-          </p>
+          <p
+            className="text-justify text-ellipsis whitespace-nowrap overflow-hidden sm:whitespace-normal"
+            dangerouslySetInnerHTML={{ __html: data.data.describe }}
+          ></p>
           <CourseRateSection
             id={id}
             currentUserLike={Boolean(Number(data.data.currentUserLike))}
@@ -149,6 +150,7 @@ function CourseMainContent() {
         </div>
         <div className="hidden w-full lg:w-[30%] lg:flex flex-col gap-10">
           <CourseSpecificationsBox
+            courseId={id}
             currentRegistrants={data.data.currentRegistrants}
             courseStatusName={data.data.courseStatusName}
             courseLevelName={data.data.courseLevelName}

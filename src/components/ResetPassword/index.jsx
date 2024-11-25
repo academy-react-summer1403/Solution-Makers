@@ -1,8 +1,8 @@
 import { Modal, ModalBody, ModalContent } from "@nextui-org/react";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { Link } from "react-router-dom";
+import { resetConfirmValue, resetPassword } from "../../core/api/app/auth";
 
 function ResetPassword({ ConfigValue }) {
   const [isResetPasswordModalOpen, setIsResetPasswordModalOpen] = useState(false);
@@ -11,7 +11,7 @@ function ResetPassword({ ConfigValue }) {
   const [resetValue, setResetValue] = useState("");
 
   useEffect(() => {
-    axios.get(`/Sign/Reset/${ConfigValue}`).then((res) => {
+    resetConfirmValue(ConfigValue).then((res) => {
       if (res.data.success) {
         setIsResetPasswordModalOpen(true);
         setUserId(res.data.id);
@@ -24,21 +24,19 @@ function ResetPassword({ ConfigValue }) {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post("/Sign/Reset", {
-        userId,
-        resetValue,
-        newPassword,
-      })
-      .then((res) => {
-        if (res.data.success) {
-          toast.success(res.data.message);
-          setNewPassword("");
-          setIsResetPasswordModalOpen(false);
-        } else {
-          toast.error(res.data.message);
-        }
-      });
+    resetPassword({
+      userId,
+      resetValue,
+      newPassword,
+    }).then((res) => {
+      if (res.data.success) {
+        toast.success(res.data.message);
+        setNewPassword("");
+        setIsResetPasswordModalOpen(false);
+      } else {
+        toast.error(res.data.message);
+      }
+    });
   };
 
   return (
@@ -88,7 +86,9 @@ function ResetPassword({ ConfigValue }) {
         </ModalContent>
       </Modal>
       <div className="w-screen h-screen flex justify-center items-center">
-        <Link to="/" className="bg-primary text-white text-2xl rounded-2xl p-3">بازگشت به صفحه اصلی</Link>
+        <Link to="/" className="bg-primary text-white text-2xl rounded-2xl p-3">
+          بازگشت به صفحه اصلی
+        </Link>
       </div>
     </>
   );
