@@ -1,12 +1,15 @@
 import {
+  useContext,
   useRef,
   useState,
 } from "react";
 import "../../app/App.css";
 import { useNavigate } from "react-router-dom";
+import { AppContext } from "../../context/Provider";
 
-function ForgetPasswordVerification() {
+function ResetPassword() {
   const navigate = useNavigate();
+  const {configValue} = useContext(AppContext)
 
   // const [resendShow, setResendShow] =
   //   useState(false);
@@ -98,14 +101,15 @@ function ForgetPasswordVerification() {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    const VeriCode =
-      otp[0] +
-      otp[1] +
-      otp[2] +
-      otp[3] +
-      otp[4];
+    // const VeriCode =
+    //   otp[0] +
+    //   otp[1] +
+    //   otp[2] +
+    //   otp[3] +
+    //   otp[4];
 
-    console.log(VeriCode);
+    // console.log(VeriCode);
+    console.log(configValue);
   };
 
   return (
@@ -197,4 +201,4 @@ function ForgetPasswordVerification() {
   );
 }
 
-export default ForgetPasswordVerification;
+export default ResetPassword;

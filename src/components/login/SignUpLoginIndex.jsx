@@ -1,10 +1,11 @@
 import Login from "./index";
-import LoginCodeVerification from "/src/pages/Login/LoginCodeVerifiction";
+// import LoginCodeVerification from "/src/pages/Login/LoginCodeVerifiction";
 import SignUp from "../SignUp/SignUp";
 import SignUpVerification from "../SignUp/SignUpVerification";
 import SetPassword from "../SignUp/SetPassword";
 import { useContext, useState } from "react";
 import { AppContext } from "../../context/Provider";
+import ForgetPassword from "../ForgetPassword/ForgetPassword";
 
 const SignUpLoginIndex = () => {
   const { phoneNumber } = useContext(AppContext);
@@ -22,7 +23,6 @@ const SignUpLoginIndex = () => {
   const SetSetPassword = () => {
     setStepLogin(3);
   };
-  console.log(phoneNumber);
 
   return (
     <>
@@ -36,8 +36,10 @@ const SignUpLoginIndex = () => {
         />
       ) : stepLogin === 3 ? (
         <SetPassword set={SetLogin} numRef={phoneNumber} />
+      ) : stepLogin == -1 ? (
+        <ForgetPassword setStepLogin={setStepLogin} />
       ) : (
-        <Login set={SetSignUp} />
+        <Login set={SetSignUp} setStepLogin={setStepLogin} />
       )}
     </>
   );

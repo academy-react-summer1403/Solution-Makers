@@ -5,7 +5,7 @@ import { useContext } from "react";
 import { AppContext } from "../../context/Provider";
 import toast from "react-hot-toast";
 
-function Login({ set }) {
+function Login({ set, setStepLogin }) {
   const { setisSignUpLoginModalOpen } = useContext(AppContext);
 
   const onSubmit = async (event) => {
@@ -75,12 +75,9 @@ function Login({ set }) {
 
             <div className="mt-[16pX] flex items-center flex-row-reverse justify-between">
               <div className="text-sm">
-                <a
-                  href="/ForgetPassword"
-                  className="font-semibold text-indigo-600 hover:text-indigo-500"
-                >
+                <span className="font-semibold text-indigo-600 hover:text-indigo-500 cursor-pointer" onClick={() => setStepLogin(-1)}>
                   رمز عبور را فراموش کردم
-                </a>
+                </span>
               </div>
               <div className=" flex gap-[7px] items-center flex-row-reverse checkbox-wrapper-13">
                 <label

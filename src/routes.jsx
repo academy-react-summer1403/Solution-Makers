@@ -4,8 +4,6 @@ import Articles from "./pages/Articles";
 import CourseDetails from "./pages/CourseDetails";
 import ArticleDetails from "./pages/ArticleDetails";
 import LoginCodeVerifiction from "./pages/Login/LoginCodeVerifiction";
-import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
-import ForgetPasswordVerification from "./pages/ForgetPassword/ForgetPasswordVerification";
 import Teachers from "./pages/Teachers";
 import Contact from "./pages/Contact";
 import UserPanelLayout from "./layouts/UserPanelLayout";
@@ -17,6 +15,7 @@ import UserPanelEditProfile from "./pages/userPanel/EditProfile";
 import UserPanelChangePassword from "./pages/userPanel/ChangePassword";
 import UserPanelComments from "./pages/userPanel/Comments";
 import UserPrivateRoute from "./components/private/UserPrivateRoute";
+import ResetPasswordPage from "./pages/ResetPassword";
 
 const routes = [
   { path: "/", element: <Landing /> },
@@ -49,12 +48,8 @@ const routes = [
     element: <LoginCodeVerifiction />,
   },
   {
-    path: "/ForgetPassword",
-    element: <ForgetPassword />,
-  },
-  {
-    path: "/ForgetPasswordVerification",
-    element: <ForgetPasswordVerification />,
+    path: "/resetpassword/:ConfigValue",
+    element: <ResetPasswordPage />,
   },
   {
     path: "/my-panel/*",
