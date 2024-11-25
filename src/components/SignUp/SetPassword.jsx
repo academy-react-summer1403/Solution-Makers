@@ -54,19 +54,19 @@ function SetPassword({ set, numRef }) {
 
   return (
     <>
-      <div className=" shadow-slate-500 shadow-lg  mt-[205px] m-auto w-[420px] h-[528px] flex min-h-full  flex-col   lg:px-8 bg-[#fff] rounded-[25px] ">
+      <div className="m-auto w-[420px] h-[480px] flex min-h-full flex-col px-8 bg-[#fff] rounded-[25px]">
         <div>
-          <h2 className="  mt-[32px] mr-[17px] text-right text-2xl font-bold leading-9 tracking-tight text-gray-900">
+          <h2 className="mt-[32px] mr-[17px] text-right text-2xl font-bold leading-9 tracking-tight text-gray-900">
             ورود به حساب
           </h2>
         </div>
 
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm  ">
+        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <form
             onSubmit={onSubmit}
             className="space-y-6"
           >
-            <div>
+            <div className="flex flex-col gap-2">
               <div className="mt-[35px]">
                 <input
                   id="email"
@@ -78,7 +78,6 @@ function SetPassword({ set, numRef }) {
                   className=" pr-[15px] text-right h-[56px] rounded-[32px] block w-full  border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
-
               <div className="mt-[16px]">
                 <input
                   id="password"
@@ -102,7 +101,7 @@ function SetPassword({ set, numRef }) {
                 />
               </div>
 
-              <div className=" mt-[8px] flex gap-[7px] items-center flex-row checkbox-wrapper-13">
+              <div className="mt-4 flex gap-[7px] items-center flex-row checkbox-wrapper-13">
                 <input
                   id="c1-13"
                   type="checkbox"

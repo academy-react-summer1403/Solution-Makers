@@ -6,6 +6,7 @@ export const AppContext = createContext();
 
 function Provider({ children }) {
   const [phoneNumber, setPhoneNumber] = useState();
+  const [isSignUpLoginModalOpen, setisSignUpLoginModalOpen] = useState(false);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   const [userInfos, setUserInfos] = useState({});
   const [showUserPanelSidebar, setShowUserPanelSidebar] = useState(false);
@@ -36,6 +37,8 @@ function Provider({ children }) {
       value={{
         theme,
         setTheme,
+        isSignUpLoginModalOpen,
+        setisSignUpLoginModalOpen,
         userInfos,
         setUserInfos,
         reFetch,
