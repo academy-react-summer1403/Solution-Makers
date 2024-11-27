@@ -41,7 +41,8 @@ function ColumnCourseCard({
   userLikedId,
   currentUserDissLike,
 }) {
-  const { setReFetch, comparisonIds, setComparisonIds } = useContext(AppContext);
+  const { setReFetch, comparisonIds, setComparisonIds } =
+    useContext(AppContext);
   const [score, setScore] = useState(0);
   const [isLiked, setIsLiked] = useState(undefined);
   const [isDisLiked, setIsDisLiked] = useState(undefined);
@@ -166,8 +167,9 @@ function ColumnCourseCard({
             className="w-full h-[150px] xs:h-[180px] sm:h-[275px] md:h-[275px] lg:h-[200px] xl:h-[180px]"
             classNames={{ wrapper: "w-full" }}
             src={
-              tumbImageAddress ||
-              "/src/assets/images/notFound/1047293-صفحه-یافت-نشد-خطای-404.jpg"
+              tumbImageAddress != "null" && tumbImageAddress
+                ? tumbImageAddress
+                : "/src/assets/images/notFound/1047293-صفحه-یافت-نشد-خطای-404.jpg"
             }
           />
         </CardHeader>

@@ -1,7 +1,4 @@
 import AppLayout from "../../layouts/AppLayout";
-// import Header from "../../components/common/Header";
-// import CoursesMiddleSection from "../../components/courses/MiddleSection";
-// import CoursesList from "../../components/courses/MiddleSection/CoursesSection/CoursesList";
 import "/src/app/App.css";
 import Services from "./Services";
 import LandingCourses from "./LandingCourses";
@@ -16,20 +13,15 @@ function Landing() {
       <div>
         <LandingHeader />
       </div>
-      <div className=" m-auto w-[1280px] ">
-        {/* خدمات ما */}
+      <div>
         <Services />
-        {/* دوره های آموزش*/}
         <LandingCourses />
-        {/* دسته بندی دوره ها */}
         <Category />
       </div>
-      <div className=" w-full mt-[30px] ">
-        {/* اساتید برتر */}
+      <div className="w-full mt-[30px]">
         <Slider />
       </div>
-      <div className=" m-auto w-[1280px] ">
-        {/* اخبار و مقالات */}
+      <div className="m-auto">
         <LandingNews />
       </div>
     </AppLayout>

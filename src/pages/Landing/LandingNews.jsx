@@ -1,11 +1,5 @@
-/* eslint-disable no-undef */
-// import React from "react";
-import {
-  useContext,
-  useEffect,
-} from "react";
+import { useContext } from "react";
 import axios from "axios";
-import { baseApi } from "../../config";
 import { useNavigate } from "react-router-dom";
 import NewsCard from "./Objects/NewsCard";
 import SectionsTitle from "./Objects/SectionsTitle";
@@ -18,45 +12,14 @@ import { BeatLoader } from "react-spinners";
 
 const LandingNews = () => {
   const navigate = useNavigate();
-  const {
-    articlesPageNumber,
-    // setArticlesPageNumber,
-    // rowsOfPage,
-    reFetch,
-    setReFetch,
-    articlesQuery,
-    articlesSortingCol,
-  } = useContext(AppContext);
+  const { articlesPageNumber } = useContext(AppContext);
   const fetchArticles = () =>
-    axios.get(
-      `${baseApi}/News?PageNumber=${articlesPageNumber}&RowsOfPage=3${
-        articlesSortingCol
-          ? `&SortingCol=${articlesSortingCol}`
-          : ""
-      }&SortType=DESC${
-        articlesQuery
-          ? `&Query=${articlesQuery}`
-          : ""
-      }`
-    );
+    axios.get(`/News?PageNumber=${articlesPageNumber}&RowsOfPage=3`);
 
-  // eslint-disable-next-line no-unused-vars
-  const {
-    data,
-    isLoading,
-    // error,
-    refetch,
-  } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ["articles"],
     queryFn: () => fetchArticles(),
   });
-  console.log(data);
-
-  useEffect(() => {
-    reFetch && refetch();
-    setReFetch(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [articlesQuery, reFetch]);
 
   if (isLoading) {
     return (
@@ -67,65 +30,50 @@ const LandingNews = () => {
       />
     );
   }
-  console.log(data.data.news[0].title);
+
+  if (error) {
+    return <span>خطا در دریافت اطلاعات</span>
+  }
+
   return (
     <>
       {data.data.news.length !== 0 ? (
         <>
-          <div className=" w-full flex flex-col items-center mt-[100px] ">
-            <SectionsTitle name="اخبار و مقالات " />
+          <div className="w-full flex flex-col items-center mt-[100px]">
+            <SectionsTitle name="اخبار و مقالات" />
 
-            <div className=" mt-[40px] w-full h-[556px] flex flex-nowrap justify-between ">
-              <div className=" hover:scale-[1.03] cursor-pointer duration-200   w-[624px] h-full flex flex-col flex-nowrap justify-between  ">
-                <div className=" rounded-[25px] overflow-hidden w-[616px] h-[340px] ">
+            <div className="mt-[40px] w-full flex flex-col gap-16 lg:gap-0 lg:flex-row justify-center items-center">
+              <div className="w-1/2 hover:scale-[1.03] cursor-pointer duration-200 h-full flex flex-col gap-5 justify-between items-center px-2">
+                <div className="w-full lg:w-[80%] rounded-[25px] overflow-hidden">
                   <img
-                    src={
-                      data.data.news[0]
-                        .currentImageAddressTumb
-                    }
-                    className=" w-full h-full "
+                    src={data.data.news[0].currentImageAddressTumb}
+                    className="w-full h-[150px] sm:h-[200px] md:h-[300px] lg:h-[400px]"
                   />
                 </div>
-                <div className=" flex flex-col justify-between w-[616px]   ">
-                  {" "}
+                <div className="flex flex-col w-full lg:w-[80%] break-words">
                   <div className="flex flex-row items-center gap-4 justify-start sm:flex-row text-primary">
-                    <span className="flex items-center gap-1 bg-[#bddcf6] rounded-full text-center justify-center h-[40px] w-[102px] ">
-                      <MdOutlineRemoveRedEye
-                        size={20}
-                      />
-                      122
+                    <span className="hidden sm:flex items-center gap-1 bg-[#bddcf6] rounded-xl text-center justify-center py-1 px-4">
+                      <MdOutlineRemoveRedEye size={20} />
+                      {data.data.news[0].currentView}
                     </span>
 
-                    <span className="flex items-center gap-1 justify-center bg-[#bddcf6] rounded-full h-[40px] w-[111px] ">
-                      <IoCalendarOutline
-                        size={20}
-                      />
-                      1254
+                    <span className="hidden sm:flex items-center gap-1 justify-center bg-[#bddcf6] rounded-xl py-1 px-4">
+                      <IoCalendarOutline size={20} />
+                      {data.data.news[0].updateDate.slice(0, 10)}
                     </span>
                   </div>
-                  <h1 className=" text-[32px] mt-[6px] ">
-                    {
-                      data.data.news[0]
-                        .title
-                    }
-                  </h1>
-                  <p className=" text-[16px] ">
-                    {
-                      data.data.news[0]
-                        .miniDescribe
-                    }
+                  <h3 className="text-[32px] mt-[6px]">
+                    {data.data.news[0].title}
+                  </h3>
+                  <p className="text-[16px]">
+                    {data.data.news[0].miniDescribe}
                   </p>
                 </div>
               </div>
-              <div className=" flex flex-col gap-[30px] pr-[10px] ">
-                {data?.data.news.map(
-                  (article) => (
-                    <NewsCard
-                      key={article.id}
-                      {...article}
-                    />
-                  )
-                )}
+              <div className="w-1/2 flex flex-col gap-[30px]">
+                {data.data.news.map((article) => (
+                  <NewsCard key={article.id} {...article} />
+                ))}
               </div>
             </div>
             <Button
@@ -135,7 +83,7 @@ const LandingNews = () => {
               radius="full"
               size="lg"
               color="primary"
-              className="hidden md:inline-block mt-[40px] "
+              className="inline-block mt-[40px]"
             >
               مشاهده همه
             </Button>
