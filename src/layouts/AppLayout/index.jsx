@@ -9,7 +9,7 @@ import { AppContext } from "../../context/Provider";
 
 function AppLayout({ children }) {
   const { isSignUpLoginModalOpen, setisSignUpLoginModalOpen } = useContext(AppContext);
-  
+
   return (
     <>
       <Toaster position="top-center" />
@@ -17,7 +17,7 @@ function AppLayout({ children }) {
       <Modal
         isOpen={isSignUpLoginModalOpen}
         onOpenChange={() => setisSignUpLoginModalOpen(false)}
-        classNames={{ closeButton: " hidden" }}
+        classNames={{ base: "dark:bg-dark-200", closeButton: " hidden" }}
       >
         <ModalContent>
           <ModalBody>

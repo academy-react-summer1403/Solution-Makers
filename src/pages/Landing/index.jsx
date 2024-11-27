@@ -10,14 +10,10 @@ import "/src/app/App.css";
 function Landing() {
   return (
     <AppLayout>
-      <div>
-        <LandingHeader />
-      </div>
-      <div>
-        <Services />
-        <LandingCourses />
-        <Category />
-      </div>
+      <LandingHeader />
+      <Services />
+      <LandingCourses />
+      <Category />
       <div className="w-full mt-[30px]">
         <Slider />
       </div>

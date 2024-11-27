@@ -79,7 +79,7 @@ function SignUpVerification({ set, setStepLogin, numRef }) {
   };
 
   return (
-    <div className="shadow-slate-500 font-[yek] font-medium m-auto w-full sm:w-[420px] h-[450px] flex min-h-full flex-col px-8 bg-[#fff] rounded-[25px]">
+    <div className="shadow-slate-500 font-[yek] font-medium m-auto w-full sm:w-[420px] h-[450px] flex min-h-full flex-col px-8 bg-[#fff] rounded-[25px] dark:bg-dark-200">
       <div className="flex justify-between items-center flex-row">
         <h2 className="text-[32px] mt-[32px] mr-[3px] text-right text-2xl font-bold leading-9 tracking-tight text-gray-900">
           کد تاییدیه

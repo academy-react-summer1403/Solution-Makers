@@ -88,9 +88,12 @@ function ArticleMainContent() {
             <h1 className="text-ellipsis whitespace-nowrap overflow-hidden">
               {data.data.detailsNewsDto.title}
             </h1>
-            <p className="text-justify mt-5 md:mt-0 overflow-hidden text-[#455A64] dark:text-white">
-              {data.data.detailsNewsDto.describe}
-            </p>
+            <p
+              className="text-justify mt-5 md:mt-0 overflow-hidden text-[#455A64] dark:text-white"
+              dangerouslySetInnerHTML={{
+                __html: data.data.detailsNewsDto.describe,
+              }}
+            ></p>
             <div className="flex flex-col sm:flex-row justify-between sm:text-[16px]">
               <div className="text-primary mt-5 md:mt-0 flex flex-col items-start sm:flex-row sm:items-center gap-4">
                 <span className="flex items-center gap-1">
@@ -100,7 +103,7 @@ function ArticleMainContent() {
                 <GoDotFill size={20} className="hidden sm:inline-block" />
                 <span className="flex items-center gap-1">
                   <IoCalendarOutline size={20} />
-                  1402/7/2
+                  {data.data.detailsNewsDto.insertDate.slice(0, 10)}
                 </span>
               </div>
               <div className="xs:flex mt-5 md:mt-0 justify-start items-center gap-3 sm:bg-white dark:bg-dark-100 sm:pe-12 sm:ps-4 sm:py-3 rounded-2xl">
@@ -115,11 +118,15 @@ function ArticleMainContent() {
           </div>
         </div>
         <div className="md:px-64">
-          <div className="flex flex-col items-start justify-center mt-12 gap-5">
+          <div className="flex flex-col items-start justify-center mt-12 gap-5 truncate">
             <h3 className="text-lg font-bold">
               {data.data.detailsNewsDto.googleTitle}
             </h3>
-            <p>{data.data.detailsNewsDto.googleDescribe}</p>
+            <p
+              dangerouslySetInnerHTML={{
+                __html: data.data.detailsNewsDto.googleDescribe,
+              }}
+            ></p>
           </div>
           <ArticleRateSection
             title="آیا از این مقاله راضی بودید؟"
@@ -143,7 +150,7 @@ function ArticleMainContent() {
             currentDissLikeCount={data.data.detailsNewsDto.currentDissLikeCount}
             refetch={refetch}
           />
-          <div className="bg-white dark:bg-dark-200 p-7 mt-12 rounded-3xl">
+          <div className="bg-white dark:bg-dark-200 p-7 mt-12 rounded-3xl shadow-xl">
             <CommentsBox
               newsId={id}
               title="نظرات کاربران درباره این مقاله"

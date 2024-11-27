@@ -48,7 +48,7 @@ function ResetPassword({ ConfigValue }) {
       >
         <ModalContent>
           <ModalBody>
-            <div className="shadow-slate-500 m-auto w-[420px] flex min-h-full flex-col px-8 pb-5 bg-[#fff] rounded-[25px]">
+            <div className="shadow-slate-500 m-auto w-[420px] flex min-h-full flex-col px-8 pb-5 bg-[#fff] rounded-[25px] dark:bg-dark-200">
               <div className="flex justify-between items-center flex-row">
                 <h2 className="text-[32px] mt-[32px] mr-[5px] text-right text-2xl font-bold leading-9 tracking-tight text-gray-900">
                   رمز عبور جدید

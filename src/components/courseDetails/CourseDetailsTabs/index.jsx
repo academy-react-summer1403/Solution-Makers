@@ -2,7 +2,7 @@ import { Tab, Tabs } from "@nextui-org/react";
 
 function CourseDetailsTabs({ setShowBox }) {
   return (
-    <div className="flex justify-center w-full rounded-xl sm:flex-col sm:shadow-lg mb-10">
+    <div className="flex justify-center w-full rounded-xl sm:flex-col mb-10 shadow-xl">
       <Tabs
         aria-label="Options"
         onSelectionChange={(e) => {

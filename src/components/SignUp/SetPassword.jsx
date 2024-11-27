@@ -29,7 +29,7 @@ function SetPassword({ set, numRef }) {
   };
 
   return (
-    <div className="m-auto w-[420px] h-[480px] flex min-h-full flex-col px-8 bg-[#fff] rounded-[25px]">
+    <div className="m-auto w-[420px] h-[480px] flex min-h-full flex-col px-8 bg-[#fff] rounded-[25px] dark:bg-dark-200">
       <div>
         <h2 className="mt-[32px] mr-[17px] text-right text-2xl font-bold leading-9 tracking-tight text-gray-900">
           ایجاد حساب کاربری

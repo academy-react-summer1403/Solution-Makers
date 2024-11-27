@@ -43,7 +43,7 @@ const LandingHeader = () => {
         <div className="bg-white dark:bg-black w-[80%] mx-auto flex rounded-2xl overflow-hidden pr-4">
           <input
             placeholder="چی میخوای یاد بگیری ؟"
-            className="w-[80%] h-14 outline-none dark:bg-black"
+            className="w-[80%] h-14 outline-none dark:bg-black dark:text-white"
             onChange={(e) => setSearchKey(e.target.value)}
             onKeyUp={(e) => {
               if (e.key == "Enter") {

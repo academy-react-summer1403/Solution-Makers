@@ -119,7 +119,10 @@ function MyNavbar() {
 
       <NavbarMenu className="bg-[#e7f0fc] dark:bg-dark-200 space-y-2">
         {!isLogin() && (
-          <NavMenuLink target="/login" title="ورود به حساب کاربری" />
+          <NavMenuLink
+            title="ورود به حساب کاربری"
+            func={() => setisSignUpLoginModalOpen(true)}
+          />
         )}
         <NavMenuLink target="/" title="صفحه اصلی" />
         {isLogin() && (
@@ -127,15 +130,14 @@ function MyNavbar() {
         )}
         <NavMenuLink target="/courses" title="دوره‌ها" />
         <NavMenuLink target="/articles" title="اخبار مقالات" />
-        <NavMenuLink target="" title="سبد خرید" />
         {isLogin() && (
           <NavMenuLink
-            target="/login"
             title="خروج"
             func={() => {
               removeItem("token");
               removeItem("userId");
               removeItem("userInfos");
+              location.reload();
             }}
           />
         )}

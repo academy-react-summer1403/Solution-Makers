@@ -11,11 +11,12 @@ import { AiOutlineHome } from "react-icons/ai";
 import { FaRegComment } from "react-icons/fa";
 import { Avatar } from "@nextui-org/react";
 import UserPanelSidebarLink from "./SidebarLink";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { removeItem } from "../../../core/services/common/storage";
 
 function UserPanelSidebar() {
-  const { showUserPanelSidebar, setShowUserPanelSidebar, userInfos } =
-    useContext(AppContext);
+  const { showUserPanelSidebar, setShowUserPanelSidebar, userInfos } = useContext(AppContext);
+  const navigate = useNavigate();
 
   return (
     <div
@@ -99,10 +100,18 @@ function UserPanelSidebar() {
           </Link>
         </div>
         <div className="px-4">
-          <Link className="flex justify-start items-center gap-3 py-3 px-5 rounded-xl text-white text-medium xl:text-lg hover:bg-[#1e87db] dark:hover:bg-primary">
+          <span
+            className="flex justify-start items-center gap-3 py-3 px-5 rounded-xl cursor-pointer text-white text-medium xl:text-lg hover:bg-[#1e87db] dark:hover:bg-primary"
+            onClick={() => {
+              removeItem("token");
+              removeItem("userId");
+              removeItem("userInfos");
+              navigate("/")
+            }}
+          >
             <BiLogOut size={30} />
             خروج از حساب
-          </Link>
+          </span>
         </div>
       </div>
     </div>

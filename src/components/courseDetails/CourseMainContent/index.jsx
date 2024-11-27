@@ -88,7 +88,7 @@ function CourseMainContent() {
             {data.data.title}
           </h1>
           <p
-            className="text-justify text-ellipsis whitespace-nowrap overflow-hidden sm:whitespace-normal"
+            className="text-justify sm:whitespace-normal"
             dangerouslySetInnerHTML={{ __html: data.data.describe }}
           ></p>
           <CourseRateSection
@@ -102,7 +102,7 @@ function CourseMainContent() {
             currentUserRateNumber={data.data.currentUserRateNumber}
             refetch={refetch}
           />
-          <div className="bg-white dark:bg-dark-200 p-7 mt-12 rounded-3xl overflow-hidden">
+          <div className="bg-white dark:bg-dark-200 p-7 mt-12 rounded-3xl overflow-hidden shadow-xl">
             <CourseDetailsTabs setShowBox={setShowBox} />
             {showBox == "descriptions" && (
               <CourseDescription

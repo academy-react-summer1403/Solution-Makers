@@ -21,7 +21,7 @@ function TopSection({ onOpen }) {
         <CoursesShowStatusToggler />
         <div className="flex lg:hidden items-center">
           <span
-            className="bg-white dark:bg-dark-100 p-[14px] rounded-xl cursor-pointer text-xl xs:text-3xl"
+            className="bg-white dark:bg-dark-100 p-[12px] rounded-xl cursor-pointer text-xl xs:text-3xl shadow-xl"
             onClick={onOpen}
           >
             <BiFilterAlt />
