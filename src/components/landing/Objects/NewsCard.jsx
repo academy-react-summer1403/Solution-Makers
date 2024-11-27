@@ -21,7 +21,7 @@ const NewsCard = ({
       <div className="h-[161px] rounded-[25px] overflow-hidden w-full md:w-[40%]">
         <img
           src={
-            currentImageAddressTumb || "/src/pages/Landing/Objects/photo.png"
+            currentImageAddressTumb || "/src/components/Landing/Objects/photo.png"
           }
           className="w-full h-full"
         />

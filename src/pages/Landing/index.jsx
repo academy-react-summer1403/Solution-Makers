@@ -1,11 +1,11 @@
 import AppLayout from "../../layouts/AppLayout";
+import Services from "../../components/landing/Services";
+import LandingCourses from "../../components/landing/LandingCourses";
+import Category from "../../components/landing/Category";
+import LandingHeader from "../../components/landing/LandingHeader";
+import LandingNews from "../../components/landing/LandingNews";
+import Slider from "../../components/landing/Slider";
 import "/src/app/App.css";
-import Services from "./Services";
-import LandingCourses from "./LandingCourses";
-import Category from "./Category";
-import LandingHeader from "./LandingHeader";
-import LandingNews from "./LandingNews";
-import Slider from "./Slider";
 
 function Landing() {
   return (

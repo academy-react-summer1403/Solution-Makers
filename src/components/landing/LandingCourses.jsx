@@ -1,5 +1,5 @@
 import SectionsTitle from "./Objects/SectionsTitle";
-import ColumnCourseCard from "../../components/common/courseCard/ColumnCourseCard";
+import ColumnCourseCard from "../common/courseCard/ColumnCourseCard";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@nextui-org/react";
 import { useNavigate } from "react-router-dom";

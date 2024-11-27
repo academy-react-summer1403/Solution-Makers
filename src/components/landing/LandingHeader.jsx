@@ -28,7 +28,7 @@ const LandingHeader = () => {
   }, []);
 
   return (
-    <div className="relative w-full h-[900px] m-auto bg-[url(/src/pages/Landing/header-bg.png)] bg-[length:100%_90%] bg-no-repeat dark:invert-[1] dark:text-black flex flex-row flex-nowrap justify-center px-6 pt-6 md:pt-20">
+    <div className="relative w-full h-[900px] m-auto bg-[url(/src/components/Landing/header-bg.png)] bg-[length:100%_90%] bg-no-repeat dark:invert-[1] dark:text-black flex flex-row flex-nowrap justify-center px-6 pt-6 md:pt-20">
       <div className="w-full lg:w-[70%] flex flex-col text-center gap-4 md:gap-14 overflow-hidden">
         <div className="flex flex-col gap-3">
           <p className="text-[20px] lg:text-[24px]">پلتفرم آموزش طراحی وب</p>

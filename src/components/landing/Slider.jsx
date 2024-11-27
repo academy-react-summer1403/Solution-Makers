@@ -59,7 +59,7 @@ const Slider = () => {
         {data.data
           .filter(
             (teacher) =>
-              teacher.courseCounts >= 10 &&
+              teacher.courseCounts >= 4 &&
               teacher.pictureAddress &&
               teacher.pictureAddress != "Not-set"
           )

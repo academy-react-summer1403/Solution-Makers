@@ -1,0 +1,13 @@
+.dark .mainHeader {
+  position: relative;
+  padding-top: 100px;
+  width: 100%;
+  background: url("/src/components/Landing/header-bg.png") no-repeat;
+  height: 900px;
+  margin: auto;
+  background-size: 100% 90%;
+  text-align: center;
+  filter: invert(1);
+  color: black;
+  border-color: white;
+}
