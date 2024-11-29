@@ -32,7 +32,7 @@ const LandingNews = () => {
   }
 
   if (error) {
-    return <span>خطا در دریافت اطلاعات</span>
+    return <span>خطا در دریافت اطلاعات</span>;
   }
 
   return (
@@ -46,7 +46,10 @@ const LandingNews = () => {
               <div className="w-1/2 hover:scale-[1.03] cursor-pointer duration-200 h-full flex flex-col gap-5 justify-between items-center px-2">
                 <div className="w-full lg:w-[80%] rounded-[25px] overflow-hidden">
                   <img
-                    src={data.data.news[0].currentImageAddressTumb}
+                    src={
+                      data.data.news[0].currentImageAddressTumb ||
+                      "/src/components/Landing/Objects/photo.png"
+                    }
                     className="w-full h-[150px] sm:h-[200px] md:h-[300px] lg:h-[400px]"
                   />
                 </div>
