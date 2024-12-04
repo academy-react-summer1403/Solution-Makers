@@ -78,7 +78,11 @@ function CommentsBox({
         >
           ارسال
         </Button>
-        <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+        <Modal
+          isOpen={isOpen}
+          onOpenChange={onOpenChange}
+          classNames={{ base: "dark:bg-dark-200 dark:border" }}
+        >
           <ModalContent>
             {(onClose) => (
               <>

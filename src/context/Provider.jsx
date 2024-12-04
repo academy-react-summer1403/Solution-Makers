@@ -28,6 +28,7 @@ function Provider({ children }) {
   const [articlesPageNumber, setArticlesPageNumber] = useState(1);
   const [articlesQuery, setArticlesQuery] = useState("");
   const [articlesSortingCol, setArticlesSortingCol] = useState(undefined);
+  const [articlesCategory, setArticlesCategory] = useState("");
   const [userNavTitle, setUserNavTitle] = useState("");
   const [commentId, setCommentId] = useState(75);
   const [comparisonIds, setComparisonIds] = useState([]);
@@ -79,6 +80,8 @@ function Provider({ children }) {
         setArticlesQuery,
         articlesSortingCol,
         setArticlesSortingCol,
+        articlesCategory,
+        setArticlesCategory,
         userNavTitle,
         setUserNavTitle,
         commentId,

@@ -15,12 +15,13 @@ function ArticlesList() {
     setReFetch,
     articlesQuery,
     articlesSortingCol,
+    articlesCategory
   } = useContext(AppContext);
 
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["articles"],
     queryFn: () =>
-      fetchArticles(articlesPageNumber, articlesSortingCol, articlesQuery),
+      fetchArticles(articlesPageNumber, articlesSortingCol, articlesQuery, articlesCategory),
   });
 
   useEffect(() => {

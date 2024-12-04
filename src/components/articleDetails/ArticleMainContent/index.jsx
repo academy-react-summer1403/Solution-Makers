@@ -85,9 +85,12 @@ function ArticleMainContent() {
             />
           </div>
           <div className="flex flex-col justify-between w-full md:w-[60%]">
-            <h1 className="text-ellipsis whitespace-nowrap overflow-hidden">
-              {data.data.detailsNewsDto.title}
-            </h1>
+            <div className="flex items-center gap-2">
+              <h1 className="text-ellipsis whitespace-nowrap overflow-hidden">
+                {data.data.detailsNewsDto.title}
+              </h1>
+              <span>{`( ${data.data.detailsNewsDto.newsCatregoryName} )`}</span>
+            </div>
             <p
               className="text-justify mt-5 md:mt-0 overflow-hidden text-[#455A64] dark:text-white"
               dangerouslySetInnerHTML={{
@@ -154,9 +157,7 @@ function ArticleMainContent() {
             <CommentsBox
               newsId={id}
               title="نظرات کاربران درباره این مقاله"
-              comments={comments.data?.data.filter(
-                (comment) => comment.accept == true
-              )}
+              comments={comments.data?.data}
               isLoading={comments.isLoading}
               error={comments.error}
               commentBody={commentBody}
