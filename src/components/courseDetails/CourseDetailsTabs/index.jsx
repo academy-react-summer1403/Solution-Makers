@@ -16,7 +16,7 @@ function CourseDetailsTabs({ setShowBox }) {
         }}
       >
         <Tab key="descriptions" title="توضیحات" />
-        <Tab key="previews" title="پیش نمایش ها" />
+        {/* <Tab key="previews" title="پیش نمایش ها" /> */}
         <Tab key="comments" title="نظرات" />
         <Tab key="details" title="جزئیات" className="lg:hidden" />
       </Tabs>
