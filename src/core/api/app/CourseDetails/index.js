@@ -141,7 +141,7 @@ export const dislikeCourseComment = (id) => {
 
 export const addCourseReserve = (courseId) =>
   toast.promise(instance.post("/CourseReserve/ReserveAdd", { courseId }), {
-    loading : "در حال پردازش",
-    success : "دوره با موفقیت رزرو شد",
-    error : "خطایی رخ داد"
+    loading: "در حال پردازش",
+    success: "دوره با موفقیت رزرو شد",
+    error: "خطایی رخ داد",
   });

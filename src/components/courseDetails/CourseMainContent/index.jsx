@@ -134,6 +134,7 @@ function CourseMainContent() {
             {showBox == "details" && (
               <div className="lg:hidden">
                 <CourseSpecificationsBox
+                  courseId={id}
                   currentRegistrants={data.data.currentRegistrants}
                   courseStatusName={data.data.courseStatusName}
                   courseLevelName={data.data.courseLevelName}
@@ -143,6 +144,9 @@ function CourseMainContent() {
                   cost={data.data.cost}
                   teacherName={data.data.teacherName}
                   uniqeUrlString={data.data.uniqeUrlString}
+                  isCourseUser={data.data.isCourseUser}
+                  isCourseReseve={data.data.isCourseReseve}
+                  refetch={refetch}
                 />
               </div>
             )}
@@ -160,6 +164,9 @@ function CourseMainContent() {
             cost={data.data.cost}
             teacherName={data.data.teacherName}
             uniqeUrlString={data.data.uniqeUrlString}
+            isCourseUser={data.data.isCourseUser}
+            isCourseReseve={data.data.isCourseReseve}
+            refetch={refetch}
           />
         </div>
       </div>
