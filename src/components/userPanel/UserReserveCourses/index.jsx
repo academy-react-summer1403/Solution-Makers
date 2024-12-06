@@ -91,7 +91,7 @@ function UserReserveCourses() {
               وضعیت تایید
             </TableColumn>
             <TableColumn align="center" key="remove">
-              وضعیت تایید
+              حذف
             </TableColumn>
           </TableHeader>
           <TableBody
