@@ -1,16 +1,15 @@
 import {
+  useContext,
   useRef,
   useState,
 } from "react";
 import "../../app/App.css";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { AppContext } from "../../context/Provider";
 
-function SignUpVerification({
-  set,
-  numRef,
-}) {
+function ResetPassword() {
   const navigate = useNavigate();
+  const {configValue} = useContext(AppContext)
 
   // const [resendShow, setResendShow] =
   //   useState(false);
@@ -102,29 +101,15 @@ function SignUpVerification({
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    const VeriCode =
-      otp[0] +
-      otp[1] +
-      otp[2] +
-      otp[3] +
-      otp[4];
+    // const VeriCode =
+    //   otp[0] +
+    //   otp[1] +
+    //   otp[2] +
+    //   otp[3] +
+    //   otp[4];
 
-    console.log(VeriCode);
-
-    const obj = {
-      phoneNumber: numRef,
-      verifyCode: VeriCode,
-    };
-
-    const res = await axios.post(
-      "https://classapi.sepehracademy.ir/api/Sign/VerifyMessage",
-      obj
-    );
-    console.log(res.data);
-
-    if (res.data.success === true) {
-      set(true);
-    }
+    // console.log(VeriCode);
+    console.log(configValue);
   };
 
   return (
@@ -141,11 +126,11 @@ function SignUpVerification({
         </div>
         <div className=" items-center w-[356px] mx-auto sm:w-full sm:max-w-[356px]  ">
           <div className=" w-[356px] mt-10 text-right text-[14px] text-gray-500">
-            کد به شماره {numRef}
+            کد به شماره 989118045177+
             ارسال شد، در صورت اشتباه
             بودن شماره آنرا{" "}
             <a
-              href="/SignUp"
+              href="#"
               className="font-semibold leading-6 text-[#2196F3] hover:text-indigo-500"
             >
               تغییر دهید
@@ -197,7 +182,7 @@ function SignUpVerification({
               type="submit"
               className="flex text-center items-center rounded-[32px] w-[208px] h-[56px] m-auto  justify-center  bg-[#2196F3] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
-              مرحله بعد{" "}
+              ورود به حساب
             </button>
           </form>
           <p className="mt-[15px] text-center text-sm text-gray-500">
@@ -216,4 +201,4 @@ function SignUpVerification({
   );
 }
 
-export default SignUpVerification;
+export default ResetPassword;

@@ -6,6 +6,7 @@ export const AppContext = createContext();
 
 function Provider({ children }) {
   const [phoneNumber, setPhoneNumber] = useState();
+  const [isSignUpLoginModalOpen, setisSignUpLoginModalOpen] = useState(false);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   const [userInfos, setUserInfos] = useState({});
   const [showUserPanelSidebar, setShowUserPanelSidebar] = useState(false);
@@ -27,6 +28,7 @@ function Provider({ children }) {
   const [articlesPageNumber, setArticlesPageNumber] = useState(1);
   const [articlesQuery, setArticlesQuery] = useState("");
   const [articlesSortingCol, setArticlesSortingCol] = useState(undefined);
+  const [articlesCategory, setArticlesCategory] = useState("");
   const [userNavTitle, setUserNavTitle] = useState("");
   const [commentId, setCommentId] = useState(75);
   const [comparisonIds, setComparisonIds] = useState([]);
@@ -36,6 +38,8 @@ function Provider({ children }) {
       value={{
         theme,
         setTheme,
+        isSignUpLoginModalOpen,
+        setisSignUpLoginModalOpen,
         userInfos,
         setUserInfos,
         reFetch,
@@ -76,6 +80,8 @@ function Provider({ children }) {
         setArticlesQuery,
         articlesSortingCol,
         setArticlesSortingCol,
+        articlesCategory,
+        setArticlesCategory,
         userNavTitle,
         setUserNavTitle,
         commentId,

@@ -1,35 +1,23 @@
 import AppLayout from "../../layouts/AppLayout";
-// import Header from "../../components/common/Header";
-// import CoursesMiddleSection from "../../components/courses/MiddleSection";
-// import CoursesList from "../../components/courses/MiddleSection/CoursesSection/CoursesList";
+import Services from "../../components/landing/Services";
+import LandingCourses from "../../components/landing/LandingCourses";
+import Category from "../../components/landing/Category";
+import LandingHeader from "../../components/landing/LandingHeader";
+import LandingNews from "../../components/landing/LandingNews";
+import Slider from "../../components/landing/Slider";
 import "/src/app/App.css";
-import Services from "./Services";
-import LandingCourses from "./LandingCourses";
-import Category from "./Category";
-import LandingHeader from "./LandingHeader";
-import LandingNews from "./LandingNews";
-import Slider from "./Slider";
 
 function Landing() {
   return (
     <AppLayout>
-      <div>
-        <LandingHeader />
-      </div>
-      <div className=" m-auto w-[1280px] ">
-        {/* خدمات ما */}
-        <Services />
-        {/* دوره های آموزش*/}
-        <LandingCourses />
-        {/* دسته بندی دوره ها */}
-        <Category />
-      </div>
-      <div className=" w-full mt-[30px] ">
-        {/* اساتید برتر */}
+      <LandingHeader />
+      <Services />
+      <LandingCourses />
+      <Category />
+      <div className="w-full mt-[30px]">
         <Slider />
       </div>
-      <div className=" m-auto w-[1280px] ">
-        {/* اخبار و مقالات */}
+      <div className="m-auto">
         <LandingNews />
       </div>
     </AppLayout>

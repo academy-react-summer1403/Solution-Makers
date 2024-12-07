@@ -25,7 +25,7 @@ function AppHelpers() {
       >
         <PiCaretUpBold size={35} className="text-white" />
       </span>
-      <ToggleTheme />
+      <ToggleTheme border="border-2" />
     </div>
   );
 }

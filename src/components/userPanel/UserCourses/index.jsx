@@ -50,7 +50,7 @@ function UserCourses() {
   }, []);
 
   const pages = useMemo(() => {
-    return data?.data ? Math.ceil(data?.data.listOfMyCourses.length / 3) : 0;
+    return data?.data ? Math.ceil(data?.data.totalCount / 3) : 0;
   }, [data?.data]);
 
   if (error) {

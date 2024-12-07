@@ -3,7 +3,7 @@ import { AppContext } from "../../../context/Provider";
 import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md";
 import { useLocation } from "react-router-dom";
 
-function ToggleTheme({ hideInMobile }) {
+function ToggleTheme({ hideInMobile, border }) {
   const { theme, setTheme } = useContext(AppContext);
   const location = useLocation();
 
@@ -25,7 +25,7 @@ function ToggleTheme({ hideInMobile }) {
     <span
       className={`${hideInMobile ? "hidden" : ""} sm:inline-block ${
         location.pathname.startsWith("/my-panel") ? "bg-background" : "bg-white"
-      } dark:bg-dark-100 p-2 rounded-full cursor-pointer`}
+      } dark:bg-dark-100 p-2 rounded-full cursor-pointer ${border}`}
       onClick={themeHandler}
     >
       {theme == "light" ? (

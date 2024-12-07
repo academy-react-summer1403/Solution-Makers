@@ -6,8 +6,8 @@ import { Navigation, Autoplay } from "swiper/modules";
 import ColumnCourseCard from "../../common/courseCard/ColumnCourseCard";
 import { BeatLoader } from "react-spinners";
 import { useLocation } from "react-router-dom";
-import "swiper/css/navigation";
 import { AppContext } from "../../../context/Provider";
+import "swiper/css/navigation";
 
 function RelatedCourses({ id, courseLevelName, techs }) {
   const { reFetch, setReFetch } = useContext(AppContext);
@@ -79,7 +79,8 @@ function RelatedCourses({ id, courseLevelName, techs }) {
 
   return (
     <div className="hidden xs:flex flex-col items-center gap-12 mt-28">
-      <h3 className="text-3xl text-center">دوره های مشابه</h3>
+      {data?.data.courseFilterDtos.filter((item) => item.courseId != id)
+        .length > 0 && <h3 className="text-3xl text-center">دوره های مشابه</h3>}
       {error ? (
         <span className="text-xl">خطا در دریافت اطلاعات</span>
       ) : (
@@ -116,14 +117,16 @@ function RelatedCourses({ id, courseLevelName, techs }) {
               }}
               className="px-4 lg:px-12"
             >
-              {data.data.courseFilterDtos
-                .filter((item) => item.courseId != id)
-                .slice(0, 5)
-                .map((item, index) => (
-                  <SwiperSlide key={index} className="py-2 bg-transparent">
-                    <ColumnCourseCard {...item} />
-                  </SwiperSlide>
-                ))}
+              {data.data.courseFilterDtos.filter((item) => item.courseId != id)
+                .length > 0 &&
+                data.data.courseFilterDtos
+                  .filter((item) => item.courseId != id)
+                  .slice(0, 5)
+                  .map((item, index) => (
+                    <SwiperSlide key={index} className="py-2 bg-transparent">
+                      <ColumnCourseCard {...item} />
+                    </SwiperSlide>
+                  ))}
             </Swiper>
           )}
         </>

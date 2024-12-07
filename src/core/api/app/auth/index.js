@@ -1,22 +1,15 @@
 import axios from "axios";
-import toast from "react-hot-toast";
-import { setItem } from "../../../services/common/storage";
 
-export const loginUser = (phoneOrGmail, password) =>
-  axios
-    .post(`/Sign/Login`, {
-      phoneOrGmail,
-      password,
-      rememberMe: true,
-    })
-    .then((res) => {
-      if (res.data.token) {
-        setItem("token", res.data.token);
-        setItem("userId", res.data.id);
-        toast.success("با موفقیت وارد شدید");
-      } else {
-        toast.error("همچین کاربری وجود ندارد");
-        return;
-      }
-    })
-    .catch((error) => toast.error("خطایی رخ داد"));
+export const loginUser = (obj) => axios.post("/Sign/Login", obj);
+
+export const sendVerifyMessage = (obj) => axios.post("/Sign/SendVerifyMessage", obj);
+
+export const verifyMessage = (obj) => axios.post("/Sign/VerifyMessage", obj);
+
+export const register = (user) => axios.post("/Sign/Register", user);
+
+export const forgetPassword = (obj) => axios.post("/Sign/ForgetPassword", obj);
+
+export const resetConfirmValue = (ConfigValue) => axios.get(`/Sign/Reset/${ConfigValue}`);
+
+export const resetPassword = (obj) => axios.post("/Sign/Reset", obj);

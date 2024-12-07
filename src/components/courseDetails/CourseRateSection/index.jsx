@@ -82,7 +82,7 @@ function RateSection({
           </Button>
         </div>
       </div>
-      <div className="hidden xs:flex items-center gap-4">
+      <div className="hidden xs:flex items-center justify-center sm:justify-start gap-4">
         <h3>{title}</h3>
         {isLiked ? (
           <Button

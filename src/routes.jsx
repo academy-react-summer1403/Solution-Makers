@@ -3,13 +3,7 @@ import Courses from "./pages/Courses";
 import Articles from "./pages/Articles";
 import CourseDetails from "./pages/CourseDetails";
 import ArticleDetails from "./pages/ArticleDetails";
-import Login from "./pages/Login";
 import LoginCodeVerifiction from "./pages/Login/LoginCodeVerifiction";
-import SignUp from "./pages/SignUp/SignUp";
-import SignUpVerification from "./pages/SignUp/SignUpVerification";
-import SetPassword from "./pages/SignUp/SetPassword";
-import ForgetPassword from "./pages/ForgetPassword/ForgetPassword";
-import ForgetPasswordVerification from "./pages/ForgetPassword/ForgetPasswordVerification";
 import Teachers from "./pages/Teachers";
 import Contact from "./pages/Contact";
 import UserPanelLayout from "./layouts/UserPanelLayout";
@@ -20,8 +14,8 @@ import UserPanelFavoriteArticles from "./pages/userPanel/FavoriteArticles";
 import UserPanelEditProfile from "./pages/userPanel/EditProfile";
 import UserPanelChangePassword from "./pages/userPanel/ChangePassword";
 import UserPanelComments from "./pages/userPanel/Comments";
-import SignUpLoginIndex from "./pages/Login/SignUpLoginIndex";
 import UserPrivateRoute from "./components/private/UserPrivateRoute";
+import ResetPasswordPage from "./pages/ResetPassword";
 import CourseComparison from "./pages/CourseComparison";
 
 const routes = [
@@ -52,34 +46,12 @@ const routes = [
     element: <Contact />,
   },
   {
-    path: "/login",
-    element: <SignUpLoginIndex />,
-  },
-  {
     path: "/LoginCodeVerifiction",
     element: <LoginCodeVerifiction />,
   },
   {
-    path: "/ForgetPassword",
-    element: <ForgetPassword />,
-  },
-  {
-    path: "/ForgetPasswordVerification",
-    element: (
-      <ForgetPasswordVerification />
-    ),
-  },
-  {
-    path: "/SignUp",
-    element: <SignUp />,
-  },
-  {
-    path: "/SignUpVerification",
-    element: <SignUpVerification />,
-  },
-  {
-    path: "/SetPassword",
-    element: <SetPassword />,
+    path: "/resetpassword/:ConfigValue",
+    element: <ResetPasswordPage />,
   },
   {
     path: "/my-panel/*",
@@ -99,15 +71,11 @@ const routes = [
       },
       {
         path: "favorite-courses",
-        element: (
-          <UserPanelFavoriteCourses />
-        ),
+        element: <UserPanelFavoriteCourses />,
       },
       {
         path: "favorite-articles",
-        element: (
-          <UserPanelFavoriteArticles />
-        ),
+        element: <UserPanelFavoriteArticles />,
       },
       {
         path: "comments",
@@ -115,15 +83,11 @@ const routes = [
       },
       {
         path: "edit-profile",
-        element: (
-          <UserPanelEditProfile />
-        ),
+        element: <UserPanelEditProfile />,
       },
       {
         path: "change-password",
-        element: (
-          <UserPanelChangePassword />
-        ),
+        element: <UserPanelChangePassword />,
       },
     ],
   },

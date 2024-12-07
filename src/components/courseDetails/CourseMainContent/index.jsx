@@ -87,9 +87,10 @@ function CourseMainContent() {
           <h1 className="text-ellipsis whitespace-nowrap overflow-hidden sm:whitespace-normal">
             {data.data.title}
           </h1>
-          <p className="text-justify text-ellipsis whitespace-nowrap overflow-hidden sm:whitespace-normal">
-            {data.data.describe}
-          </p>
+          <p
+            className="text-justify sm:whitespace-normal"
+            dangerouslySetInnerHTML={{ __html: data.data.describe }}
+          ></p>
           <CourseRateSection
             id={id}
             currentUserLike={Boolean(Number(data.data.currentUserLike))}
@@ -101,7 +102,7 @@ function CourseMainContent() {
             currentUserRateNumber={data.data.currentUserRateNumber}
             refetch={refetch}
           />
-          <div className="bg-white dark:bg-dark-200 p-7 mt-12 rounded-3xl overflow-hidden">
+          <div className="bg-white dark:bg-dark-200 p-7 mt-12 rounded-3xl overflow-hidden shadow-xl">
             <CourseDetailsTabs setShowBox={setShowBox} />
             {showBox == "descriptions" && (
               <CourseDescription
@@ -133,6 +134,7 @@ function CourseMainContent() {
             {showBox == "details" && (
               <div className="lg:hidden">
                 <CourseSpecificationsBox
+                  courseId={id}
                   currentRegistrants={data.data.currentRegistrants}
                   courseStatusName={data.data.courseStatusName}
                   courseLevelName={data.data.courseLevelName}
@@ -142,6 +144,9 @@ function CourseMainContent() {
                   cost={data.data.cost}
                   teacherName={data.data.teacherName}
                   uniqeUrlString={data.data.uniqeUrlString}
+                  isCourseUser={data.data.isCourseUser}
+                  isCourseReseve={data.data.isCourseReseve}
+                  refetch={refetch}
                 />
               </div>
             )}
@@ -149,6 +154,7 @@ function CourseMainContent() {
         </div>
         <div className="hidden w-full lg:w-[30%] lg:flex flex-col gap-10">
           <CourseSpecificationsBox
+            courseId={id}
             currentRegistrants={data.data.currentRegistrants}
             courseStatusName={data.data.courseStatusName}
             courseLevelName={data.data.courseLevelName}
@@ -158,6 +164,9 @@ function CourseMainContent() {
             cost={data.data.cost}
             teacherName={data.data.teacherName}
             uniqeUrlString={data.data.uniqeUrlString}
+            isCourseUser={data.data.isCourseUser}
+            isCourseReseve={data.data.isCourseReseve}
+            refetch={refetch}
           />
         </div>
       </div>
